@@ -8,13 +8,16 @@ Let's dive directly into how to use it.
 
 Since Xcode's starter project template for a macOS SwiftUI app isn't set up for `MacMenuBar` there are few things you have to change to make it ready.
 
-1. Add this package as a dependency in your app. In Xcode select `Swift Packages` from the `File` menu, then `Add Pacakge Dependency`.  Then fill-in the URL for this package.
+1. Add this package as a dependency in your app. In Xcode select `Swift Packages` from the `File` menu, then `Add Pacakge Dependency`.  Then fill-in the URL for this package: [https://github.com/chipjarred/MacMenuBar.git](https://github.com/chipjarred/MacMenuBar.git)
 
-2. Tell Xcode your app depends on the `MacMenuBar` library.  Click on your project's icon in the `Project Navigator` (the left side bar where files and folders  are shown).  Select your application's target, in the section labeled `Frameworks, Librarys, and Embedded Content` click on the `+` sign and then select the `MacMenuBar` library from the list.  Click `Add`.
+2. Remove  the `Main.storyboard` file.  Just like you don't use a Storyboard for your SwiftUI `View` types, you don't use them for `MacMenuBar` either.  Just delete it (or uncheck it as belonging to the application target in the `File Inspector` side-bar on the right)
 
-3. Remove  the `Main.storyboard` file.  Just like you don't use a Storyboard for your SwiftUI `View` types, you don't use them for `MacMenuBar` either.  Just delete it (or uncheck it as belonging to the application target in the `File Inspector` side-bar on the right)
+3. Change the `Main Inteface` target setting. 
+    1. Click on the project in the Project Navigator (side bar to the left that shows files and folder)
+    2. Select your application target
+    3. Under "General" in the "Deployment Info" section, clear the "Main Interface" field.
 
-4. Add `main.swift`.  With `Main.storyboard` gone, `NSApplication` won't' work automagically, so you have to add a `main.swift` to provide a working entry point for your app.  It should look like this.
+3. Add `main.swift`.  With `Main.storyboard` gone, `NSApplication` won't work automagically, so you have to add a `main.swift` to provide a working entry point for your app.  It should look like this.
 
 ```swift
 import Cocoa
@@ -22,13 +25,13 @@ let delegate = AppDelegate()
 NSApplication.shared.delegate = delegate
 _ = NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 ```
-5.  Remove the `@NSApplicationMain` attribute from `AppDelegate` in  `AppDelegate.swift`.  
+4.  Remove the `@NSApplicationMain` attribute from `AppDelegate` in  `AppDelegate.swift`.  
 ```swift
 @NSApplicationMain // <- REMOVE THIS
 class AppDelegate: NSObject, NSApplicationDelegate
 ```
 
-6. Import `MacMenuBar` in `AppDelelgate.swift`:
+5. Import `MacMenuBar` in `AppDelelgate.swift`:
 
 ```swift
 import Cocoa
@@ -36,7 +39,7 @@ import SwiftUI
 import MacMenuBar // <-- ADD THIS
 ```
 
-7. Test the setup by building and running the app.  You no longer have a menu bar in the app, so you'll need to kill it using Stop button in Xcode.
+6. Test the setup by building and running the app.  You no longer have a menu bar in the app, so *you'll need to kill it using Stop button in Xcode.*
 
 ## Creating a Simple Menu Bar
 
@@ -45,7 +48,7 @@ Now we'll create a minimalist menu bar with just the application menu and the us
 Create a new file called `MenuBar.swift` with the following code
 
 ```swift
-#import MacMenuBar
+import MacMenuBar
 
 struct MainMenuBar: MenuBar
 {
@@ -109,7 +112,7 @@ func applicationDidFinishLaunching(_ aNotification: Notification)
 }
 ```
 
-Now your shiny new, albeit minimalist, menu bar is set up.  Run the application to see it work.  Of course, the only thing you can do from it right now is to quit, and display the about box, but that's all you coud do with the one Apple provided in the `Main.storyboard` file we deleted.  Before we start adding functionality let's take a look at a few things, so go back to `MenuBar.swift`.
+Now your shiny new, albeit bare bones, menu bar is set up.  Run the application to see it work.  Of course, the only thing you can do from it right now is to quit, and display the About box, but that's all you could do with the one Apple provided in the `Main.storyboard` file we deleted.  Before we start adding functionality let's take a look at a few things, so go back to `MenuBar.swift`.
 
 You'll see that `MainMenuBar.body` returns a `StandardMenuBar`.  Think of it as sort of analogous to `HStack`, but for menus.  
 
@@ -175,7 +178,7 @@ struct MainMenuBar: MenuBar
         #if DEBUG
         StandardMenu(title: "Debug")
         {
-            TextMenuItem(title: "Show Log", keyEquivalent: .command + .option + "L") { _ in
+            TextMenuItem(title: "Show Log", keyEquivalent: .command + .option + "l") { _ in
                 showLog()
             }
         }
@@ -184,4 +187,4 @@ struct MainMenuBar: MenuBar
 }
 ```
 
-As you can see, this ads a new menu called `Debug` to the menu bar.  It contains a menu item called `Show Log`, but what's different about our previous `TextMenuItem` examples, is that now we're specifying both a key equivalent for the menu item, and an action closure that is called when the menu item is selected.    If you don't want a key equivalent for your menu item, you can specify `.none` or just omit it altogether.
+As you can see, this adds a new menu called `Debug` to the menu bar.  It contains a menu item called `Show Log`, but what's different about our previous `TextMenuItem` examples is that now we're specifying both a key equivalent for the menu item, and an action closure that is called when the menu item is selected.    If you don't want a key equivalent for your menu item, you can specify `.none`.
