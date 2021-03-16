@@ -46,6 +46,13 @@ import Cocoa
         set { super.title = substituteVariables(in: localize(newValue)) }
     }
     
+    // -------------------------------------
+    public override var isEnabled: Bool
+    {
+        get { return _action?.isEnabled ?? super.isEnabled }
+        set { _action?.isEnabled = newValue; super.isEnabled = newValue }
+    }
+    
     private let menuItemActionSelector = #selector(_doMenuItemAction(_:))
 
     // -------------------------------------
