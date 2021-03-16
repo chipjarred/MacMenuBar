@@ -61,6 +61,10 @@ import Cocoa
         set { _action?.enabledValidator = newValue }
     }
     
+    // -------------------------------------
+    @usableFromInline
+    internal var titleUpdater: (() -> String)? = nil
+    
     private let menuItemActionSelector = #selector(_doMenuItemAction(_:))
 
     // -------------------------------------

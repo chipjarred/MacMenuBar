@@ -194,14 +194,19 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
         
         return item
     }
-//    
-//    // -------------------------------------
-//    public func menu(
-//        _ menu: NSMenu,
-//        update item: NSMenuItem,
-//        at index: Int,
-//        shouldCancel: Bool) -> Bool
-//    {
-//        return true
-//    }
+    
+    // -------------------------------------
+    public func menu(
+        _ menu: NSMenu,
+        update item: NSMenuItem,
+        at index: Int,
+        shouldCancel: Bool) -> Bool
+    {
+        if let item = item as? NSMacMenuItem,
+           let titleUpdater = item.titleUpdater
+        {
+            item.title = titleUpdater()
+        }
+        return true
+    }
 }

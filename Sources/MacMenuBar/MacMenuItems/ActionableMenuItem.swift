@@ -113,4 +113,14 @@ extension ActionableMenuItem
         
         return self
     }
+    
+    // -------------------------------------
+    @inlinable public func updatingTitleWith(
+        _ updater: @escaping () -> String) -> Self
+    {
+        if let item = nsMenuItem as? NSMacMenuItem {
+            item.titleUpdater = updater
+        }
+        return self
+    }
 }
