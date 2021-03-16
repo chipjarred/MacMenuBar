@@ -213,4 +213,9 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
         }
         return true
     }
+    
+    // -------------------------------------
+    public func numberOfItems(in menu: NSMenu) -> Int {
+        return items.count
+    }
 }
