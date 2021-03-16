@@ -220,3 +220,20 @@ Now when you select "Show Log" from the "Debug" menu, that item will become disa
             }
             #endif
 ```
+
+Now the "Show Log" menu will be disabled whenever the log window is visible.  But is that what Mac users really expect?  Maybe it would be better to change the menu item to "Hide Log"  when the log is visible, and back to "Show Log"  when it's not.  We can do that by modifying our action closure to either show or hide the log window based on its current visibility, and use the `.updatingTitleWith` method to specify a closure for updating the title:
+
+```swift
+            #if DEBUG
+            StandardMenu(title: "Debug")
+            {
+                TextMenuItem(title: "Show Log", keyEquivalent: .command + .option + "l") { _ in
+                    if logWindow.isVisible {
+                        hideLog()
+                    }
+                    else { showLog() }
+                }
+                .updatingTitleWith { logWindow.isVisible ? "Hide Log" : "Show Log" }
+            }
+            #endif
+```
