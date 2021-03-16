@@ -137,7 +137,7 @@ Although we haven't done it so far, you can also nest one or more `StandardMenu`
 The easiest way to define a custom action is with a closure. Let's say you have a `showLog()` function that displays a log window, and you want to add a `Debug` menu an item to show the log.  At the end of `MainMenuBar.body` you can your conditionally-compiled `Debug` menu:
 
 ```swift
-#import MacMenuBar
+import MacMenuBar
 
 struct MainMenuBar: MenuBar
 {
