@@ -112,7 +112,7 @@ func applicationDidFinishLaunching(_ aNotification: Notification)
 }
 ```
 
-Now your shiny new, albeit bare bones, menu bar is set up.  Run the application to see it work.  Of course, the only thing you can do from it right now is to quit, and display the About box, but in a brand new projects that's all you could really do with the one Apple provided in the `Main.storyboard` file we deleted.  
+Now your shiny new, albeit bare bones, menu bar is set up.  Run the application to see it work.  Of course, the only thing you can do from it right now is to quit, and display the About box, but in a brand new project that's all you could really do with the one Apple provided in the `Main.storyboard` file we deleted.  
 
 Before we start adding functionality let's take a closer look at a few things, so go back to `MenuBar.swift`.
 
