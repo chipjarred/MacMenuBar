@@ -118,15 +118,15 @@ Before we start adding functionality let's take a closer look at a few things, s
 
 You'll see that `MainMenuBar.body` returns a `StandardMenuBar`.  Think of it as sort of analogous to `HStack`, but for menus and we don't nest inside other menus.  It's strictly a top-level thing representing the menu bar.  
 
-Our actual menus in the menu bar are declared as `StandardMenu`.   These correspond to the main items you see in the menu bar when you haven't clicked on anything.  You provide each one with the `String` to use for it's title, however, that text is a bit smarter than your average `String`, because it actually does two things for you automatically. 
+Our actual menus in the menu bar are declared as `StandardMenu`.   These correspond to the main items you see in the menu bar when you haven't clicked on anything.  You provide each one with the `String` to use for its title, however, that text is a bit smarter than your average `String`, because it actually does two things for you automatically. 
 
-1. It looks up a localized version of the `String` you specify as the title.  It uses the `Menus.strings` file in your app''s bundle (or one of the appropriate localization subdirectories), if you include it.  If it finds one, it uses the localized string from it.  If not, it uses the string as-is for the next step.
+1. It looks up a localized version of the `String` you specify as the title.  It uses the `Menus.strings` file in your app's bundle (or one of the appropriate localization subdirectories), if you include it.  If it finds one, it uses the localized string from it.  If not, it uses the string as-is for the next step.
 
-2. It does string substituation within the string returned from step 1, whether it's the localized string or not.   The title string for our application menu contains `"$(AppName)"` .  This is automatically replaced by your program's name. The substitution strings take the form `$(SomeName)`  `MacMenuBar` looks for a value to substitute for whatever is in the parentheses.   It first checks to see if it's a pre-defined symbol, which `AppName` is, and if not it looks for a variable with a matching name in your application's process environment (`ProcessInfo.processInfo.environment`).  So `"$(PATH)"`  evaluates to whatever the `PATH` variable is set to in your app's environment.  If no such variable is found, then it evaluates to itself, as-is. 
+2. It does string substituation within the string returned from step 1, whether it's the localized string or not.   The title string for our application menu contains `"$(AppName)"` .  This is automatically replaced by your program's name. The substitution strings take the form `$(SomeName)`.  `MacMenuBar` looks for a value to substitute for whatever is in the parentheses.   It first checks to see if it's a pre-defined symbol, which `AppName` is, and if not it looks for a variable with a matching name in your application's process environment (`ProcessInfo.processInfo.environment`).  So `"$(PATH)"`  evaluates to whatever the `PATH` variable is set to in your app's environment.  If no such variable is found, then it evaluates to itself, as-is. 
 
 The titles for all menus and menu items in `MacMenuBar` work this way.  This makes localization easy.  More substitution options are planned as well.
 
-Within the top-level `StandardMenu` instances, we have two kinds of menu items: `TextMenuItem` and `MenuSeparator`.  
+Within the top-level `StandardMenu` instances we have two kinds of menu items: `TextMenuItem` and `MenuSeparator`.  
 
 `TextMenuItem` is your basic, most commonly used menu item.  You give it a title and an action.  The code above uses standard menu actions, but as you'll see later, you can define your own.  For a complete list of the standard ones, see `StandardMenuItemAction.swift`. These standard menu item actions use the usual responder chain you're familiar with from ordinary Cocoa apps, and use the usual key equivalents that Mac users expect.
 
@@ -201,7 +201,7 @@ Of course, you can also specify an action using an arbitrary selector.
 
 A lot of menu item updating, especially enabling and disabling them, happens automatically via Cocoa's [Responder Chain](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html#//apple_ref/doc/uid/10000060i-CH3-SW2), but that works based whether some object in the responder chain responds to the Objective-C selector associated with a given menu.  That's the way Cocoa apps work in Swift too. That also still works  for selector based menus actions in `MacMenuBar` with SwiftUI, if the `AppKit` objects underlying your SwiftUI views respond to the appropriate selectors, but closure-based menu actions in `MacMenuBar`, such as the one we wrote in the previous example, require more explicit handling.
 
-Suppose we just want to disable the "Show Log" menu item once the log is shown, we can specify that behavior using the `afterAction` method, when gets the menu item itself passed in as its parameter:
+Suppose we just want to disable the "Show Log" menu item once the log is shown. We can specify that behavior using the `afterAction` method, which takes the menu item itself as its parameter:
 
 ```swift
             #if DEBUG
