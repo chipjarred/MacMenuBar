@@ -207,7 +207,7 @@ Suppose we just want to disable the "Show Log" menu item once the log is shown, 
             #endif
 ```
 
-Now when you select "Show Log" from the "Debug" menu, that item will become disabled.  Of course, that's not actually want we want, because it will remain disabled even after you close the log window.  We'd really for it to be enabled or disabled based on whether the log window is currently visible.
+Now when you select "Show Log" from the "Debug" menu, that item will become disabled.  Of course, that's not actually want we want, because it will remain disabled even after you close the log window.  We'd really for it to be enabled or disabled based on whether the log window is currently visible.  Instead of `.afterAction` we can use `.enabledWhen`:
 
 ```swift
             #if DEBUG
@@ -216,7 +216,7 @@ Now when you select "Show Log" from the "Debug" menu, that item will become disa
                 TextMenuItem(title: "Show Log", keyEquivalent: .command + .option + "l") { _ in
                     showLog()
                 }
-                .afterAction { $0.isEnabled = false } // <- ADDED THIS
+                .enabledWhen { !logWindow.isVisible } // <- CHANGED THIS
             }
             #endif
 ```
