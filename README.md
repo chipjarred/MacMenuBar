@@ -8,7 +8,7 @@ Let's dive directly into how to use it.
 
 Since Xcode's starter project template for a macOS SwiftUI app isn't set up for `MacMenuBar` there are few things you have to change to make it ready.
 
-1. Add `MacMenuBar` as a Swift Package Dependency in your app. In Xcode select `Swift Packages` from the `File` menu, then `Add Pacakge Dependency`.  Then fill-in the URL for this package: [https://github.com/chipjarred/MacMenuBar.git](https://github.com/chipjarred/MacMenuBar.git)
+1. Add `MacMenuBar` as a Swift Package Dependency in your app. In Xcode select `Swift Packages` from the `File` menu, then `Add Package Dependency`.  Then fill-in the URL for this package: [https://github.com/chipjarred/MacMenuBar.git](https://github.com/chipjarred/MacMenuBar.git)
 
 2. Remove  the `Main.storyboard` file.  Just like you don't use a Storyboard for your SwiftUI `View` types, you don't use them for `MacMenuBar` either.  Just delete it (or uncheck it as belonging to the application target in the `File Inspector` side-bar on the right). 
 
