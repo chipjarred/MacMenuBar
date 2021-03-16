@@ -53,6 +53,14 @@ import Cocoa
         set { _action?.isEnabled = newValue; super.isEnabled = newValue }
     }
     
+    // -------------------------------------
+    @usableFromInline
+    internal var enabledValidator: (() -> Bool)?
+    {
+        get { _action?.enabledValidator }
+        set { _action?.enabledValidator = newValue }
+    }
+    
     private let menuItemActionSelector = #selector(_doMenuItemAction(_:))
 
     // -------------------------------------

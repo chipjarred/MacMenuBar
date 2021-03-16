@@ -75,6 +75,16 @@ extension ActionableMenuItem
     }
     
     // -------------------------------------
+    @inlinable public func enabledWhen(
+        _ validator: @escaping () -> Bool) -> Self
+    {
+        if let item = nsMenuItem as? NSMacMenuItem {
+            item.enabledValidator = validator
+        }
+        return self
+    }
+    
+    // -------------------------------------
     @inlinable public func visible(_ makeVisible: Bool = true) -> Self
     {
         var item = self

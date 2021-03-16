@@ -25,6 +25,7 @@ public protocol Action
 {
     var keyEquivalent: KeyEquivalent? { get set }
     var isEnabled: Bool { get set }
+    var enabledValidator: (() -> Bool)? { get set }
         
     // -------------------------------------
    /**

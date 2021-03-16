@@ -187,4 +187,36 @@ struct MainMenuBar: MenuBar
 }
 ```
 
-As you can see, this adds a new menu called `Debug` to the menu bar.  It contains a menu item called `Show Log`, but what's different about our previous `TextMenuItem` examples is that now we're specifying both a key equivalent for the menu item, and an action closure that is called when the menu item is selected.    If you don't want a key equivalent for your menu item, you can specify `.none`.
+As you can see, this adds a new menu called `Debug` to the menu bar.  It contains a menu item called `Show Log`, but what's different from our previous `TextMenuItem` examples is that now we're specifying both a key equivalent for the menu item, and an action closure that is called when the menu item is selected.    If you don't want a key equivalent for your menu item, you can specify `.none`.
+
+## Updating Menus
+
+A lot fo menu updating, especially with regard to whether menus are enabled or disabled happens automatically via Cocoa's [Responder Chain](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html#//apple_ref/doc/uid/10000060i-CH3-SW2), but that works based on Objective-C selectors, which we still use in Swift Cocoa apps, That also still works  for selector based menus in `MacMenuBar`, but closure menu actions such as the one we wrote in the previous example require more explicit handling.
+
+Suppose we just want to disable the "Show Log" menu item once the log is shown, we can specify that behavior using it's `afterAction` method:
+
+```swift
+            #if DEBUG
+            StandardMenu(title: "Debug")
+            {
+                TextMenuItem(title: "Show Log", keyEquivalent: .command + .option + "l") { _ in
+                    showLog()
+                }
+                .afterAction { $0.isEnabled = false } // <- ADDED THIS
+            }
+            #endif
+```
+
+Now when you select "Show Log" from the "Debug" menu, that item will become disabled.  Of course, that's not actually want we want, because it will remain disabled even after you close the log window.  We'd really for it to be enabled or disabled based on whether the log window is currently visible.
+
+```swift
+            #if DEBUG
+            StandardMenu(title: "Debug")
+            {
+                TextMenuItem(title: "Show Log", keyEquivalent: .command + .option + "l") { _ in
+                    showLog()
+                }
+                .afterAction { $0.isEnabled = false } // <- ADDED THIS
+            }
+            #endif
+```

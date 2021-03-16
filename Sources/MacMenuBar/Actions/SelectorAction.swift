@@ -25,6 +25,7 @@ public struct SelectorAction: Action
 {
     public var selector: Selector? = nil
     public var keyEquivalent: KeyEquivalent? = nil
+    public var enabledValidator: (() -> Bool)? = nil
     
     init(keyEquivalent: KeyEquivalent?, selector: Selector?)
     {
@@ -36,7 +37,10 @@ public struct SelectorAction: Action
     private var _isEnabled: Bool = true
     public var isEnabled: Bool
     {
-        get { return _isEnabled && selector != nil }
+        get {
+            return _isEnabled && selector != nil
+                && (enabledValidator?() ?? true)
+        }
         set { _isEnabled = newValue }
     }
     

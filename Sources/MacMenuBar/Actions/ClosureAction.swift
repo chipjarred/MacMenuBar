@@ -27,7 +27,13 @@ public struct ClosureAction: Action
     
     public var closure: ActionClosure
     public var keyEquivalent: KeyEquivalent? = nil
-    public var isEnabled: Bool = true
+    private var _isEnabled: Bool = true
+    public var isEnabled: Bool
+    {
+        get { return _isEnabled && (enabledValidator?() ?? true) }
+        set { _isEnabled = newValue }
+    }
+    public var enabledValidator: (() -> Bool)? = nil
     
     // -------------------------------------
     public init(_ closure: @escaping ActionClosure) { self.closure = closure }

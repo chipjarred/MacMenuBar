@@ -40,6 +40,13 @@ public struct NoAction: Action
     }
     
     // -------------------------------------
+    public var enabledValidator: (() -> Bool)?
+    {
+        get { nil }
+        set { }
+    }
+
+    // -------------------------------------
     public func performActionSelf(
         on target: ActionResponder?,
         for sender: Any?) -> Bool
