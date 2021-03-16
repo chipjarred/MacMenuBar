@@ -62,13 +62,17 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     @objc override var nsMacMenuItem: NSMacMenuItem? { return _nsMacMenuItem }
     
     // -------------------------------------
-    public override init(title: String) {
+    public override init(title: String)
+    {
         super.init(title: substituteVariables(in: localize(title)))
+        self.delegate = self
     }
     
     // -------------------------------------
-    required init(coder: NSCoder) {
+    required init(coder: NSCoder)
+    {
         super.init(coder: coder)
+        self.delegate = self
     }
     
     // MARK:- Adding menu items
