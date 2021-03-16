@@ -193,13 +193,13 @@ As you can see, this adds a new menu called `Debug` to the menu bar.  It contain
 
 Note that when specifying the key equivalent, we used a lowercase "L".  Using uppercase would imply that the shift key would also need to be pressed.   `"L"` and `.shift + "l"` are equivalent in this context.
 
-The `StandardMenuItemAction` we used before already have the standard key equivalents associated with them, so you don't need to specify one of them.   If you don't want a key equivalent for your closure menu item, you can specify `.none`.
+The `StandardMenuItemAction`s we used before already have the standard key equivalents associated with them, so you don't need to specify one for them.   If you don't want a key equivalent for your closure menu item, you can specify `.none`.
 
 Of course, you can also specify an action using an arbitrary selector.
 
 ## Updating Menus
 
-A lot fo menu item updating, especially enabling and disabling them, happens automatically via Cocoa's [Responder Chain](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html#//apple_ref/doc/uid/10000060i-CH3-SW2), but that works based whether some object in the responder chain responds to the Objective-C selector associated with a given menu.  That's the way Cocoa apps work in Swift too. That also still works  for selector based menus actions in `MacMenuBar`, if the `AppKit` objects underlying your SwiftUI views respond to the appropriate selectors, but closure-based menu actions in `MacMenuBar`, such as the one we wrote in the previous example, require more explicit handling.
+A lot of menu item updating, especially enabling and disabling them, happens automatically via Cocoa's [Responder Chain](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html#//apple_ref/doc/uid/10000060i-CH3-SW2), but that works based whether some object in the responder chain responds to the Objective-C selector associated with a given menu.  That's the way Cocoa apps work in Swift too. That also still works  for selector based menus actions in `MacMenuBar` with SwiftUI, if the `AppKit` objects underlying your SwiftUI views respond to the appropriate selectors, but closure-based menu actions in `MacMenuBar`, such as the one we wrote in the previous example, require more explicit handling.
 
 Suppose we just want to disable the "Show Log" menu item once the log is shown, we can specify that behavior using the `afterAction` method, when gets the menu item itself passed in as its parameter:
 
@@ -229,7 +229,7 @@ Now when you select "Show Log" from the "Debug" menu, that item will become disa
             #endif
 ```
 
-Now the "Show Log" menu will be disabled whenever the log window is visible, and enabled whenever it's hidden.
+Now the "Show Log" menu item will be disabled whenever the log window is visible, and enabled whenever it's hidden.
 
 But is that what Mac users really expect?  Maybe it would be better to change the menu item to "Hide Log"  when the log is visible, and back to "Show Log"  when it's not.  We can do that by modifying our action closure to either show or hide the log window based on its current visibility, and use the `.updatingTitleWith` method to specify a closure for updating the title:
 
