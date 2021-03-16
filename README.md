@@ -1,6 +1,6 @@
 # MacMenuBar
 
-Are you writing a macOS application using SwiftUI and wish you could work with the menu bar (aka "main menu") like you do your SwiftUI views?  Now you can!
+Are you writing a macOS application using SwiftUI? Do wish you could work with the menu bar (aka "main menu") like you do your SwiftUI views?  Now you can!
 
 Let's dive directly into how to use it. 
 
@@ -12,7 +12,7 @@ Since Xcode's starter project template for a macOS SwiftUI app isn't set up for 
 
 2. Remove  the `Main.storyboard` file.  Just like you don't use a Storyboard for your SwiftUI `View` types, you don't use them for `MacMenuBar` either.  Just delete it (or uncheck it as belonging to the application target in the `File Inspector` side-bar on the right)
 
-3. Change the `Main Inteface` target setting. 
+3. Change the `Main Interface` target setting. 
     1. Click on the project in the Project Navigator (side bar to the left that shows files and folder)
     2. Select your application target
     3. Under "General" in the "Deployment Info" section, clear the "Main Interface" field.
@@ -87,7 +87,7 @@ struct MainMenuBar: MenuBar
     }
 }
 ```
-This kind of looks like how you write your SwiftUI `View` code doesn't it?  We just need to tell the `AppDelegate` to use it.  So at the end of `AppDelegate.applicationDidFinishLaunching()`  add `setMenuBar(to: MainMenuBar())`
+This kind of looks like how you write your SwiftUI `View` code, doesn't it?  We just need to tell the `AppDelegate` to use it.  So at the end of `AppDelegate.applicationDidFinishLaunching()`  add `setMenuBar(to: MainMenuBar())`
 
 ```swift
 func applicationDidFinishLaunching(_ aNotification: Notification)
@@ -187,11 +187,11 @@ struct MainMenuBar: MenuBar
 }
 ```
 
-As you can see, this adds a new menu called `Debug` to the menu bar.  It contains a menu item called `Show Log`, but what's different from our previous `TextMenuItem` examples is that now we're specifying both a key equivalent for the menu item, and an action closure that is called when the menu item is selected.    If you don't want a key equivalent for your menu item, you can specify `.none`.
+As you can see, this adds a new menu called `Debug` to the menu bar.  It contains a menu item called `Show Log`, but what's different from our previous `TextMenuItem` examples is that now we're specifying both a key equivalent for the menu item, and an action closure that is called when the menu item is selected.   The `StandardMenuItemAction` we used before already have the standard key equivalents associated with them.   If you don't want a key equivalent for your closure menu item, you can specify `.none`.
 
 ## Updating Menus
 
-A lot fo menu updating, especially with regard to whether menus are enabled or disabled happens automatically via Cocoa's [Responder Chain](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html#//apple_ref/doc/uid/10000060i-CH3-SW2), but that works based on Objective-C selectors, which we still use in Swift Cocoa apps, That also still works  for selector based menus in `MacMenuBar`, but closure menu actions such as the one we wrote in the previous example require more explicit handling.
+A lot fo menu updating, especially with regard to whether menus are enabled or disabled, happens automatically via Cocoa's [Responder Chain](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html#//apple_ref/doc/uid/10000060i-CH3-SW2), but that works based on Objective-C selectors, which we still use in Swift Cocoa apps. That also still works  for selector based menus in `MacMenuBar`, if the `AppKit` objects underlying your SwiftUI views respond to the appropriate selectors, but closure-based menu actions in `MacMenuBar` such as the one we wrote in the previous example require more explicit handling.
 
 Suppose we just want to disable the "Show Log" menu item once the log is shown, we can specify that behavior using it's `afterAction` method:
 
@@ -221,7 +221,9 @@ Now when you select "Show Log" from the "Debug" menu, that item will become disa
             #endif
 ```
 
-Now the "Show Log" menu will be disabled whenever the log window is visible.  But is that what Mac users really expect?  Maybe it would be better to change the menu item to "Hide Log"  when the log is visible, and back to "Show Log"  when it's not.  We can do that by modifying our action closure to either show or hide the log window based on its current visibility, and use the `.updatingTitleWith` method to specify a closure for updating the title:
+Now the "Show Log" menu will be disabled whenever the log window is visible.  
+
+But is that what Mac users really expect?  Maybe it would be better to change the menu item to "Hide Log"  when the log is visible, and back to "Show Log"  when it's not.  We can do that by modifying our action closure to either show or hide the log window based on its current visibility, and use the `.updatingTitleWith` method to specify a closure for updating the title:
 
 ```swift
             #if DEBUG
