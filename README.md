@@ -116,7 +116,7 @@ Now your shiny new, albeit bare bones, menu bar is set up.  Run the application 
 
 Before we start adding functionality let's take a closer look at a few things, so go back to `MenuBar.swift`.
 
-You'll see that `MainMenuBar.body` returns a `StandardMenuBar`.  Think of it as sort of analogous to `HStack`, but for menus and we don't nest inside other menus.  It's strictly a top-level thing representing the menu bar.  
+You'll see that `MainMenuBar.body` returns a `StandardMenuBar`.  Think of it as sort of analogous to `HStack`, but for menus and we don't nest it inside other menus.  It's strictly a top-level thing representing the menu bar.  
 
 Our actual menus in the menu bar are declared as `StandardMenu`.   These correspond to the main items you see in the menu bar when you haven't clicked on anything.  You provide each one with the `String` to use for its title, however, that text is a bit smarter than your average `String`, because it actually does two things for you automatically. 
 
@@ -191,7 +191,7 @@ struct MainMenuBar: MenuBar
 
 As you can see, this adds a new menu called `Debug` to the menu bar.  It contains a menu item called `Show Log`, but what's different from our previous `TextMenuItem` examples is that now we're specifying both a key equivalent for the menu item, and an action closure that is called when the menu item is selected.   
 
-Note that when specifying the key equivalent, we used a lowercase "L".  Using uppercase would imply that the shift key would also need to be pressed.   `"L"` and `.shift + "l"` are equivalent in this context.
+Note that when specifying the key equivalent, we used a lowercase "L".  Using uppercase would imply that the shift key would also need to be pressed.   `"L"` and `.shift + "l"` are equivalent in this context.  If at least one of  `.command`, `.option` or `.control` is not specified, `.command` is implied, so you if you use just `"l"` for your key equivalent, it will be treated as `.command + "l"`. 
 
 The `StandardMenuItemAction`s we used before already have the standard key equivalents associated with them, so you don't need to specify one for them.   If you don't want a key equivalent for your closure menu item, you can specify `.none`.
 
@@ -199,7 +199,7 @@ Of course, you can also specify an action using an arbitrary selector.
 
 ## Updating Menus
 
-A lot of menu item updating, especially enabling and disabling them, happens automatically via Cocoa's [Responder Chain](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html#//apple_ref/doc/uid/10000060i-CH3-SW2), but that works based whether some object in the responder chain responds to the Objective-C selector associated with a given menu.  That's the way Cocoa apps work in Swift too. That also still works  for selector based menus actions in `MacMenuBar` with SwiftUI, if the `AppKit` objects underlying your SwiftUI views respond to the appropriate selectors, but closure-based menu actions in `MacMenuBar`, such as the one we wrote in the previous example, require more explicit handling.
+A lot of menu item updating, especially enabling and disabling them, happens automatically via Cocoa's [Responder Chain](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html#//apple_ref/doc/uid/10000060i-CH3-SW2), but that works based whether some object in the responder chain responds to the Objective-C selector associated with a given menu.  That's the way Cocoa apps work in Swift too. That also still works  for selector based menus actions in `MacMenuBar` with SwiftUI, if the `AppKit` objects underlying your SwiftUI views respond to the appropriate selectors. On the other hand, closure-based menu actions in `MacMenuBar`, such as the one we wrote in the previous example, require more explicit handling.
 
 Suppose we just want to disable the "Show Log" menu item once the log is shown. We can specify that behavior using the `afterAction` method, which takes the menu item itself as its parameter:
 
