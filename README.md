@@ -323,7 +323,7 @@ Let's leave our "Debug" for now, and provide menu functionality our app's users 
             }
 ```
 
-One potential "gotcha" here is that one might be tempted to use `$0` instead of a name here.  The difficulty with that is in the action closure.  In that context, `$0` will refer to the action closure's parameter, which the sender of the action.  What we want is the parameter from the `ForEach` closure.  Giving a name and capturing it in the action closure by that name avoids some frustrating "type of closure is ambiguous without more context" errors that can be unhelpful in figuring out what's.
+One potential "gotcha" here is that one might be tempted to use `$0` instead of a name here.  The difficulty with that is in the action closure.  In that context, `$0` will refer to the action closure's parameter, which is the sender of the action.  What we want is the parameter from the `ForEach` closure.  Giving a name and capturing it in the action closure by that name avoids some frustrating "type of closure is ambiguous without more context" errors that can be unhelpful in figuring out what's.
 
 This automatically generated "Themes" menu is a  lot better than typing out a declaration for each theme's menu item, but it still leaves something to be desired.  Suppose we later allow the user to define and save their own custom themes.  We'd want to show those too.  `ForEach` is able to do that too.  In fact, it's already dynamically populating the menu each time it's opened, it's just that we can't tell because we're giving it static input.   The parameter where we pass in our array is actually an `@autoclosure` that is called whenever the menu is opened.  So if the thing we pass in is dynamic, the contents of our "Themes" menu will be too.
 
