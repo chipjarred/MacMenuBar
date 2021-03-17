@@ -23,7 +23,7 @@ import AppKit
 fileprivate let dummyMenuItem = NSMacMenuItem()
 
 // -------------------------------------
-public struct MenuItemForEach
+public struct ForEach
 {
     @usableFromInline
     internal var generator: () -> [NSMenuItem]
@@ -31,7 +31,7 @@ public struct MenuItemForEach
     // -------------------------------------
     @inlinable
     public init<S: Sequence>(
-        of items: S, content: @escaping (S.Element) -> MenuElement)
+        _ items: S, content: @escaping (S.Element) -> MenuElement)
     {
         self.generator =
         { () -> [NSMenuItem] in
@@ -59,7 +59,7 @@ public struct MenuItemForEach
                      inefficient, but it works.
                      */
                     menuItem.appendSelf(to: &tempMenu)
-                    result.append(tempMenu.nsMenu.items.first!)
+                    result.append(contentsOf: tempMenu.nsMenu.items)
                     tempMenu.nsMenu.removeAllItems()
                 }
             }
@@ -70,7 +70,7 @@ public struct MenuItemForEach
 }
 
 // -------------------------------------
-extension MenuItemForEach: MenuElement
+extension ForEach: MenuElement
 {
     public var isItem: Bool {
         false
