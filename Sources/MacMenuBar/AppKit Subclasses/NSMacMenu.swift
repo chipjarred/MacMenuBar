@@ -93,7 +93,7 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     {
         if item is NSMacMenuItem || !selectorAlreadyAdded(item.action)
         {
-            if rebuilding {
+            if rebuilding || supermenu == nil {
                 super.addItem(item)
             }
             else { dynamicContent.append(item) }
@@ -147,7 +147,7 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
             // long as we're inserting at the end, that's fine.
             assert(index == items.endIndex, "MacMenuBar only appends menus")
 //            super.insertItem(item, at: index)
-            if rebuilding {
+            if rebuilding || supermenu == nil {
                 super.addItem(item)
             }
             else { dynamicContent.append(item) }
