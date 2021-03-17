@@ -30,9 +30,8 @@ public struct MenuItemForEach
     
     // -------------------------------------
     @inlinable
-    public init<S: Sequence, M: MenuElement>(
-        of items: S,
-        with menuElementMaker: @escaping (S.Element) -> M)
+    public init<S: Sequence>(
+        of items: S, content: @escaping (S.Element) -> MenuElement)
     {
         self.generator =
         { () -> [NSMenuItem] in
@@ -41,7 +40,7 @@ public struct MenuItemForEach
 
             for item in items
             {
-                let menuItem = menuElementMaker(item)
+                let menuItem = content(item)
                 
                 if let macMenuItem = menuItem as? MacMenuItem {
                     result.append(macMenuItem.nsMenuItem)

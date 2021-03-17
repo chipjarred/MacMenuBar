@@ -85,7 +85,7 @@ struct DynamicNSMenuContent
          future macOS version inserts them elsewhere... well they're about to be
          re-arranged.
          */
-        let savedItems = menu.items.filter { $0 is NSMacMenuItem }
+        let savedItems = menu.items.filter { !($0 is NSMacMenuItem) }
         
         menu.removeAllItems()
         groups.forEach { $0.addAll(to: menu) }

@@ -24,6 +24,6 @@ import Cocoa
 public extension NSApplicationDelegate
 {
     func setMenuBar<MenuBarType: MenuBar>(to menuBar: MenuBarType) {
-        NSApplication.shared.mainMenu = menuBar.body.menu.nsMenu
+        NSApplication.shared.mainMenu = menuBar.body.menu
     }
 }

@@ -35,9 +35,17 @@ public struct MenuBarBuilder {
 // -------------------------------------
 public struct StandardMenuBar
 {
-    public private(set) var menu: StandardMenu
+    internal private(set) var menu: NSMenu
     
-    public init(@MenuBarBuilder menus: () -> [MacMenu]){
-        self.menu = StandardMenu(items: menus())
+    public init(@MenuBarBuilder menus: () -> [MacMenu])
+    {
+        self.menu = NSMenu()
+        menus().forEach
+        {
+            let item = NSMenuItem()
+            item.title = $0.title
+            item.submenu = $0.nsMenu
+            self.menu.addItem(item)
+        }
     }
 }
