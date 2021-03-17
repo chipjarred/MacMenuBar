@@ -1,6 +1,10 @@
 # MacMenuBar
 
-Are you writing a macOS application using SwiftUI? Do wish you could work with the menu bar (aka "main menu") like you do your SwiftUI views?  Now you can!
+Are you writing a macOS application using SwiftUI? Do wish you could programmatically create and work with the menu bar (aka "main menu") like you do your SwiftUI views? 
+
+SwiftUI makes creating views programmatically simple, but it's focus on iOS shows when you use it to create a macOS app. Menu handling is a big part of that defiiciency.  No doubt, Apple will improve that over time, but for now you're stuck with the same `AppKit` menu API as in a normal Cocoa app, only it's less obvious how to  interact with it from SwiftUI.  Want to disable a menu, or change it's title?  You have to hunt it down in `NSWindow.shared.mainMenu`.  Programmatically creating your main menu with `AppKit` at least gives you a chance to store references to your menus for easy access, but it's a headache too. 
+
+I wanted to build my app's menu the same declarative way I build SwiftUI views.  I wanted it to dynamically update and respond in same sort of way SwiftUI views do.   Those are the problems `MacMenuBar` aims to solve.
 
 Let's dive directly into how to use it. 
 
@@ -197,7 +201,7 @@ The `StandardMenuItemAction`s we used before already have the standard key equiv
 
 Of course, you can also specify an action using an arbitrary selector.
 
-## Updating Menus
+## Dynamically Enabling/Disabling Menu Items
 
 A lot of menu item updating, especially enabling and disabling them, happens automatically via Cocoa's [Responder Chain](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html#//apple_ref/doc/uid/10000060i-CH3-SW2), but that works based whether some object in the responder chain responds to the Objective-C selector associated with a given menu.  That's the way Cocoa apps work in Swift too. That also still works  for selector based menus actions in `MacMenuBar` with SwiftUI, if the `AppKit` objects underlying your SwiftUI views respond to the appropriate selectors. On the other hand, closure-based menu actions in `MacMenuBar`, such as the one we wrote in the previous example, require more explicit handling.
 
@@ -230,7 +234,9 @@ Now when you select "Show Log" from the "Debug" menu, that item will become disa
             #endif
 ```
 
-`.enabledWhen` is called whenever the item's parent menu is opened to determine whether or not that item is enabled.   The actual process `MacMenuBar` uses for determining whether the menu should be enabled or disabled is:
+`.enabledWhen` is called whenever the item's parent menu is opened to determine whether or not that item is enabled.  The "Show Log" menu item will now be disabled whenever the log window is visible, and enabled whenever it's hidden.
+
+The actual process `MacMenuBar` uses for determining whether the menu should be enabled or disabled is:
 
 1. If the menu item does *not* have an associated action, then it is *disabled*.  If it does have an action, validation proceeds to the next step.
 
@@ -244,11 +250,9 @@ Now when you select "Show Log" from the "Debug" menu, that item will become disa
     
 Note that step 3 says if "`isEnabled` is *explicitly set*...".  The phrase "explicitly set" means that its setter has been used to set its value.  This is in contrast to using its getter to query the current enabled state, which goes through the above steps, except for checking the responder chain.  The motivation is that when you get `isEnabled`'s value, you almost certainly want to know if the menu would be rendered in an enabled or disabled state, but when you set it to `false`, you really want it to be disabled.  [NOTE: This conflation of roles is something I plan to fix.  A future version will have a get-only `isEnabled` property and a settable `canBeEnabled` property]
 
-Continuing with the example code...
+## Dynamically Updating Menu Item Names
 
-The "Show Log" menu item will now be disabled whenever the log window is visible, and enabled whenever it's hidden.
-
-But is that what Mac users really expect?  Maybe it would be better to change the menu item to "Hide Log"  when the log is visible, and back to "Show Log"  when it's not.  That way we can toggle the log window's visible state with a key equivalent.   We can do that by modifying our action closure to either show or hide the log window based on its current visibility, and use the `.updatingTitleWith` method to specify a closure for updating the title:
+In its current state, our "Show Log" menu item is certainly usable now, but is it what Mac users really expect?  Maybe it would be better to change the menu item to "Hide Log"  when the log is visible, and back to "Show Log"  when it's not.  That way we can toggle the log window's visible state with a key equivalent.   We can do that by modifying our action closure to either show or hide the log window based on its current visibility, and use the `.updatingTitleWith` method to specify a closure for updating the title:
 
 ```swift
             #if DEBUG
@@ -264,3 +268,4 @@ But is that what Mac users really expect?  Maybe it would be better to change th
             }
             #endif
 ```
+The closure you pass to `.updatingTitleWith` is called when the user opens the menu before determining its enabled state.  This gives you a chance to update the menu's appearance by changing the title.
