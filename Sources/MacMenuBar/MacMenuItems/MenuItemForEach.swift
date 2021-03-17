@@ -26,7 +26,7 @@ fileprivate let dummyMenuItem = NSMacMenuItem()
 public struct MenuItemForEach
 {
     @usableFromInline
-    internal var generator: () -> [MenuElement]
+    internal var generator: () -> [NSMenuItem]
     
     // -------------------------------------
     @inlinable
@@ -35,11 +35,34 @@ public struct MenuItemForEach
         with menuElementMaker: @escaping (S.Element) -> MenuElement)
     {
         self.generator =
-        { () -> [MenuElement] in
-            var result = [MenuElement]()
-            
-            for item in items {
-                result.append(menuElementMaker(item))
+        { () -> [NSMenuItem] in
+            var result = [NSMenuItem]()
+            var tempMenu = StandardMenu()
+
+            for item in items
+            {
+                let menuItem = menuElementMaker(item)
+                
+                if let macMenuItem = menuItem as? MacMenuItem {
+                    result.append(macMenuItem.nsMenuItem)
+                }
+                else if let macMenu = menuItem as? MacMenu {
+                    result.append(macMenu.nsMenu.nsMacMenuItem!)
+                }
+                else
+                {
+                    /*
+                     This is kind of a silly way to do this, but if menuItem is
+                     not a MacMenuItem and not a MacMenu, then it's some other
+                     kind of MenuElement (perhaps added in the future).  In
+                     that case, it knows how to add itself to a MacMenu, so we
+                     add it, then extract it and remove it.  Terribly
+                     inefficient, but it works.
+                     */
+                    menuItem.appendSelf(to: &tempMenu)
+                    result.append(tempMenu.nsMenu.items.first!)
+                    tempMenu.nsMenu.removeAllItems()
+                }
             }
             
             return result
@@ -48,8 +71,17 @@ public struct MenuItemForEach
 }
 
 // -------------------------------------
-extension MenuItemForEach: MacMenuItem
+extension MenuItemForEach: MenuElement
 {
+    public var isItem: Bool {
+        false
+    }
+    
+    public func appendSelf<T>(to menu: inout T) where T : MacMenu
+    {
+        menu.nsMenu.dynamicContent.append(generator)
+    }
+    
     public var nsMenuItem: NSMenuItem { dummyMenuItem }
     public var isEnabled: Bool { true }
 

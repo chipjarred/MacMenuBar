@@ -27,22 +27,16 @@ struct DynamicNSMenuContent
     // -------------------------------------
     struct Group
     {
-        let generator: () -> [NSMenuItem?]
+        let generator: () -> [NSMenuItem]
         
         // -------------------------------------
-        init(with generator: @escaping () -> [NSMenuItem?]) {
+        init(with generator: @escaping () -> [NSMenuItem]) {
             self.generator = generator
         }
         
         // -------------------------------------
-        func addAll(to menu: NSMacMenu)
-        {
-            generator().forEach
-            {
-                if let item = $0 {
-                    menu.addItem(item)
-                }
-            }
+        func addAll(to menu: NSMacMenu) {
+            generator().forEach { menu.addItem($0) }
         }
     }
     
@@ -54,29 +48,20 @@ struct DynamicNSMenuContent
     }
     
     // -------------------------------------
-    mutating func append(_ submenu: NSMenu) {
-        groups.append(Group { [submenu.parentItem] })
+    mutating func append(_ submenu: NSMenu)
+    {
+        groups.append(
+            Group
+            {
+                if let item = submenu.parentItem { return [item] }
+                return []
+            }
+        )
     }
     
     // -------------------------------------
-    mutating func append(_ elements: @escaping () -> [MenuElement])
-    {
-        let generator =
-        { () -> [NSMenuItem] in
-            var items = [NSMenuItem]()
-            for element in elements()
-            {
-                if let nsMenuItem = (element as? MacMenuItem)?.nsMenuItem
-                    ?? (element as? MacMenu)?.nsMenu.parentItem
-                {
-                    items.append(nsMenuItem)
-                }
-            }
-            
-            return items
-        }
-        
-        groups.append(Group(with: generator))
+    mutating func append(_ elements: @escaping () -> [NSMenuItem]) {
+        groups.append(Group(with: elements))
     }
     
     // -------------------------------------
