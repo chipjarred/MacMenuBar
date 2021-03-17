@@ -139,13 +139,13 @@ Within the top-level `StandardMenu` instances we have two kinds of menu items: `
 
 `MenuItemSeparator` gives the familiar dividing line that separates groups of related menu items within a menu.
 
-Although we haven't done it so far, you can also nest one or more `StandardMenu` instances inside another `StandardMenu`, creating submenus.   
+In addition to menu items, we can also nest menus within menus to create submenus by simply using another `StandardMenu` instead of a menu item type. The "Open Recent..." submenu in our "File" menu is an example of this.
 
-Finally the change we made to `AppDelegate.applicationDidFinishLaunching` by calling `setMenuBar(to: MainMenuBar())` is the line that actuallys sets the application's main menu to our `MainMenuBar`.  SwiftUI has to do something similar a few lines up in the line, `let contentView = MainContentView()`.  It's just that the project template already provided that line, so you don't have to write it yourself.
+Finally the change we made to `AppDelegate.applicationDidFinishLaunching` by calling `setMenuBar(to: MainMenuBar())` is the line that actually sets the application's main menu to our `MainMenuBar`.  SwiftUI has to do something similar a few lines up in the line, `let contentView = ContentView()`.  It's just that the project template already provided that line, so you don't have to write it yourself.
 
 ## Custom Menu Actions
 
-It's great that we have a menu bar now, and that we've created it in a simple delcarative way, but it doesn't do much.  Let's start to fix that.  You do that by creating a menu item with an *action* associated with it.
+It's great that we have a menu bar now, and that we've created it in a simple delcarative way, but it doesn't do much.  Let's remedy that.  You do that by creating a menu item with an *action* associated with it.
 
 The easiest way to define a custom action is with a closure. Let's say you have a `showLog()` function that displays a log window, and you want to add a `Debug` menu item to show the log.  At the end of `MainMenuBar.body` you can add your conditionally-compiled `Debug` menu:
 
