@@ -206,10 +206,10 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
         at index: Int,
         shouldCancel: Bool) -> Bool
     {
-        if let item = item as? NSMacMenuItem,
-           let titleUpdater = item.titleUpdater
+        if let item = item as? NSMacMenuItem
         {
-            item.title = titleUpdater()
+            item.title = item.titleUpdater?() ?? item.title
+            item.state = item.stateUpdater?().nsControlStateValue ?? item.state
         }
         return true
     }
