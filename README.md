@@ -91,7 +91,9 @@ struct MainMenuBar: MenuBar
     }
 }
 ```
-This kind of looks like how you write your SwiftUI `View` code, doesn't it?  Now we just need to tell the `AppDelegate` to use it.  So at the end of `AppDelegate.applicationDidFinishLaunching()`  add `setMenuBar(to: MainMenuBar())`
+This kind of looks like how you write your SwiftUI `View` code, doesn't it?  
+
+Now we just need to tell the `AppDelegate` to use it.  So at the end of `AppDelegate.applicationDidFinishLaunching()`  add `setMenuBar(to: MainMenuBar())`
 
 ```swift
 func applicationDidFinishLaunching(_ aNotification: Notification)
@@ -116,8 +118,9 @@ func applicationDidFinishLaunching(_ aNotification: Notification)
 }
 ```
 
-Now your shiny new, albeit bare bones, menu bar is set up.  Run the application to see it work.  Of course, the only thing you can do from it right now is to quit, and display the About box, but in a brand new project that's all you could really do with the one Apple provided in the `Main.storyboard` file we deleted.  
+Now your shiny new, albeit bare bones menu bar is set up.  Run the application to see it work.  Of course, the only thing you can do from it right now is to quit, and display the About box, but in a brand new project that's all you could really do with the one Apple provided in the `Main.storyboard` file we deleted.  
 
+### What have we done?
 Before we start adding functionality let's take a closer look at a few things, so go back to `MenuBar.swift`.
 
 You'll see that `MainMenuBar.body` returns a `StandardMenuBar`.  Think of it as sort of analogous to `HStack`, but for menus and we don't nest it inside other menus.  It's strictly a top-level thing representing the menu bar.  
@@ -132,13 +135,17 @@ The titles for all menus and menu items in `MacMenuBar` work this way.  This mak
 
 Within the top-level `StandardMenu` instances we have two kinds of menu items: `TextMenuItem` and `MenuSeparator`.  
 
-`TextMenuItem` is your basic, most commonly used menu item.  You give it a title and an action.  The code above uses standard menu actions, but as you'll see later, you can define your own.  For a complete list of the standard ones, see `StandardMenuItemAction.swift`. These standard menu item actions use the usual responder chain you're familiar with from ordinary Cocoa apps, and use the usual key equivalents that Mac users expect.
+`TextMenuItem` is your basic, most commonly used menu item.  You give it a title and an action.  The code above uses standard menu actions, but as you'll see later, you can define your own.  For a complete list of the standard ones, see `StandardMenuItemAction.swift`. These standard menu item actions use the usual responder chain you're familiar with from ordinary Cocoa apps, and the usual key equivalents that Mac users expect.
 
 `MenuItemSeparator` gives the familiar dividing line that separates groups of related menu items within a menu.
 
 Although we haven't done it so far, you can also nest one or more `StandardMenu` instances inside another `StandardMenu`, creating submenus.   
 
+Finally the change we made to `AppDelegate.applicationDidFinishLaunching` by calling `setMenuBar(to: MainMenuBar())` is the line that actuallys sets the application's main menu to our `MainMenuBar`.  SwiftUI has to do something similar a few lines up in the line, `let contentView = MainContentView()`.  It's just that the project template already provided that line, so you don't have to write it yourself.
+
 ## Custom Menu Actions
+
+It's great that we have a menu bar now, and that we've created it in a simple delcarative way, but it doesn't do much.  Let's start to fix that.  You do that by creating a menu item with an *action* associated with it.
 
 The easiest way to define a custom action is with a closure. Let's say you have a `showLog()` function that displays a log window, and you want to add a `Debug` menu item to show the log.  At the end of `MainMenuBar.body` you can add your conditionally-compiled `Debug` menu:
 
@@ -195,15 +202,17 @@ struct MainMenuBar: MenuBar
 
 As you can see, this adds a new menu called `Debug` to the menu bar.  It contains a menu item called `Show Log`, but what's different from our previous `TextMenuItem` examples is that now we're specifying both a key equivalent for the menu item, and an action closure that is called when the menu item is selected.   
 
-Note that when specifying the key equivalent, we used a lowercase "L".  Using uppercase would imply that the shift key would also need to be pressed.   `"L"` and `.shift + "l"` are equivalent in this context.  If at least one of  `.command`, `.option` or `.control` is not specified, `.command` is implied, so you if you use just `"l"` for your key equivalent, it will be treated as `.command + "l"`. 
+Note that when specifying the key equivalent, we used a lowercase "L".  Using uppercase would imply that the shift key would also need to be pressed.   `"L"` and `.shift + "l"` are equivalent in this context.  If at least one of  `.command`, `.option` or `.control` is not specified, `.command` is implied, so you if you use just `"l"` for your key equivalent, it will be treated as `.command + "l"`.   Also note  that we don't need to muck about with `NSEvent` modifier flags.  We can specify the modifiers by naming them and adding them to the base key.
 
-The `StandardMenuItemAction`s we used before already have the standard key equivalents associated with them, so you don't need to specify one for them.   If you don't want a key equivalent for your closure menu item, you can specify `.none`.
+The `StandardMenuItemAction` examples we delcared in our application and `File` menus already have the standard key equivalents impliicitly associated with them, so they don't need to be specified.   
 
-Of course, you can also specify an action using an arbitrary selector.
+If you don't want a key equivalent for your closure menu item, you can specify `.none`.
+
+Of course, you can also specify an action using an arbitrary `Selector`.
 
 ## Dynamically Enabling/Disabling Menu Items
 
-A lot of menu item updating, especially enabling and disabling them, happens automatically via Cocoa's [Responder Chain](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html#//apple_ref/doc/uid/10000060i-CH3-SW2), but that works based whether some object in the responder chain responds to the Objective-C selector associated with a given menu.  That's the way Cocoa apps work in Swift too. That also still works  for selector based menus actions in `MacMenuBar` with SwiftUI, if the `AppKit` objects underlying your SwiftUI views respond to the appropriate selectors. On the other hand, closure-based menu actions in `MacMenuBar`, such as the one we wrote in the previous example, require more explicit handling.
+A lot of menu item updating, especially enabling and disabling them, happens automatically via Cocoa's [Responder Chain](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html#//apple_ref/doc/uid/10000060i-CH3-SW2), but that works based whether some object in the responder chain responds to the Objective-C selector associated with a given menu.  That's the way Cocoa apps work in Swift too, and it applies to `Selector`-based menus actions in `MacMenuBar`, if the `AppKit` objects underlying your SwiftUI views respond to the appropriate selectors. On the other hand, closure-based menu actions in `MacMenuBar`, such as the one we wrote in the previous example, require more explicit handling.
 
 Suppose we just want to disable the "Show Log" menu item once the log is shown. We can specify that behavior using the `afterAction` method, which takes the menu item itself as its parameter:
 
@@ -218,7 +227,7 @@ Suppose we just want to disable the "Show Log" menu item once the log is shown. 
             }
             #endif
 ```
-As its name suggests, `.afterAction` is called after the menu calls it's action closure.   There is also a `.beforeAction` method that works the same way, except that it is called immediately before the action closure is called.
+As its name suggests, `.afterAction` is called after the menu item calls its action closure.   There is also a `.beforeAction` method that works the same way, except that it is called immediately before the action closure is called.
 
 Now when you select "Show Log" from the "Debug" menu, that item will become disabled.  Of course, that's not actually what we want, because it will remain disabled even after you close the log window.  We'd prefer for it to be enabled or disabled based on whether the log window is currently visible.  Instead of `.afterAction` we can use `.enabledWhen`:
 
@@ -240,9 +249,9 @@ The actual process `MacMenuBar` uses for determining whether the menu should be 
 
 1. If the menu item does *not* have an associated action, then it is *disabled*.  If it does have an action, validation proceeds to the next step.
 
-2. If the menu item's action is a *selector* action *and* no object in the responder chain responds to that selector, then the menu item is *disabled*.  If the some responder in the chain does respond to that selector, or if the action is a closure action, validation proceeds to the next step.
+2. If the menu item's action is a `Selector`-based action *and* no object in the responder chain responds to that selector, then the menu item is *disabled*.  If some responder in the chain does respond to that selector, or if the action is a closure action, validation proceeds to the next step.
 
-3. If the menu item's `isEnabled`  property has been explicitly set it to `false`, then menu is *disabled*.  If it's explicitly `true`, which is the default, the validation process continues to the next step.
+3. If the menu item's `isEnabled`  property has been explicitly set to `false`, then menu item is *disabled*.  If it's explicitly `true`, which is the default, the validation process continues to the next step.
 
 4. If `.enabledWhen` has *not* been used to set a validation closure for the item, then the item is *enabled*.   If it does have a validation closure, validation proceeds to the next step.
 
@@ -268,4 +277,4 @@ In its current state, our "Show Log" menu item is certainly usable now, but is i
             }
             #endif
 ```
-The closure you pass to `.updatingTitleWith` is called when the user opens the menu before determining its enabled state.  This gives you a chance to update the menu's appearance by changing the title.
+The closure you pass to `.updatingTitleWith` is called when the user opens the item's parent menu before determining the item's enabled state.  This gives you a chance to update the item's appearance by changing the title.

@@ -33,12 +33,15 @@ public struct NoAction: Action
     }
     
     // -------------------------------------
-    public var isEnabled: Bool
+    public var canBeEnabled: Bool
     {
         get { false }
         set { }
     }
     
+    // -------------------------------------
+    public var isEnabled: Bool { false }
+
     // -------------------------------------
     public var enabledValidator: (() -> Bool)?
     {

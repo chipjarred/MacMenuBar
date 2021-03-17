@@ -74,9 +74,12 @@ extension MenuItemGroup: MacMenu
     }
     
     // -------------------------------------
-    @inlinable public var isEnabled: Bool
+    @inlinable public var canBeEnabled: Bool
     {
         get { false }
         set { }
     }
+    
+    // -------------------------------------
+    @inlinable public var isEnabled: Bool { false }
 }

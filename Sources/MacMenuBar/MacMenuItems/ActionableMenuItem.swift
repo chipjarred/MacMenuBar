@@ -60,17 +60,20 @@ extension ActionableMenuItem
     }
     
     // -------------------------------------
-    @inlinable public var isEnabled: Bool
+    @inlinable public var canBeEnabled: Bool
     {
-        get { !nsMenuItem.isEnabled }
-        set { nsMenuItem.isEnabled = newValue }
+        get { (nsMenuItem as? NSMacMenuItem)?.canBeEnabled ?? true }
+        set { (nsMenuItem as? NSMacMenuItem)?.canBeEnabled = newValue }
     }
     
+    // -------------------------------------
+    @inlinable public var isEnabled: Bool { nsMenuItem.isEnabled }
+
     // -------------------------------------
     @inlinable public func enabled(_ enable: Bool = true) -> Self
     {
         var item = self
-        item.isEnabled = enable
+        item.canBeEnabled = enable
         return item
     }
     

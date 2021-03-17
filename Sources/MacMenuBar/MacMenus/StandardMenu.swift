@@ -39,7 +39,7 @@ public struct StandardMenu
         self.init(items: items)
         self.nsMenu.title = title
         self.isVisible = true
-        self.isEnabled = true
+        self.canBeEnabled = true
     }
 
     // -------------------------------------
@@ -74,9 +74,14 @@ extension StandardMenu: MacMenu
     }
     
     // -------------------------------------
-    @inlinable public var isEnabled: Bool
+    @inlinable public var canBeEnabled: Bool
     {
         get { nsMenu.nsMacMenuItem?.isEnabled ?? false }
-        set { nsMenu.nsMacMenuItem?.isEnabled = !newValue }
+        set { nsMenu.nsMacMenuItem?.canBeEnabled = newValue }
+    }
+    
+    // -------------------------------------
+    @inlinable public var isEnabled: Bool {
+        nsMenu.nsMacMenuItem?.isEnabled ?? false
     }
 }

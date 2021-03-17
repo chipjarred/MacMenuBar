@@ -47,12 +47,19 @@ import Cocoa
     }
     
     // -------------------------------------
+    public var canBeEnabled: Bool
+    {
+        get { return _action?.canBeEnabled ?? true }
+        set { _action?.canBeEnabled = newValue }
+    }
+    
+    // -------------------------------------
     public override var isEnabled: Bool
     {
         get { return _action?.isEnabled ?? super.isEnabled }
-        set { _action?.isEnabled = newValue; super.isEnabled = newValue }
+        set { super.isEnabled = newValue }
     }
-    
+
     // -------------------------------------
     @usableFromInline
     internal var enabledValidator: (() -> Bool)?

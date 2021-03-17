@@ -87,7 +87,7 @@ public struct TextMenuItem
     public init(action: Action)
     {
         self.init(title: "", action: action)
-        isEnabled = true
+        canBeEnabled = true
         isVisible = true
     }
     
