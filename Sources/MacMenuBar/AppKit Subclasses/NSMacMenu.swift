@@ -55,6 +55,9 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
         get { return _nsMacMenuItem?.isEnabled ?? true }
         set { _nsMacMenuItem?.isEnabled = newValue }
     }
+    
+    internal var dynamicContent = DynamicNSMenuContent()
+    internal var rebuilding = false
 
     private weak var _nsMacMenuItem: NSMacMenuItem? = nil
     
@@ -88,8 +91,12 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     // -------------------------------------
     public override func addItem(_ item: NSMenuItem)
     {
-        if item is NSMacMenuItem || !selectorAlreadyAdded(item.action) {
-            super.addItem(item)
+        if item is NSMacMenuItem || !selectorAlreadyAdded(item.action)
+        {
+            if rebuilding {
+                super.addItem(item)
+            }
+            else { dynamicContent.append(item) }
         }
         else
         {
@@ -134,8 +141,16 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     // -------------------------------------
     public override func insertItem(_ item: NSMenuItem, at index: Int)
     {
-        if item is NSMacMenuItem || !selectorAlreadyAdded(item.action) {
-            super.insertItem(item, at: index)
+        if item is NSMacMenuItem || !selectorAlreadyAdded(item.action)
+        {
+            // Actually inserting throws off our dynamic menu scheme, but as
+            // long as we're inserting at the end, that's fine.
+            assert(index == items.endIndex, "MacMenuBar only appends menus")
+//            super.insertItem(item, at: index)
+            if rebuilding {
+                super.addItem(item)
+            }
+            else { dynamicContent.append(item) }
         }
         else
         {
@@ -215,7 +230,9 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     }
     
     // -------------------------------------
-    public func numberOfItems(in menu: NSMenu) -> Int {
+    public func numberOfItems(in menu: NSMenu) -> Int
+    {
+        dynamicContent.rebuild(for: self)
         return items.count
     }
 }
