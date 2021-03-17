@@ -23,7 +23,7 @@ import AppKit
 fileprivate let dummyMenuItem = NSMacMenuItem()
 
 // -------------------------------------
-public struct MenuItemForEach<T>
+public struct MenuItemForEach
 {
     @usableFromInline
     internal var generator: () -> [MenuElement]
@@ -31,9 +31,8 @@ public struct MenuItemForEach<T>
     // -------------------------------------
     @inlinable
     public init<S: Sequence>(
-        _ items: S,
-        with menuElementMaker: @escaping (T) -> MenuElement)
-        where S.Element == T
+        of items: S,
+        with menuElementMaker: @escaping (S.Element) -> MenuElement)
     {
         self.generator =
         { () -> [MenuElement] in
