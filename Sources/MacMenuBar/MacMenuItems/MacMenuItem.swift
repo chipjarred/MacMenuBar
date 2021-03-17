@@ -21,6 +21,20 @@
 import Cocoa
 
 // -------------------------------------
+public enum MacMenuItemState: Int
+{
+    case mixed = -1
+    case off   =  0
+    case on    =  1
+    
+    // -------------------------------------
+    @usableFromInline
+    internal var nsControlStateValue: NSControl.StateValue {
+        .init(self.rawValue)
+    }
+}
+
+// -------------------------------------
 public protocol MacMenuItem: MenuElement
 {
     var nsMenuItem: NSMenuItem { get }
@@ -39,10 +53,10 @@ extension MacMenuItem
     }
     
     // -------------------------------------
-    @inlinable public var state: NSControl.StateValue
+    @inlinable public var state: MacMenuItemState
     {
-        get { nsMenuItem.state }
-        set { nsMenuItem.state = newValue }
+        get { MacMenuItemState(rawValue: nsMenuItem.state.rawValue)! }
+        set { nsMenuItem.state = newValue.nsControlStateValue }
     }
     
     // -------------------------------------
@@ -51,7 +65,7 @@ extension MacMenuItem
     }
     
     // -------------------------------------
-    @inlinable public func with(state: NSControl.StateValue) -> Self
+    @inlinable public func with(state: MacMenuItemState) -> Self
     {
         var changedItem = self
         changedItem.state = state
@@ -72,6 +86,15 @@ extension MacMenuItem
     {
         (self.nsMenuItem as? NSMacMenuItem)?.toggleStateWhenSelected =
             toggle
+        return self
+    }
+    
+    // -------------------------------------
+    @inlinable
+    public func updatingStateWith(
+        updater: @escaping () -> MacMenuItemState) -> Self
+    {
+        (self.nsMenuItem as? NSMacMenuItem)?.stateUpdater = updater
         return self
     }
     

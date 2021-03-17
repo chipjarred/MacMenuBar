@@ -38,6 +38,9 @@ import Cocoa
     
     @usableFromInline
     internal var postActionClosure: ActionTriggerClosure? = nil
+    
+    @usableFromInline
+    internal var stateUpdater: (() -> MacMenuItemState)?
 
     // -------------------------------------
     public override var title: String

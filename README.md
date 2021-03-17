@@ -278,3 +278,32 @@ In its current state, our "Show Log" menu item is certainly usable now, but is i
             #endif
 ```
 The closure you pass to `.updatingTitleWith` is called when the user opens the item's parent menu before determining the item's enabled state.  This gives you a chance to update the item's appearance by changing the title.
+
+## Dynamically Updating Menu Item State
+
+Some menus items represent an application setting that can be enabled or disabled by the user.  That state appears as check-mark next in the menu item when the setting is enabled.  Suppose our logger allows us to select whether or not we want more detailed logging than usual by setting its `.detailedLogging` property to `true`.  We can implement that with the `.updatingStateWith` method in `TextMenuItem` .  Let's add a new menu item to our "Debug" menu to do that.
+
+```swift
+            #if DEBUG
+            StandardMenu(title: "Debug")
+            {
+                TextMenuItem(title: "Show Log", keyEquivalent: .command + .option + "l") { _ in
+                    if logWindow.isVisible {
+                        hideLog()
+                    }
+                    else { showLog() }
+                }
+                .updatingTitleWith { logWindow.isVisible ? "Hide Log" : "Show Log" }
+                
+                // >>>>>>>> ADDED THE FOLLOWING BIT <<<<<<<<<<
+                TextMenuItem(title: "Detailed Logging")  { _ in
+                    logger.detailedLogging.toggle()
+                }
+                .updatingStateWith { logger.detailedLogging ? .on : .off }
+            }
+            #endif
+```
+
+Now we have a  "Detailed Logging" menu item that will display whether detailed logging is currently enabled, and allows us to toggle that setting by selecting it.
+
+The closure passed to `.updatingStateWith` is called when the menu is opened by the user, just like for `.updatingTitleWith`.  In addition to `.on` and `.off`, the closure can return `.mixed`, which is displayed as a dash in the menu item instead of a check-mark.
