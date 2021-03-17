@@ -214,6 +214,7 @@ Suppose we just want to disable the "Show Log" menu item once the log is shown. 
             }
             #endif
 ```
+As its name suggests, `.afterAction` is called after the menu calls it's action closure.   There is also a `.beforeAction` method that works the same way, except that it is called immediately before the action closure is called.
 
 Now when you select "Show Log" from the "Debug" menu, that item will become disabled.  Of course, that's not actually what we want, because it will remain disabled even after you close the log window.  We'd prefer for it to be enabled or disabled based on whether the log window is currently visible.  Instead of `.afterAction` we can use `.enabledWhen`:
 
@@ -229,9 +230,20 @@ Now when you select "Show Log" from the "Debug" menu, that item will become disa
             #endif
 ```
 
-Now the "Show Log" menu item will be disabled whenever the log window is visible, and enabled whenever it's hidden.
+`.enabledWhen` is called whenever the item's parent menu is opened to determine whether or not that item is enabled.   The actual process `MacMenuBar` uses for determining whether the menu should be enabled or disabled is:
+    1. If the menu item does *not* have an associated action, then it is *disabled*.  If it does have an action, validation proceeds to the next step.
+    2. If the menu item's action is a *selector* action *and* no object in the responder chain responds to that selector, then the menu item is *disabled*.  If the some responder in the chain does respond to that selector, or if the action is a closure action, validation proceeds to the next step.
+    3. If the menu item's `isEnabled`  property has been explicitly set it to `false`, then menu is *disabled*.  If it's explicitly `true`, which is the default, the validation process continues to the next step.
+    4. If `.enabledWhen` has *not* been used to set a validation closure for the item, then the item is *enabled*.   If it does have a validation closure, validastion proceeds to the next step.
+    5. The validation closure set with `.enabledWhen` is used to determine whether or not the menu item is enabled.  If the closure returns `true`, it is *enabled*.  If it returns `false`, it is *disabled*.
+    
+Note that step 3 says if "`isEnabled` is *explicitly set*...".  The phrase "explicitly set" means that its setter has been used to set its value.  This is in contrast to using it's getter to quering the current enabled state, which goes through the above steps, except for checking the responder chain.  The motivation is that when you get `isEnabled`'s value, you almost certainly want to know if the menu would be rendered in an enabled or disabled state, but when you set it to false, you really want it to be disabled.  [NOTE: This conflation of roles is something I plan to fix.  A future version will have a get-only `isEnabled` property and a settable `canBeEnabled` property]
 
-But is that what Mac users really expect?  Maybe it would be better to change the menu item to "Hide Log"  when the log is visible, and back to "Show Log"  when it's not.  We can do that by modifying our action closure to either show or hide the log window based on its current visibility, and use the `.updatingTitleWith` method to specify a closure for updating the title:
+Continuing with the example code...
+
+The "Show Log" menu item will now be disabled whenever the log window is visible, and enabled whenever it's hidden.
+
+But is that what Mac users really expect?  Maybe it would be better to change the menu item to "Hide Log"  when the log is visible, and back to "Show Log"  when it's not.  That way we can toggle the log window's visible state with a key equivalent.   We can do that by modifying our action closure to either show or hide the log window based on its current visibility, and use the `.updatingTitleWith` method to specify a closure for updating the title:
 
 ```swift
             #if DEBUG
