@@ -21,7 +21,7 @@ Since Xcode's starter project template for a macOS SwiftUI app isn't set up for 
     2. Select your application target
     3. Select the "General" tab at the top, then in the "Deployment Info" section, clear the "Main Interface" field.
 
-3. Add `main.swift`.  With `Main.storyboard` gone, `NSApplication` won't work automagically, so you have to add a `main.swift` to provide a working entry point for your app.  It should look like this.
+4. Add `main.swift`.  With `Main.storyboard` gone, `NSApplication` won't work automagically, so you have to add a `main.swift` to provide a working entry point for your app.  It should look like this.
 
 ```swift
 import Cocoa
@@ -29,13 +29,13 @@ let delegate = AppDelegate()
 NSApplication.shared.delegate = delegate
 _ = NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 ```
-4.  Remove the `@NSApplicationMain` attribute from `AppDelegate` in  `AppDelegate.swift`.  
+5.  Remove the `@NSApplicationMain` attribute from `AppDelegate` in  `AppDelegate.swift`.  
 ```swift
 @NSApplicationMain // <- REMOVE THIS
 class AppDelegate: NSObject, NSApplicationDelegate
 ```
 
-5. Import `MacMenuBar` in `AppDelelgate.swift`:
+6. Import `MacMenuBar` in `AppDelelgate.swift`:
 
 ```swift
 import Cocoa
@@ -43,7 +43,7 @@ import SwiftUI
 import MacMenuBar // <-- ADD THIS
 ```
 
-6. Test the setup by building and running the app.  You no longer have a menu bar in the app, so *you'll need to kill it using Stop button in Xcode.*
+7. Test the setup by building and running the app.  You no longer have a menu bar in the app, so *you'll need to kill it using Stop button in Xcode.*
 
 ## Creating a Simple Menu Bar
 
