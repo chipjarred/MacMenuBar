@@ -307,3 +307,50 @@ Some menus items represent an application setting that can be enabled or disable
 Now we have a  "Detailed Logging" menu item that will display whether detailed logging is currently enabled, and allows us to toggle that setting by selecting it.
 
 The closure passed to `.updatingStateWith` is called when the menu is opened by the user, just like for `.updatingTitleWith`.  In addition to `.on` and `.off`, the closure can return `.mixed`, which is displayed as a dash in the menu item instead of a check-mark.
+
+## Dynamically Populating Menus
+
+Let's leave our "Debug" for now, and provide menu functionality our app's users would use.  We'll add a new "Themes" menu so that users can select the color scheme used by our app, and we'll populate with the names of our themes.  Instead of declaring each menu item individually, we can use `ForEach` to generate them for us from a array of the theme names:
+
+```swift
+            StandardMenu(title: "Themes")
+            {
+                ForEach(["Light", "Dark", "Sahara", "Congo", "Ocean"])
+                { themeName in
+                    TextMenuItem(title: themeName) { _ in setTheme(to: themeName) }
+                        .updatingStateWith { currentTheme == themeName ? .on : .off }
+                }
+            }
+```
+
+One potential "gotcha" here is that one might be tempted to use `$0` instead of a name here.  The difficulty with that is in the action closure.  In that context, `$0` will refer to the action closure's parameter, which the sender of the action.  What we want is the parameter from the `ForEach` closure.  Giving a name and capturing it in the action closure by that name avoids some frustrating "type of closure is ambiguous without more context" errors that can be unhelpful in figuring out what's.
+
+This automatically generated "Themes" menu is a  lot better than typing out a declaration for each theme's menu item, but it still leaves something to be desired.  Suppose we later allow the user to define and save their own custom themes.  We'd want to show those too.  `ForEach` is able to do that too.  In fact, it's already dynamically populating the menu each time it's opened, it's just that we can't tell because we're giving it static input.   The parameter where we pass in our array is actually an `@autoclosure` that is called whenever the menu is opened.  So if the thing we pass in is dynamic, the contents of our "Themes" menu will be too.
+
+Let's define a dynamic themes list called, unimaginitively,  `themesList`.   For the sake of this example, we'll just make it a computed global variable that randomly selects a subset of our existing themes.
+
+```swift
+var fixedThemes = ["Light", "Dark", "Sahara", "Congo", "Ocean"]
+var themesList: [String] {
+    return fixedThemes.filter { currentTheme == $0 || Bool.random() }
+}
+```
+
+Then we modify our "Themes" menu declaration to use it:
+
+```swift
+            StandardMenu(title: "Themes")
+            {
+                ForEach(themesList)
+                { themeName in
+                    TextMenuItem(title: themeName) { _ in setTheme(to: themeName) }
+                        .updatingStateWith { currentTheme == themeName ? .on : .off }
+                }
+            }
+```
+
+Now our menu will list our current theme plus a different random selection of the other available themes each time it's opened.
+
+The `ForEach` being used here is purposefully named to match the one in SwiftUI, because it serves a similar purpose, but we're using `MacMenuBar.ForEach` not `SwiftUI.ForEach`.  Whereas SwiftUI's `ForEach` needs to respond to dynamically changing data at any time during execution, MacMenuBar's `ForEach` only needs to do that when the user opens its parent menu, and of course, it generates menu items not SwiftUI `View`s.
+
+
