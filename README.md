@@ -204,7 +204,7 @@ As you can see, this adds a new menu called `Debug` to the menu bar.  It contain
 
 Note that when specifying the key equivalent, we used a lowercase "L".  Using uppercase would imply that the shift key would also need to be pressed.   `"L"` and `.shift + "l"` are equivalent in this context.  If at least one of  `.command`, `.option` or `.control` is not specified, `.command` is implied, so you if you use just `"l"` for your key equivalent, it will be treated as `.command + "l"`.   Also note  that we don't need to muck about with `NSEvent` modifier flags.  We can specify the modifiers by naming them and adding them to the base key.
 
-The `StandardMenuItemAction` examples we delcared in our application and `File` menus already have the standard key equivalents impliicitly associated with them, so they don't need to be specified.   
+The `StandardMenuItemAction` examples we delcared in our application and `File` menus already have the standard key equivalents implicitly associated with them, so they don't need to be specified.   
 
 If you don't want a key equivalent for your closure menu item, you can specify `.none`.
 
@@ -251,7 +251,7 @@ The actual process `MacMenuBar` uses for determining whether the menu should be 
 
 2. If the menu item's action is a `Selector`-based action *and* no object in the responder chain responds to that selector, then the menu item is *disabled*.  If some responder in the chain does respond to that selector, or if the action is a closure action, validation proceeds to the next step.
 
-3. If the menu item's `.canBeEnabled`  property is `false`, then menu item is *disabled*.  If it's `true`, which is the default, the validation process continues to the next step.
+3. If the menu item's `.canBeEnabled`  property is `false`, then the menu item is *disabled*.  If it's `true`, which is the default, the validation process continues to the next step.
 
 4. If `.enabledWhen` has *not* been used to set a validation closure for the item, then the item is *enabled*.   If it does have a validation closure, validation proceeds to the next step.
 
