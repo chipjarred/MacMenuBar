@@ -23,7 +23,7 @@ import AppKit
 fileprivate let dummyMenuItem = NSMacMenuItem()
 
 // -------------------------------------
-public struct ForEach<Source: Sequence>
+public struct MenuItemForEach<Source: Sequence>
 {
     @usableFromInline
     internal var generator: () -> [MenuElement]
@@ -48,7 +48,7 @@ public struct ForEach<Source: Sequence>
 }
 
 // -------------------------------------
-extension ForEach: MacMenuItem
+extension MenuItemForEach: MacMenuItem
 {
     public var nsMenuItem: NSMenuItem { dummyMenuItem }
     public var isEnabled: Bool { true }
