@@ -23,16 +23,17 @@ import AppKit
 fileprivate let dummyMenuItem = NSMacMenuItem()
 
 // -------------------------------------
-public struct MenuItemForEach<Source: Sequence>
+public struct MenuItemForEach<T>
 {
     @usableFromInline
     internal var generator: () -> [MenuElement]
     
     // -------------------------------------
     @inlinable
-    public init(
-        _ items: Source,
-        with menuElementMaker: @escaping (Source.Element) -> MenuElement)
+    public init<S: Sequence>(
+        _ items: S,
+        with menuElementMaker: @escaping (T) -> MenuElement)
+        where S.Element == T
     {
         self.generator =
         { () -> [MenuElement] in
