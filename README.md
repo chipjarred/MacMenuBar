@@ -223,7 +223,7 @@ Suppose we just want to disable the "Show Log" menu item once the log is shown. 
                 TextMenuItem(title: "Show Log", keyEquivalent: .command + .option + "l") { _ in
                     showLog()
                 }
-                .afterAction { $0.isEnabled = false } // <- ADDED THIS
+                .afterAction { $0.canBeEnabled = false } // <- ADDED THIS
             }
             #endif
 ```
@@ -251,14 +251,14 @@ The actual process `MacMenuBar` uses for determining whether the menu should be 
 
 2. If the menu item's action is a `Selector`-based action *and* no object in the responder chain responds to that selector, then the menu item is *disabled*.  If some responder in the chain does respond to that selector, or if the action is a closure action, validation proceeds to the next step.
 
-3. If the menu item's `isEnabled`  property has been explicitly set to `false`, then menu item is *disabled*.  If it's explicitly `true`, which is the default, the validation process continues to the next step.
+3. If the menu item's `.canBeEnabled`  property is `false`, then menu item is *disabled*.  If it's `true`, which is the default, the validation process continues to the next step.
 
 4. If `.enabledWhen` has *not* been used to set a validation closure for the item, then the item is *enabled*.   If it does have a validation closure, validation proceeds to the next step.
 
 5. The validation closure set with `.enabledWhen` is used to determine whether or not the menu item is enabled.  If the closure returns `true`, it is *enabled*.  If it returns `false`, it is *disabled*.
-    
-Note that step 3 says if "`isEnabled` is *explicitly set*...".  The phrase "explicitly set" means that its setter has been used to set its value.  This is in contrast to using its getter to query the current enabled state, which goes through the above steps, except for checking the responder chain.  The motivation is that when you get `isEnabled`'s value, you almost certainly want to know if the menu would be rendered in an enabled or disabled state, but when you set it to `false`, you really want it to be disabled.  [NOTE: This conflation of roles is something I plan to fix.  A future version will have a get-only `isEnabled` property and a settable `canBeEnabled` property]
 
+The above list extends the logic of Cocoa's built-in menu-enabling rules.  Of special note is that if both `.canBeEnabled` and `.enabledWhen`  are used and `.canBeEnabled` is `false`, that overrules the closure for `.enabledWhen`. In most cases, it makes sense to use one or the other, but not both, but it does give you a way to tell `MacMenuBar` to unconditionally disable a menu item, even if it is using `.enableWhen`.
+    
 ## Dynamically Updating Menu Item Names
 
 In its current state, our "Show Log" menu item is certainly usable now, but is it what Mac users really expect?  Maybe it would be better to change the menu item to "Hide Log"  when the log is visible, and back to "Show Log"  when it's not.  That way we can toggle the log window's visible state with a key equivalent.   We can do that by modifying our action closure to either show or hide the log window based on its current visibility, and use the `.updatingTitleWith` method to specify a closure for updating the title:
