@@ -238,11 +238,11 @@ Now when you select "Show Log" from the "Debug" menu, that item will become disa
 
 3. If the menu item's `isEnabled`  property has been explicitly set it to `false`, then menu is *disabled*.  If it's explicitly `true`, which is the default, the validation process continues to the next step.
 
-4. If `.enabledWhen` has *not* been used to set a validation closure for the item, then the item is *enabled*.   If it does have a validation closure, validastion proceeds to the next step.
+4. If `.enabledWhen` has *not* been used to set a validation closure for the item, then the item is *enabled*.   If it does have a validation closure, validation proceeds to the next step.
 
 5. The validation closure set with `.enabledWhen` is used to determine whether or not the menu item is enabled.  If the closure returns `true`, it is *enabled*.  If it returns `false`, it is *disabled*.
     
-Note that step 3 says if "`isEnabled` is *explicitly set*...".  The phrase "explicitly set" means that its setter has been used to set its value.  This is in contrast to using it's getter to quering the current enabled state, which goes through the above steps, except for checking the responder chain.  The motivation is that when you get `isEnabled`'s value, you almost certainly want to know if the menu would be rendered in an enabled or disabled state, but when you set it to false, you really want it to be disabled.  [NOTE: This conflation of roles is something I plan to fix.  A future version will have a get-only `isEnabled` property and a settable `canBeEnabled` property]
+Note that step 3 says if "`isEnabled` is *explicitly set*...".  The phrase "explicitly set" means that its setter has been used to set its value.  This is in contrast to using its getter to query the current enabled state, which goes through the above steps, except for checking the responder chain.  The motivation is that when you get `isEnabled`'s value, you almost certainly want to know if the menu would be rendered in an enabled or disabled state, but when you set it to `false`, you really want it to be disabled.  [NOTE: This conflation of roles is something I plan to fix.  A future version will have a get-only `isEnabled` property and a settable `canBeEnabled` property]
 
 Continuing with the example code...
 
