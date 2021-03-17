@@ -24,7 +24,8 @@ import Cocoa
 public protocol Action
 {
     var keyEquivalent: KeyEquivalent? { get set }
-    var isEnabled: Bool { get set }
+    var isEnabled: Bool { get }
+    var canBeEnabled: Bool { get set }
     var enabledValidator: (() -> Bool)? { get set }
         
     // -------------------------------------

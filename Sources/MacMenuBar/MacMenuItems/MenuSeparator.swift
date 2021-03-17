@@ -46,9 +46,12 @@ extension MenuSeparator: MacMenuItem
     }
     
     // -------------------------------------
-    public var isEnabled: Bool
+    public var canBeEnabled: Bool
     {
         get { false }
         set { }
     }
+    
+    // -------------------------------------
+    public var isEnabled: Bool { false }
 }

@@ -34,14 +34,13 @@ public struct SelectorAction: Action
     }
     
     // -------------------------------------
-    private var _isEnabled: Bool = true
+    public var canBeEnabled: Bool = true
+    
+    // -------------------------------------
     public var isEnabled: Bool
     {
-        get {
-            return _isEnabled && selector != nil
-                && (enabledValidator?() ?? true)
-        }
-        set { _isEnabled = newValue }
+        return canBeEnabled && selector != nil
+            && (enabledValidator?() ?? true)
     }
     
     // -------------------------------------
@@ -49,7 +48,7 @@ public struct SelectorAction: Action
         on target: ActionResponder?,
         for sender: Any?) -> Bool
     {
-        guard _isEnabled, let nsTarget = target as? NSObject else {
+        guard canBeEnabled, let nsTarget = target as? NSObject else {
             return false
         }
         

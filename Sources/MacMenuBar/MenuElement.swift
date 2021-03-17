@@ -26,8 +26,9 @@ public protocol MenuElement
     var isItem: Bool { get }
     var title: String { get set }
     var isVisible: Bool { get set }
-    var isEnabled: Bool { get set }
-    
+    var canBeEnabled: Bool { get set }
+    var isEnabled: Bool { get }
+
     func appendSelf<T: MacMenu>(to menu: inout T)
 }
 
@@ -38,7 +39,7 @@ public extension MenuElement
     func enable(_ value: Bool = true) -> Self
     {
         var copy = self
-        copy.isEnabled = value
+        copy.canBeEnabled = value
         return copy
     }
     
