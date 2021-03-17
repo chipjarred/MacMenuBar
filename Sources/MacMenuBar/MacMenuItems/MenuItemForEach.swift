@@ -30,9 +30,9 @@ public struct MenuItemForEach
     
     // -------------------------------------
     @inlinable
-    public init<S: Sequence>(
+    public init<S: Sequence, M: MenuElement>(
         of items: S,
-        with menuElementMaker: @escaping (S.Element) -> MacMenuItem)
+        with menuElementMaker: @escaping (S.Element) -> M)
     {
         self.generator =
         { () -> [NSMenuItem] in
