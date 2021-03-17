@@ -32,7 +32,7 @@ public struct MenuItemForEach
     @inlinable
     public init<S: Sequence>(
         of items: S,
-        with menuElementMaker: @escaping (S.Element) -> MenuElement)
+        with menuElementMaker: @escaping (S.Element) -> MacMenuItem)
     {
         self.generator =
         { () -> [NSMenuItem] in
@@ -77,8 +77,7 @@ extension MenuItemForEach: MenuElement
         false
     }
     
-    public func appendSelf<T>(to menu: inout T) where T : MacMenu
-    {
+    public func appendSelf<T>(to menu: inout T) where T : MacMenu {
         menu.nsMenu.dynamicContent.append(generator)
     }
     
