@@ -31,14 +31,15 @@ public struct ForEach
     // -------------------------------------
     @inlinable
     public init<S: Sequence>(
-        _ items: S, content: @escaping (S.Element) -> MenuElement)
+        _ items: @escaping @autoclosure () -> S,
+        content: @escaping (S.Element) -> MenuElement)
     {
         self.generator =
         { () -> [NSMenuItem] in
             var result = [NSMenuItem]()
             var tempMenu = StandardMenu()
 
-            for item in items
+            for item in items()
             {
                 let menuItem = content(item)
                 
