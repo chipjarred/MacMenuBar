@@ -145,7 +145,7 @@ Finally the change we made to `AppDelegate.applicationDidFinishLaunching` by cal
 
 ## Custom Menu Actions
 
-It's great that we have a menu bar now, and that we've created it in a simple delcarative way, but it doesn't do much.  Let's remedy that.  You do that by creating a menu item with an *action* associated with it.
+It's great that we have a menu bar now, and that we've created it in a simple declarative way, but it doesn't do much.  Let's remedy that.  You do that by creating a menu item with an *action* associated with it.
 
 The easiest way to define a custom action is with a closure. Let's say you have a `showLog()` function that displays a log window, and you want to add a `Debug` menu item to show the log.  At the end of `MainMenuBar.body` you can add your conditionally-compiled `Debug` menu:
 
@@ -339,7 +339,7 @@ var themesList: [String] {
 Then we modify our "Themes" menu declaration to use it:
 
 ```swift
-            StandardMenu(title: "Themes")
+            StandardMenu(title: "Themes") // <- CHANGED THIS
             {
                 ForEach(themesList)
                 { themeName in
