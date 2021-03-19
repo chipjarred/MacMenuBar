@@ -14,7 +14,7 @@ cd MacMenuBar/Templates
 ./install.bash
 ```
 
-Once the templates are installed, when you create a new macOS app in Xcode, a template named "App using MacMenuBar" will be one of your options.  When you create a new project using that template, the only thing you'll need to do is to add package dependency.  If you don't already know how to do that, the README.md file in the newly created project contains the instructions you need.
+Once the templates are installed, when you create a new macOS app in Xcode, a template named "App using MacMenuBar" will be one of your options.  When you create a new project using that template, the only thing you'll need to do is to add a package dependency for MacMenuBar.  If you don't already know how to do that, the README.md file in the newly created project contains the instructions you need.
 
 If you'd prefer to set up your project manually, see the instructions in [ManualSetup.md](ManualSetup.md).
 
