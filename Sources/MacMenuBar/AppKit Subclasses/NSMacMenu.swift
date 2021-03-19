@@ -143,9 +143,10 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     {
         if item is NSMacMenuItem || !selectorAlreadyAdded(item.action)
         {
-            // Actually inserting throws off our dynamic menu scheme, but as
-            // long as we're inserting at the end, that's fine.
-//            assert(index == items.endIndex, "MacMenuBar only appends menus")
+            // Actually inserting at arbirary positions throws off our dynamic
+            // menu scheme.  We only ever append.  The only thing that inserts
+            // menu items is macOS intself when it injects its menus like
+            // "Enter Full Screen", which should always go at the end anyway.
             if rebuilding {
                 super.insertItem(item, at: items.count)
             }
