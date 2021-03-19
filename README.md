@@ -1,6 +1,6 @@
 # MacMenuBar
 
-MacMenuBar is a Swift Package for creating and working with macOS's main menu in SwiftUI apps without a Storyboard, using the same declarative style you use for your SwiftUI views.
+MacMenuBar is a Swift Package for creating and working with macOS's main menu in SwiftUI apps without a Storyboard. It let's you use the same declarative style you use for your SwiftUI views to create your menus.
 
 Let's dive directly into how to use it. 
 
