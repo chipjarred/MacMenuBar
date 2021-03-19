@@ -16,7 +16,7 @@ cd MacMenuBar/Templates
 
 Once the templates are installed, when you create a new macOS app in Xcode, a template named "App using MacMenuBar" will be one of your options.  When you create a new project using that template, the only thing you'll need to do is to add package dependency.  If you don't already know how to do that, the README.md file in the newly created project contains the instructions you need.
 
-if you'd prefer to set up your project manually, see the instructions in [ManualSetup.md](ManualSetup.md).
+If you'd prefer to set up your project manually, see the instructions in [ManualSetup.md](ManualSetup.md).
 
 ## Creating a Simple Menu Bar
 
@@ -234,7 +234,9 @@ The above list extends the logic of Cocoa's built-in menu-enabling rules.  Of sp
     
 ## Dynamically Updating Menu Item Names
 
-In its current state, our "Show Log" menu item is certainly usable now, but is it what Mac users really expect?  Maybe it would be better to change the menu item to "Hide Log"  when the log is visible, and back to "Show Log"  when it's not.  That way we can toggle the log window's visible state with a key equivalent.   We can do that by modifying our action closure to either show or hide the log window based on its current visibility, and use the `.updatingTitleWith` method to specify a closure for updating the title:
+In its current state, our "Show Log" menu item is certainly usable now, but is it what Mac users really expect?  
+
+Maybe it would be better to change the menu item to "Hide Log"  when the log is visible, and back to "Show Log"  when it's not.  That way we can toggle the log window's visible state with a key equivalent.   We can do that by modifying our action closure to either show or hide the log window based on its current visibility, and use the `.updatingTitleWith` method to specify a closure for updating the title:
 
 ```swift
             #if DEBUG
@@ -254,7 +256,9 @@ The closure you pass to `.updatingTitleWith` is called when the user opens the i
 
 ## Dynamically Updating Menu Item State
 
-Some menus items represent an application setting that can be enabled or disabled by the user.  That state appears as check-mark next in the menu item when the setting is enabled.  Suppose our logger allows us to select whether or not we want more detailed logging than usual by setting its `.detailedLogging` property to `true`.  We can implement that with the `.updatingStateWith` method in `TextMenuItem` .  Let's add a new menu item to our "Debug" menu to do that.
+Some menus items represent an application setting that can be enabled or disabled by the user.  That state appears as check-mark next in the menu item when the setting is enabled.  
+
+Suppose our logger allows us to select whether or not we want more detailed logging than usual by setting its `.detailedLogging` property to `true`.  We can implement that with the `.updatingStateWith` method in `TextMenuItem` .  Let's add a new menu item to our "Debug" menu to do that.
 
 ```swift
             #if DEBUG
