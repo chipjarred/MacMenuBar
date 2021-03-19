@@ -145,7 +145,7 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
         {
             // Actually inserting throws off our dynamic menu scheme, but as
             // long as we're inserting at the end, that's fine.
-            assert(index == items.endIndex, "MacMenuBar only appends menus")
+//            assert(index == items.endIndex, "MacMenuBar only appends menus")
             if rebuilding {
                 super.insertItem(item, at: items.count)
             }
