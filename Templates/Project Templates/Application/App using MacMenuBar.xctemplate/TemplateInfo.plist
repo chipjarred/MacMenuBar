@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Ancestors</key>
+	<array>
+		<string>com.apple.dt.unit.cocoaApplicationNativeBase</string>
+		<string>com.apple.dt.unit.appLifecycle.macOS</string>
+	</array>
+	<key>Concrete</key>
+	<true/>
+	<key>Definitions</key>
+	<dict>
+		<key>AppDelegate.swift</key>
+		<dict>
+			<key>Path</key>
+			<string>AppDelegate.swift</string>
+			<key>SortOrder</key>
+			<integer>100</integer>
+		</dict>
+		<key>ContentView.swift</key>
+		<dict>
+			<key>Path</key>
+			<string>ContentView.swift</string>
+			<key>SortOrder</key>
+			<integer>99</integer>
+		</dict>
+		<key>Info.plist</key>
+		<dict>
+			<key>Path</key>
+			<string>Info.plist</string>
+			<key>SortOrder</key>
+			<integer>102</integer>
+		</dict>
+		<key>Menu Bar/ApplicationMenu.swift</key>
+		<dict>
+			<key>Group</key>
+			<string>Menu Bar</string>
+			<key>Path</key>
+			<string>ApplicationMenu.swift</string>
+			<key>SortOrder</key>
+			<integer>91</integer>
+		</dict>
+		<key>Menu Bar/DebugMenu.swift</key>
+		<dict>
+			<key>Group</key>
+			<string>Menu Bar</string>
+			<key>Path</key>
+			<string>DebugMenu.swift</string>
+			<key>SortOrder</key>
+			<integer>97</integer>
+		</dict>
+		<key>Menu Bar/EditMenu.swift</key>
+		<dict>
+			<key>Group</key>
+			<string>Menu Bar</string>
+			<key>Path</key>
+			<string>EditMenu.swift</string>
+			<key>SortOrder</key>
+			<integer>93</integer>
+		</dict>
+		<key>Menu Bar/FileMenu.swift</key>
+		<dict>
+			<key>Group</key>
+			<string>Menu Bar</string>
+			<key>Path</key>
+			<string>FileMenu.swift</string>
+			<key>SortOrder</key>
+			<integer>92</integer>
+		</dict>
+		<key>Menu Bar/FormatMenu.swift</key>
+		<dict>
+			<key>Group</key>
+			<string>Menu Bar</string>
+			<key>Path</key>
+			<string>FormatMenu.swift</string>
+			<key>SortOrder</key>
+			<integer>94</integer>
+		</dict>
+		<key>Menu Bar/MenuBar.swift</key>
+		<dict>
+			<key>Group</key>
+			<string>Menu Bar</string>
+			<key>Path</key>
+			<string>MenuBar.swift</string>
+			<key>SortOrder</key>
+			<integer>90</integer>
+		</dict>
+		<key>Menu Bar/ViewMenu.swift</key>
+		<dict>
+			<key>Group</key>
+			<string>Menu Bar</string>
+			<key>Path</key>
+			<string>ViewMenu.swift</string>
+			<key>SortOrder</key>
+			<integer>95</integer>
+		</dict>
+		<key>Menu Bar/WindowMenu.swift</key>
+		<dict>
+			<key>Group</key>
+			<string>Menu Bar</string>
+			<key>Path</key>
+			<string>WindowMenu.swift</string>
+			<key>SortOrder</key>
+			<integer>96</integer>
+		</dict>
+		<key>Preview Content/Preview Assets.xcassets</key>
+		<dict>
+			<key>Group</key>
+			<string>Preview Content</string>
+			<key>Path</key>
+			<string>Preview Assets.xcassets</string>
+			<key>SortOrder</key>
+			<integer>101</integer>
+		</dict>
+		<key>README.md</key>
+		<dict>
+			<key>Path</key>
+			<string>README.md</string>
+			<key>SortOrder</key>
+			<integer>89</integer>
+		</dict>
+		<key>main.swift</key>
+		<dict>
+			<key>Path</key>
+			<string>main.swift</string>
+			<key>SortOrder</key>
+			<integer>98</integer>
+		</dict>
+	</dict>
+	<key>Description</key>
+	<string>This template creates an MacMenuBar application without a Storyboard</string>
+	<key>Identifier</key>
+	<string>com.github.chipjarred.macMenuBar.singleViewApp</string>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+	<key>NameOfInitialFileForEditor</key>
+	<string>README.md</string>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Default</key>
+			<string>SwiftUI</string>
+			<key>Description</key>
+			<string>The type of user interface.</string>
+			<key>Identifier</key>
+			<string>userInterface</string>
+			<key>Name</key>
+			<string>Interface:</string>
+			<key>SortOrder</key>
+			<integer>100</integer>
+			<key>Type</key>
+			<string>popup</string>
+			<key>Units</key>
+			<dict>
+				<key>SwiftUI</key>
+				<array>
+					<dict>
+						<key>Definitions</key>
+						<dict/>
+						<key>Nodes</key>
+						<array>
+							<string>AppDelegate.swift</string>
+							<string>ContentView.swift</string>
+							<string>README.md</string>
+							<string>main.swift</string>
+							<string>Info.plist</string>
+							<string>Menu Bar/MenuBar.swift</string>
+							<string>Menu Bar/ApplicationMenu.swift</string>
+							<string>Menu Bar/FileMenu.swift</string>
+							<string>Menu Bar/EditMenu.swift</string>
+							<string>Menu Bar/FormatMenu.swift</string>
+							<string>Menu Bar/ViewMenu.swift</string>
+							<string>Menu Bar/WindowMenu.swift</string>
+							<string>Menu Bar/DebugMenu.swift</string>
+							<string>Preview Content/Preview Assets.xcassets</string>
+						</array>
+						<key>RequiredOptions</key>
+						<dict>
+							<key>appLifecycle</key>
+							<string>Cocoa</string>
+						</dict>
+						<key>Targets</key>
+						<array>
+							<dict>
+								<key>SharedSettings</key>
+								<dict>
+									<key>DEVELOPMENT_ASSET_PATHS</key>
+									<string>___PACKAGENAMEPREVIEWCONTENT:quoteIfNeeded___</string>
+									<key>ENABLE_PREVIEWS</key>
+									<string>YES</string>
+									<key>MACOSX_DEPLOYMENT_TARGET</key>
+									<string>10.15</string>
+								</dict>
+							</dict>
+						</array>
+					</dict>
+				</array>
+			</dict>
+			<key>Values</key>
+			<array>
+				<string>SwiftUI</string>
+			</array>
+			<key>Variables</key>
+			<dict>
+				<key>SwiftUI</key>
+				<dict>
+					<key>windowPropertyObjC</key>
+					<string></string>
+					<key>windowPropertySwift</key>
+					<string>var window: NSWindow!</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>appLifecycle</string>
+			<key>Units</key>
+			<dict>
+				<key>SwiftUI</key>
+				<array>
+					<dict>
+						<key>Nodes</key>
+						<array>
+							<string>Preview Content/Preview Assets.xcassets</string>
+						</array>
+						<key>Targets</key>
+						<array>
+							<dict>
+								<key>SharedSettings</key>
+								<dict>
+									<key>DEVELOPMENT_ASSET_PATHS</key>
+									<string>___PACKAGENAMEPREVIEWCONTENT:quoteIfNeeded___</string>
+									<key>ENABLE_PREVIEWS</key>
+									<string>YES</string>
+									<key>MACOSX_DEPLOYMENT_TARGET</key>
+									<string>11.0</string>
+								</dict>
+							</dict>
+						</array>
+					</dict>
+					<dict>
+						<key>Definitions</key>
+						<dict>
+							<key>AppDelegate.swift</key>
+							<dict>
+								<key>Path</key>
+								<string>AppDelegate.swift</string>
+								<key>SortOrder</key>
+								<integer>100</integer>
+							</dict>
+							<key>ContentView.swift</key>
+							<dict>
+								<key>Path</key>
+								<string>ContentView.swift</string>
+								<key>SortOrder</key>
+								<integer>99</integer>
+							</dict>
+							<key>Info.plist</key>
+							<dict>
+								<key>Path</key>
+								<string>Info.plist</string>
+								<key>SortOrder</key>
+								<integer>101</integer>
+							</dict>
+							<key>Menu Bar/ApplicationMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>ApplicationMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>92</integer>
+							</dict>
+							<key>Menu Bar/DebugMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>DebugMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>98</integer>
+							</dict>
+							<key>Menu Bar/EditMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>EditMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>94</integer>
+							</dict>
+							<key>Menu Bar/FileMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>FileMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>93</integer>
+							</dict>
+							<key>Menu Bar/FormatMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>FormatMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>95</integer>
+							</dict>
+							<key>Menu Bar/MenuBar.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>MenuBar.swift</string>
+								<key>SortOrder</key>
+								<integer>89</integer>
+							</dict>
+							<key>Menu Bar/ViewMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>ViewMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>96</integer>
+							</dict>
+							<key>Menu Bar/WindowMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>WindowMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>97</integer>
+							</dict>
+							<key>README.swift</key>
+							<dict>
+								<key>Path</key>
+								<string>README.md</string>
+								<key>SortOrder</key>
+								<integer>88</integer>
+							</dict>
+							<key>___PACKAGENAME:identifier___App.swift</key>
+							<dict>
+								<key>Path</key>
+								<string>App.swift</string>
+								<key>SortOrder</key>
+								<integer>98</integer>
+							</dict>
+							<key>main.swift</key>
+							<dict>
+								<key>Path</key>
+								<string>main.swift</string>
+								<key>SortOrder</key>
+								<integer>97</integer>
+							</dict>
+						</dict>
+						<key>Nodes</key>
+						<array>
+							<string>___PACKAGENAME:identifier___App.swift</string>
+							<string>AppDelegate.swift</string>
+							<string>ContentView.swift</string>
+							<string>README.md</string>
+							<string>main.swift</string>
+							<string>Info.plist</string>
+							<string>Menu Bar/MenuBar.swift</string>
+							<string>Menu Bar/ApplicationMenu.swift</string>
+							<string>Menu Bar/FileMenu.swift</string>
+							<string>Menu Bar/EditMenu.swift</string>
+							<string>Menu Bar/FormatMenu.swift</string>
+							<string>Menu Bar/ViewMenu.swift</string>
+							<string>Menu Bar/WindowMenu.swift</string>
+							<string>Menu Bar/DebugMenu.swift</string>
+						</array>
+						<key>RequiredOptions</key>
+						<dict>
+							<key>coreData</key>
+							<string>false</string>
+						</dict>
+					</dict>
+					<dict>
+						<key>Definitions</key>
+						<dict>
+							<key>AppDelegate.swift</key>
+							<dict>
+								<key>Path</key>
+								<string>AppDelegate.swift</string>
+								<key>SortOrder</key>
+								<integer>102</integer>
+							</dict>
+							<key>ContentView.swift</key>
+							<dict>
+								<key>Path</key>
+								<string>ContentView-CoreData.swift</string>
+								<key>SortOrder</key>
+								<integer>99</integer>
+							</dict>
+							<key>Info.plist</key>
+							<dict>
+								<key>Path</key>
+								<string>Info.plist</string>
+								<key>SortOrder</key>
+								<integer>103</integer>
+							</dict>
+							<key>Menu Bar/ApplicationMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>ApplicationMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>90</integer>
+							</dict>
+							<key>Menu Bar/DebugMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>DebugMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>96</integer>
+							</dict>
+							<key>Menu Bar/EditMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>EditMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>92</integer>
+							</dict>
+							<key>Menu Bar/FileMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>FileMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>91</integer>
+							</dict>
+							<key>Menu Bar/FormatMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>FormatMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>93</integer>
+							</dict>
+							<key>Menu Bar/MenuBar.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>MenuBar.swift</string>
+								<key>SortOrder</key>
+								<integer>89</integer>
+							</dict>
+							<key>Menu Bar/ViewMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>ViewMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>94</integer>
+							</dict>
+							<key>Menu Bar/WindowMenu.swift</key>
+							<dict>
+								<key>Group</key>
+								<string>Menu Bar</string>
+								<key>Path</key>
+								<string>WindowMenu.swift</string>
+								<key>SortOrder</key>
+								<integer>95</integer>
+							</dict>
+							<key>Persistence.swift</key>
+							<dict>
+								<key>Path</key>
+								<string>Persistence.swift</string>
+								<key>SortOrder</key>
+								<integer>100</integer>
+							</dict>
+							<key>README.md</key>
+							<dict>
+								<key>Path</key>
+								<string>README.md</string>
+								<key>SortOrder</key>
+								<integer>88</integer>
+							</dict>
+							<key>___PACKAGENAME:identifier___App.swift</key>
+							<dict>
+								<key>Path</key>
+								<string>App-CoreData.swift</string>
+								<key>SortOrder</key>
+								<integer>98</integer>
+							</dict>
+							<key>___PACKAGENAMEASIDENTIFIER___.xcdatamodeld</key>
+							<dict>
+								<key>Path</key>
+								<string>___PACKAGENAMEASIDENTIFIER___.xcdatamodeld</string>
+								<key>SortOrder</key>
+								<integer>101</integer>
+							</dict>
+							<key>main.swift</key>
+							<dict>
+								<key>Path</key>
+								<string>main.swift</string>
+								<key>SortOrder</key>
+								<integer>97</integer>
+							</dict>
+						</dict>
+						<key>Nodes</key>
+						<array>
+							<string>___PACKAGENAME:identifier___App.swift</string>
+							<string>AppDelegate.swift</string>
+							<string>ContentView.swift</string>
+							<string>README.md</string>
+							<string>main.swift</string>
+							<string>Info.plist</string>
+							<string>Menu Bar/MenuBar.swift</string>
+							<string>Menu Bar/ApplicationMenu.swift</string>
+							<string>Menu Bar/FileMenu.swift</string>
+							<string>Menu Bar/EditMenu.swift</string>
+							<string>Menu Bar/FormatMenu.swift</string>
+							<string>Menu Bar/ViewMenu.swift</string>
+							<string>Menu Bar/WindowMenu.swift</string>
+							<string>Menu Bar/DebugMenu.swift</string>
+							<string>Persistence.swift</string>
+							<string>___PACKAGENAMEASIDENTIFIER___.xcdatamodeld</string>
+						</array>
+						<key>RequiredOptions</key>
+						<dict>
+							<key>coreData</key>
+							<string>true</string>
+						</dict>
+						<key>Targets</key>
+						<array>
+							<dict>
+								<key>SharedSettings</key>
+								<dict>
+									<key>DEVELOPMENT_ASSET_PATHS</key>
+									<string>___PACKAGENAMEPREVIEWCONTENT:quoteIfNeeded___</string>
+									<key>ENABLE_PREVIEWS</key>
+									<string>YES</string>
+									<key>MACOSX_DEPLOYMENT_TARGET</key>
+									<string>10.15</string>
+								</dict>
+							</dict>
+						</array>
+					</dict>
+				</array>
+			</dict>
+			<key>Variables</key>
+			<dict>
+				<key>SwiftUI</key>
+				<dict>
+					<key>windowPropertyObjC</key>
+					<string></string>
+					<key>windowPropertySwift</key>
+					<string>var window: NSWindow!</string>
+				</dict>
+			</dict>
+		</dict>
+	</array>
+	<key>Project</key>
+	<dict/>
+</dict>
+</plist>
