@@ -1,49 +1,22 @@
 # MacMenuBar
 
-Are you writing a macOS application using SwiftUI? Do wish you could programmatically create and work with the menu bar (aka "main menu") like you do your SwiftUI views? 
-
-SwiftUI makes creating views programmatically simple, but it's focus on iOS shows when you use it to create a macOS app. Menu handling is a big part of that defiiciency.  No doubt, Apple will improve that over time, but for now you're stuck with the same `AppKit` menu API as in a normal Cocoa app, only it's less obvious how to  interact with it from SwiftUI.  Want to disable a menu, or change it's title?  You have to hunt it down in `NSWindow.shared.mainMenu`.  Programmatically creating your main menu with `AppKit` at least gives you a chance to store references to your menus for easy access, but it's a headache too. 
-
-I wanted to build my app's menu the same declarative way I build SwiftUI views.  I wanted it to dynamically update and respond in same sort of way SwiftUI views do.   Those are the problems `MacMenuBar` aims to solve.
+MacMenuBar is a Swift Package for creating and working with macOS's main menu in SwiftUI apps without a Storyboard, using the same declarative style you use for your SwiftUI views.
 
 Let's dive directly into how to use it. 
 
-## Configure Your Project for MacMenuBar
+## Creating a MacMenuBar-based Project.
 
-Since Xcode's starter project template for a macOS SwiftUI app isn't set up for `MacMenuBar` there are few things you have to change to make it ready.
+To use MacMenuBar you will need to create an Xcode project configured to use it.  The easiest way to do that is by installing the Xcode project templates from this repo using the command line:
 
-1. Add `MacMenuBar` as a Swift Package Dependency in your app. In Xcode select `Swift Packages` from the `File` menu, then `Add Package Dependency`.  Then fill-in the URL for this package: [https://github.com/chipjarred/MacMenuBar.git](https://github.com/chipjarred/MacMenuBar.git)
-
-2. Remove  the `Main.storyboard` file.  Just like you don't use a Storyboard for your SwiftUI `View` types, you don't use them for `MacMenuBar` either.  Just delete it (or uncheck it as belonging to the application target in the `File Inspector` side-bar on the right). 
-
-3. Change the `Main Interface` target setting. 
-    1. Click on the project in the Project Navigator (side bar to the left that shows files and folder)
-    2. Select your application target
-    3. Select the "General" tab at the top, then in the "Deployment Info" section, clear the "Main Interface" field.
-
-4. Add `main.swift`.  With `Main.storyboard` gone, `NSApplication` won't work automagically, so you have to add a `main.swift` to provide a working entry point for your app.  It should look like this.
-
-```swift
-import Cocoa
-let delegate = AppDelegate()
-NSApplication.shared.delegate = delegate
-_ = NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
-```
-5.  Remove the `@NSApplicationMain` attribute from `AppDelegate` in  `AppDelegate.swift`.  
-```swift
-@NSApplicationMain // <- REMOVE THIS
-class AppDelegate: NSObject, NSApplicationDelegate
+```bash
+git clone https://github.com/chipjarred/MacMenuBar.git
+cd MacMenuBar/Templates
+./install.bash
 ```
 
-6. Import `MacMenuBar` in `AppDelelgate.swift`:
+Once the templates are installed, when you create a new macOS app in Xcode, a template named "App using MacMenuBar" will be one of your options.  When you create a new project using that template, the only thing you'll need to do is to add package dependency.  If you don't already know how to do that, the README.md file in the newly created project contains the instructions you need.
 
-```swift
-import Cocoa
-import SwiftUI
-import MacMenuBar // <-- ADD THIS
-```
-
-7. Test the setup by building and running the app.  You no longer have a menu bar in the app, so *you'll need to kill it using Stop button in Xcode.*
+if you'd prefer to set up your project manually, see the instructions in [ManualSetup.md](ManualSetup.md).
 
 ## Creating a Simple Menu Bar
 
