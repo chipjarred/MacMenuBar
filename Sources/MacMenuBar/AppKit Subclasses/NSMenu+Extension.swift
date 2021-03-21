@@ -60,8 +60,11 @@ public extension NSMenu
     // -------------------------------------
     internal func selectorAlreadyAdded(_ selector: Selector?) -> Bool
     {
-        guard let selector = selector else { return false }
-        return nil == rootMenu.firstMenuItem { $0.action == selector }
+        guard let selector = selector,
+              let item = rootMenu.firstMenuItem(where:{ $0.action == selector })
+        else { return false }
+        return true
+//        return nil == rootMenu.firstMenuItem { $0.action == selector }
     }
     
     // -------------------------------------

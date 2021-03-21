@@ -89,21 +89,8 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     }
     
     // -------------------------------------
-    public override func addItem(_ item: NSMenuItem)
-    {
-        if item is NSMacMenuItem || !selectorAlreadyAdded(item.action)
-        {
-            if rebuilding {
-                super.addItem(item)
-            }
-            else { dynamicContent.append(item) }
-        }
-        else
-        {
-            #if DEBUG
-            print("Refusing to add NSMenuItem named \"\(item.title)\"")
-            #endif
-        }
+    public override func addItem(_ item: NSMenuItem) {
+        insertItem(item, at: items.count)
     }
     
     // -------------------------------------
@@ -141,7 +128,33 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     // -------------------------------------
     public override func insertItem(_ item: NSMenuItem, at index: Int)
     {
-        if item is NSMacMenuItem || !selectorAlreadyAdded(item.action)
+        if item is NSMacMenuItem
+        {
+            if rebuilding
+            {
+                /*
+                 Sometimes macOS inserts its injected menus before we can our own
+                 that implements the same selector.  In order to override the
+                 macOS version, we have to remove it, and the add ours.
+                 */
+                if let itemAction = item.action
+                {
+                    for i in items.indices.reversed()
+                    {
+                        if items[i].action == itemAction,
+                           !(items[i] is NSMacMenuItem)
+                        {
+                            removeItem(at: i)
+                        }
+                    }
+                }
+                
+                super.insertItem(item, at: items.count)
+            }
+            else { dynamicContent.append(item) }
+        }
+        else if !selectorAlreadyAdded(item.action),
+                !items.contains(where: { $0 === item } )
         {
             // Actually inserting at arbitrary positions throws off our dynamic
             // menu scheme.  We only ever append.  The only thing that inserts

@@ -23,7 +23,17 @@ import Cocoa
 // -------------------------------------
 public extension NSApplicationDelegate
 {
-    func setMenuBar<MenuBarType: MenuBar>(to menuBar: MenuBarType) {
-        NSApplication.shared.mainMenu = menuBar.body.menu
+    func setMenuBar<MenuBarType: MenuBar>(to menuBar: MenuBarType)
+    {
+        let menu = menuBar.body.menu
+        // Build dynamic menu content before setting the menu bar so our menus
+        // are populated before macOS knows about them to inject its own.
+        for item in menu.items
+        {
+            if let submenu = item.submenu {
+                let _ = submenu.delegate?.numberOfItems?(in: submenu)
+            }
+        }
+        NSApplication.shared.mainMenu = menu
     }
 }
