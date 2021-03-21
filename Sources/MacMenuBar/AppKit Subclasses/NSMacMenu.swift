@@ -184,7 +184,7 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
             keyEquivalent: charCode)
         
         if !rebuilding {
-            insertItem(item, at: index)
+            addItem(item)
         }
         return item
     }
