@@ -123,9 +123,7 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
             action: selector,
             keyEquivalent: charCode)
         
-        if !rebuilding {
-            addItem(item)
-        }
+        addItem(item)
         return item
     }
     
@@ -145,12 +143,14 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     {
         if item is NSMacMenuItem || !selectorAlreadyAdded(item.action)
         {
-            // Actually inserting at arbirary positions throws off our dynamic
+            // Actually inserting at arbitrary positions throws off our dynamic
             // menu scheme.  We only ever append.  The only thing that inserts
             // menu items is macOS intself when it injects its menus like
             // "Enter Full Screen", which should always go at the end anyway.
             if rebuilding {
-                super.insertItem(item, at: items.count)
+                if items.last !== item {
+                    super.insertItem(item, at: items.count)
+                }
             }
             else { dynamicContent.append(item) }
         }
@@ -183,9 +183,7 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
             action: selector,
             keyEquivalent: charCode)
         
-        if !rebuilding {
-            addItem(item)
-        }
+        addItem(item)
         return item
     }
 
