@@ -32,7 +32,7 @@ public protocol ActionableMenuItem: MacMenuItem
 // -------------------------------------
 extension ActionableMenuItem
 {
-    init(action: StandardMenuItemAction)
+    public init(action: StandardMenuItemAction)
     {
         let (selector, keyEquivalent) = action.selectorAndKeyEquivalent
         self.init(
@@ -44,7 +44,7 @@ extension ActionableMenuItem
     }
     
     // -------------------------------------
-    init(
+    public init(
         keyEquivalent: KeyEquivalent = .none,
         action: @escaping ClosureAction.ActionClosure)
     {

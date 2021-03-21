@@ -27,7 +27,9 @@ public struct SelectorAction: Action
     public var keyEquivalent: KeyEquivalent? = nil
     public var enabledValidator: (() -> Bool)? = nil
     
-    init(keyEquivalent: KeyEquivalent?, selector: Selector?)
+    // -------------------------------------
+    @inlinable
+    public init(keyEquivalent: KeyEquivalent?, selector: Selector?)
     {
         self.selector = selector
         self.keyEquivalent = keyEquivalent

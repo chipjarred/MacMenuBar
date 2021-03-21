@@ -57,6 +57,7 @@ public struct TextMenuItem
         - action: Closure to be called when this menu item is selected.
      */
     // -------------------------------------
+    @inlinable
     public init(
         title: String,
         keyEquivalent: KeyEquivalent = .none,
@@ -69,6 +70,7 @@ public struct TextMenuItem
     }
     
     // -------------------------------------
+    @inlinable
     public init(
         title: String,
         keyEquivalent: KeyEquivalent,
@@ -84,6 +86,7 @@ public struct TextMenuItem
     }
     
     // -------------------------------------
+    @inlinable
     public init(action: Action)
     {
         self.init(title: "", action: action)
@@ -92,15 +95,23 @@ public struct TextMenuItem
     }
     
     // -------------------------------------
+    @inlinable
     public init(title: String, action: Action = NoAction()) {
-        self.nsMenuItem = NSMacMenuItem(title: title, action: action)
+        self.init(from: NSMacMenuItem(title: title, action: action))
     }
     
     // -------------------------------------
+    @inlinable
     public init(title: String, action: StandardMenuItemAction)
     {
         self.init(action: action)
         self.title = title
+    }
+    
+    // -------------------------------------
+    @usableFromInline
+    internal init(from nsMacMenuItem: NSMacMenuItem) {
+        self.nsMenuItem = nsMacMenuItem
     }
 }
 

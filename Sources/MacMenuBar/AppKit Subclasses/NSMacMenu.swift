@@ -123,7 +123,9 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
             action: selector,
             keyEquivalent: charCode)
         
-        addItem(item)
+        if !rebuilding {
+            addItem(item)
+        }
         return item
     }
     
@@ -181,7 +183,9 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
             action: selector,
             keyEquivalent: charCode)
         
-        insertItem(item, at: index)
+        if !rebuilding {
+            insertItem(item, at: index)
+        }
         return item
     }
 
