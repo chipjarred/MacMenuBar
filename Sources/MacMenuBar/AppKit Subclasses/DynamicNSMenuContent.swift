@@ -85,12 +85,25 @@ struct DynamicNSMenuContent
          future macOS version inserts them elsewhere... well they're about to be
          re-arranged.
          */
-        let savedItems = menu.items.filter { !($0 is NSMacMenuItem) }
+        var savedItems = menu.items.filter { !($0 is NSMacMenuItem) }
         
         menu.removeAllItems()
         groups.forEach { $0.addAll(to: menu) }
         
-        savedItems.forEach { menu.addItem($0) }
+        if savedItems.count > 0
+        {
+            // We don't want our menu ending with a separator
+            if savedItems.last?.isSeparatorItem == true {
+                savedItems.removeLast()
+            }
+            
+            // Make sure saved items are separated from rest of menu
+            if savedItems.first?.isSeparatorItem == false {
+                menu.addItem(NSMacMenuItem.separator())
+            }
+                
+            savedItems.forEach { menu.addItem($0) }
+        }
     }
 }
 

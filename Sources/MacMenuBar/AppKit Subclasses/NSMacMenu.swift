@@ -56,6 +56,9 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
         set { _nsMacMenuItem?.isEnabled = newValue }
     }
     
+    @usableFromInline
+    internal var refuseAutoinjectedItems = false
+    
     internal var dynamicContent = DynamicNSMenuContent()
     internal var rebuilding = false
 
@@ -95,10 +98,10 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     
     // -------------------------------------
     /*
-     We don't call this, but macOS's automatically added menus do. We create
-     the menu to placate macOS's automatically added menus, but we use the
-     standard NSMenuItem instead of our NSMacMenuItem, so we can filter it out
-     if we've already implemented the specified selector.
+     We don't call this, but macOS's automatically added items do. We create
+     the item to placate macOS', but for that we use the standard NSMenuItem
+     instead of NSMacMenuItem, so we can filter it out if we've already
+     implemented the specified selector.
      */
     public override func addItem(
         withTitle string: String,
@@ -128,14 +131,52 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     // -------------------------------------
     public override func insertItem(_ item: NSMenuItem, at index: Int)
     {
+        /**
+         Inserting menu items would be simple if it weren't for the fact that
+         macOS auto-injects its own items.  If we're not explicitly refusing
+         all auto-injected menus, we still want to avoid allowing auto-injected
+         menus that have action selectors we already implement, so we have to
+         filter them out.   Sometimes macOS injects them when the main menu is
+         set ("Start Dictation..." and "Emoji & Symbols") and sometimes it
+         injects them whenever the menu is opened ("Enter Full Screen").
+         There's even some indication that sometimes it might be trying to
+         inject them while we're rebuilding dynamic menu content.  So the
+         following code attempts to detect those cases, and refuse to insert
+         the auto-inject items that we've already implemented.
+         
+         If you are having problems with auto-injected items inappropriately
+         duplicating items that you've created, or get an assertion from within
+         `NSMenu`'s `insertItem` that the item has already been added, use the
+         `refuseAutoinjectedMenuItems` property of `MacMenu`, and implement an
+         item for that action yourself.
+         
+         For convenience, `StandardMenuItemActions` defines actions for the
+         auto-injected items at the time of writing this comment.  If new ones
+         are added before `StandardMenuItemActions` can be updated to include
+         them, the debugging output below prints the selector, to help you use
+         `SelectorAction` to implement it.
+         */
+        if refuseAutoinjectedItems && !(item is NSMacMenuItem)
+        {
+            #if DEBUG
+            print(
+                "Refusing to insert macOS auto-injected NSMenuItem named "
+                + "\"\(item.title)\" using action selector, "
+                + "\(String(describing: item.action)), at position \(index). "
+                + " Consider implementing it yourself."
+            )
+            #endif
+            return
+        }
+        
         if item is NSMacMenuItem
         {
             if rebuilding
             {
                 /*
-                 Sometimes macOS inserts its injected menus before we can our own
-                 that implements the same selector.  In order to override the
-                 macOS version, we have to remove it, and the add ours.
+                 Sometimes macOS inserts its injected menus before we can our
+                 own that implements the same selector.  In order to override
+                 the macOS version, we have to remove it, and the add ours.
                  */
                 if let itemAction = item.action
                 {
@@ -144,6 +185,15 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
                         if items[i].action == itemAction,
                            !(items[i] is NSMacMenuItem)
                         {
+                            #if DEBUG
+                            print(
+                                "Replacing item named \"\(items[i].title)\" "
+                                + "with item named \"\(item.title)\" with "
+                                + "selector, "
+                                + "\(String(describing: item.action)), while "
+                                + "rebuilding dynamic menu content"
+                            )
+                            #endif
                             removeItem(at: i)
                         }
                     }
@@ -169,10 +219,15 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
         }
         else
         {
+            item.action = nil
+            item.target = nil
+            
             #if DEBUG
             print(
-                "Refusing to insert NSMenuItem named \"\(item.title)\" at "
-                + "position \(index)"
+                "Refusing to insert macOS auto-injected NSMenuItem named "
+                + "\"\(item.title)\" using action selector, "
+                + "\(String(describing: item.action)), at position \(index). "
+                + " Consider implementing it yourself."
             )
             #endif
         }
@@ -180,10 +235,10 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     
     // -------------------------------------
     /*
-     We don't call this, but macOS's automatically added menus do. We create
-     the menu to placate macOS's automatically added menus, but we use the
-     standard NSMenuItem instead of our NSMacMenuItem, so we can filter it out
-     if we've already implemented the specified selector.
+     We don't call this, but macOS's automatically added items do. We create
+     the item to placate macOS', but for that we use the standard NSMenuItem
+     instead of NSMacMenuItem, so we can filter it out if we've already
+     implemented the specified selector.
      */
     public override func insertItem(
         withTitle string: String,

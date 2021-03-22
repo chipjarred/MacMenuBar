@@ -53,6 +53,16 @@ extension ActionableMenuItem
     }
     
     // -------------------------------------
+    public mutating func setStandardAction(_ action: StandardMenuItemAction)
+    {
+        let (selector, keyEquivalent) = action.selectorAndKeyEquivalent
+        self.action = SelectorAction(
+            keyEquivalent: keyEquivalent,
+            selector: selector
+        )
+    }
+    
+    // -------------------------------------
     @inlinable public var isVisible: Bool
     {
         get { !nsMenuItem.isHidden }

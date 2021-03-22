@@ -21,55 +21,30 @@
 import Cocoa
 
 // -------------------------------------
-public extension NSMenu
+public extension NSMenuItem
 {
     // -------------------------------------
-    func firstMenuItem(where condition: (NSMenuItem) -> Bool) -> NSMenuItem?
+    func setSelectorAction(_ action: StandardMenuItemAction)
     {
-        for item in items
-        {
-            if let submenu = item.submenu
-            {
-                if let foundItem = submenu.firstMenuItem(where: condition) {
-                    return foundItem
-                }
-            }
-            else if condition(item) { return item }
-        }
+        let (selector, keyEquivalent) = action.selectorAndKeyEquivalent
         
-        return nil
+        setSelectorAction(
+            SelectorAction(keyEquivalent: keyEquivalent, selector: selector)
+        )
     }
     
     // -------------------------------------
-    func lastMenuItem(where condition: (NSMenuItem) -> Bool) -> NSMenuItem?
+    func setSelectorAction(_ action: SelectorAction)
     {
-        for item in items.reversed()
+        if let nsMacMenuItem = self as? NSMacMenuItem {
+            nsMacMenuItem._action = action
+        }
+        else
         {
-            if let submenu = item.submenu
-            {
-                if let foundItem = submenu.lastMenuItem(where: condition) {
-                    return foundItem
-                }
-            }
-            else if condition(item) { return item }
+            self.action = action.selector
+            self.keyEquivalent = action.keyEquivalent?.description ?? ""
+            self.keyEquivalentModifierMask = action.keyEquivalent?.modifiers
+                ?? NSEvent.ModifierFlags()
         }
-        
-        return nil
-    }
-    
-    // -------------------------------------
-    internal func selectorAlreadyAdded(_ selector: Selector?) -> Bool
-    {
-        guard let selector = selector else { return false }
-        return nil != rootMenu.firstMenuItem { $0.action == selector }
-    }
-    
-    // -------------------------------------
-    internal var rootMenu: NSMenu {
-        var curMenu = self
-        while curMenu.supermenu != nil {
-            curMenu = curMenu.supermenu!
-        }
-        return curMenu
     }
 }

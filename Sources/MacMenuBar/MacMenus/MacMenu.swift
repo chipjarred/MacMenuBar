@@ -50,8 +50,16 @@ extension MacMenu
         items.forEach {
             $0.appendSelf(to: &self)
         }
-   }
+    }
     
+    // -------------------------------------
+    @inlinable
+    public func refuseAutoinjectedMenuItems(_ shouldRefuse: Bool = true) -> Self
+    {
+        nsMenu.refuseAutoinjectedItems = shouldRefuse
+        return self
+    }
+
     // -------------------------------------
     @inlinable
     public func appendSelf<T: MacMenu>(to menu: inout T) {

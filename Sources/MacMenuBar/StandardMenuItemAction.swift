@@ -134,13 +134,19 @@ public enum StandardMenuItemAction
     case customizeToolbar
     case showSidebar
     case enterFullScreen
+    case exitFullScreen
 
     // Window Menu
     case minimize
     case zoom
     case bringAllToFront
+    
+    public var selector: Selector { selectorAndKeyEquivalent.action }
+    public var keyEquivalent: KeyEquivalent {
+        selectorAndKeyEquivalent.keyEquivalent
+    }
 
-    var selectorAndKeyEquivalent:
+    public var selectorAndKeyEquivalent:
         (action: Selector, keyEquivalent: KeyEquivalent)
     {
         switch self
@@ -555,6 +561,11 @@ public enum StandardMenuItemAction
                 return (
                     #selector(NSWindow.toggleFullScreen(_:)),
                     .control + .command + "f"
+                )
+            case .exitFullScreen:
+                return (
+                    #selector(NSWindow.toggleFullScreen(_:)),
+                    .escape
                 )
 
             // Window Menu
