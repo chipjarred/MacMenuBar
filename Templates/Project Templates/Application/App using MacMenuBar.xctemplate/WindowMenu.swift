@@ -11,3 +11,4 @@ let windowMenu = StandardMenu(title: "Window")
     
     TextMenuItem(title: "Bring All to Front", action: .bringAllToFront)
 }
+.refuseAutoinjectedMenuItems()

@@ -11,9 +11,6 @@ let viewMenu = StandardMenu(title: "View")
     
     TextMenuItem(title: "Show Sidebar", action: .showSidebar)
     
-    // Toggle full screen is automatically added by macOS
-    // TODO: Either prevent automatic full screen addition, or attach
-    // keyEquivalent to the automatically added menu
     TextMenuItem(title: "Enter Full Screen", action: .enterFullScreen)
         .afterAction
         { menuItem in
@@ -29,3 +26,4 @@ let viewMenu = StandardMenu(title: "View")
             }
         }
 }
+.refuseAutoinjectedMenuItems()
