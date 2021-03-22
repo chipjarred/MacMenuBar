@@ -22,6 +22,9 @@ import Cocoa
 
 public enum StandardMenuItemAction
 {
+    // Non-menus
+    case cancel
+    
     // Application Menu
     case about
     case hide
@@ -151,6 +154,13 @@ public enum StandardMenuItemAction
     {
         switch self
         {
+            // Non-menus
+            case .cancel:
+                return (
+                    #selector(NSResponder.cancelOperation(_:)),
+                    .command + "."
+                )
+
             // Application Menu
             case .about:
                 return (
