@@ -132,18 +132,6 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
     public override func insertItem(_ item: NSMenuItem, at index: Int)
     {
         /**
-         Inserting menu items would be simple if it weren't for the fact that
-         macOS auto-injects its own items.  If we're not explicitly refusing
-         all auto-injected menus, we still want to avoid allowing auto-injected
-         menus that have action selectors we already implement, so we have to
-         filter them out.   Sometimes macOS injects them when the main menu is
-         set ("Start Dictation..." and "Emoji & Symbols") and sometimes it
-         injects them whenever the menu is opened ("Enter Full Screen").
-         There's even some indication that sometimes it might be trying to
-         inject them while we're rebuilding dynamic menu content.  So the
-         following code attempts to detect those cases, and refuse to insert
-         the auto-inject items that we've already implemented.
-         
          If you are having problems with auto-injected items inappropriately
          duplicating items that you've created, or get an assertion from within
          `NSMenu`'s `insertItem` that the item has already been added, use the
@@ -166,71 +154,25 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
                 + " Consider implementing it yourself."
             )
             #endif
-            return
         }
-        
-        if item is NSMacMenuItem
+        else if rebuilding
         {
-            if rebuilding
-            {
-                /*
-                 Sometimes macOS inserts its injected menus before we can our
-                 own that implements the same selector.  In order to override
-                 the macOS version, we have to remove it, and the add ours.
-                 */
-                if let itemAction = item.action
-                {
-                    for i in items.indices.reversed()
-                    {
-                        if items[i].action == itemAction,
-                           !(items[i] is NSMacMenuItem)
-                        {
-                            #if DEBUG
-                            print(
-                                "Replacing item named \"\(items[i].title)\" "
-                                + "with item named \"\(item.title)\" with "
-                                + "selector, "
-                                + "\(String(describing: item.action)), while "
-                                + "rebuilding dynamic menu content"
-                            )
-                            #endif
-                            removeItem(at: i)
-                        }
-                    }
-                }
-                
+            if !items.contains(where: { $0 === item } ) {
                 super.insertItem(item, at: items.count)
             }
-            else { dynamicContent.append(item) }
-        }
-        else if !selectorAlreadyAdded(item.action),
-                !items.contains(where: { $0 === item } )
-        {
-            // Actually inserting at arbitrary positions throws off our dynamic
-            // menu scheme.  We only ever append.  The only thing that inserts
-            // menu items is macOS intself when it injects its menus like
-            // "Enter Full Screen", which should always go at the end anyway.
-            if rebuilding {
-                if items.last !== item {
-                    super.insertItem(item, at: items.count)
-                }
+            else
+            {
+                #if DEBUG
+                print(
+                    "Refusing to insert macOS auto-injected NSMenuItem named "
+                    + "\"\(item.title)\" using action selector, "
+                    + "\(String(describing: item.action)), at position \(index). "
+                    + " Consider implementing it yourself."
+                )
+                #endif
             }
-            else { dynamicContent.append(item) }
         }
-        else
-        {
-            item.action = nil
-            item.target = nil
-            
-            #if DEBUG
-            print(
-                "Refusing to insert macOS auto-injected NSMenuItem named "
-                + "\"\(item.title)\" using action selector, "
-                + "\(String(describing: item.action)), at position \(index). "
-                + " Consider implementing it yourself."
-            )
-            #endif
-        }
+        else { dynamicContent.append(item) }
     }
     
     // -------------------------------------
