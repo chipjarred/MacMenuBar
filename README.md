@@ -316,9 +316,9 @@ var themesList: [String] {
 Then we modify our "Themes" menu declaration to use it:
 
 ```swift
-            StandardMenu(title: "Themes") // <- CHANGED THIS
+            StandardMenu(title: "Themes")
             {
-                ForEach(themesList)
+                ForEach(themesList) // <- CHANGED THIS
                 { themeName in
                     TextMenuItem(title: themeName) { _ in setTheme(to: themeName) }
                         .updatingStateWith { currentTheme == themeName ? .on : .off }
