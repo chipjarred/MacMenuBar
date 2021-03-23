@@ -20,6 +20,8 @@
 
 import Cocoa
 
+public var debugPrintMenuInsertionRefusals = true
+
 // -------------------------------------
 @objc fileprivate extension NSMenu {
     @objc var nsMacMenuItem: NSMacMenuItem? { return nil }
@@ -147,12 +149,19 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
         if refuseAutoinjectedItems && !(item is NSMacMenuItem)
         {
             #if DEBUG
-            print(
-                "Refusing to insert macOS auto-injected NSMenuItem named "
-                + "\"\(item.title)\" using action selector, "
-                + "\(String(describing: item.action)), at position \(index). "
-                + " Consider implementing it yourself."
-            )
+            if debugPrintMenuInsertionRefusals
+            {
+                print(
+                    "Refusing to insert macOS auto-injected NSMenuItem named "
+                    + "\"\(item.title)\" using action selector, "
+                    + "\(String(describing: item.action)), at position \(index). "
+                    + " Consider implementing it yourself."
+                )
+                print(
+                    "To silence these messages, "
+                    + "MacMenuBar.debugPrintMenuInsertionRefusals = false"
+                )
+            }
             #endif
         }
         else if rebuilding
@@ -163,12 +172,19 @@ public class NSMacMenu: NSMenu, NSMenuDelegate
             else
             {
                 #if DEBUG
-                print(
-                    "Refusing to insert macOS auto-injected NSMenuItem named "
-                    + "\"\(item.title)\" using action selector, "
-                    + "\(String(describing: item.action)), at position \(index). "
-                    + " Consider implementing it yourself."
-                )
+                if debugPrintMenuInsertionRefusals
+                {
+                    print(
+                        "Refusing to insert macOS auto-injected NSMenuItem named "
+                        + "\"\(item.title)\" using action selector, "
+                        + "\(String(describing: item.action)), at position \(index). "
+                        + " Consider implementing it yourself."
+                    )
+                    print(
+                        "To silence these messages, "
+                        + "MacMenuBar.debugPrintMenuInsertionRefusals = false"
+                    )
+                }
                 #endif
             }
         }
