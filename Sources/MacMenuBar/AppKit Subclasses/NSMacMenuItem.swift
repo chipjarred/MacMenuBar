@@ -190,7 +190,11 @@ import Cocoa
     {
         if self.submenu != nil { return true }
         
-        guard let action = _action, action.isEnabled else { return false }
+        guard let action = _action, action.canBeEnabled else { return false }
+        
+        if let validator = action.enabledValidator {
+            return validator()
+        }
         
         guard let selectorAction = action as? SelectorAction else {
             return true
