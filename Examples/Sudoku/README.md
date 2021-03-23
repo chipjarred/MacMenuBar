@@ -25,5 +25,5 @@ This project uses:
 - [ ] Usage tutorial on first run
 - [ ] Keyboard navigation guides
 - [ ] Modify Guess/Note View to change when option key is pressed.
-- [ ] Support option-click for bringing up Note view
+- [x] Support option-click for bringing up Note view
 - [ ] Support long click for bringing up Guess view.
