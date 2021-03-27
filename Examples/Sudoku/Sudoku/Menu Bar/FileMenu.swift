@@ -51,7 +51,7 @@ let fileMenu = StandardMenu(title: "File")
         PuzzleObject.shared.bookmark == nil ? "Save..." : "Save"
     }
     
-    TextMenuItem(title: "Save As...", keyEquivalent: .command + "a") { sender in
+    TextMenuItem(title: "Save As...") { sender in
         AppDelegate.shared.saveTo(sender)
     }
     TextMenuItem(title: "Revert to Saved", keyEquivalent: .command + "r")
