@@ -36,156 +36,53 @@ fileprivate let fontList = NSFontManager.shared.availableFontFamilies
     .map { font(from: $0) }.filter { $0 != nil }.map { $0! }
 
 // -------------------------------------
-/*
- MacMenuBar doesn't currently allow setting attributed titles, and since we
- want a font menu to show fonts in their own face, we use standard NSMenu and
- NSMenuItem to build the font menu.
- */
-struct FontPopupButton<ValueContainer>: NSViewRepresentable
+struct FontPopupButton<ValueContainer>: PopupButtonProtocol
 {
     typealias Value = NSFont
-    typealias NSViewType = CustomNSPopUpButton
-    typealias ValuePath = WritableKeyPath<ValueContainer, Value>
+    typealias ValueContainer = ValueContainer
     
-    let width: CGFloat
-    let height: CGFloat
-    
-    @Binding var valueContainer: ValueContainer
-    let valuePath: ValuePath
-    let content: () -> [Value] = { fontList }
+    var width: CGFloat
+    var height: CGFloat
+    var valueContainer: Binding<ValueContainer>
+    var valuePath: ValuePath
+    var content: () -> [NSFont]
     
     // -------------------------------------
-    var currentValue: NSFont
+    init(
+        width: CGFloat,
+        height: CGFloat,
+        valuePath: ValuePath,
+        in container: Binding<ValueContainer>,
+        content: @escaping () -> [NSFont])
     {
-        get { valueContainer[keyPath: valuePath] }
-        set { valueContainer[keyPath: valuePath] = newValue }
+        self.width = width
+        self.height = height
+        self.valueContainer = container
+        self.valuePath = valuePath
+        self.content = content
     }
     
     // -------------------------------------
-    class CustomNSPopUpButton: NSPopUpButton
+    init(
+        width: CGFloat,
+        height: CGFloat,
+        valuePath: ValuePath,
+        in container: Binding<ValueContainer>)
     {
-        typealias ItemSelectionAction = (NSMenuItem) -> Void
-        let width: CGFloat
-        let height: CGFloat
-        var size: CGSize { CGSize(width: width, height: height) }
-        let itemSelectionAction: ItemSelectionAction
-        
-        // -------------------------------------
-        override var intrinsicContentSize: NSSize {
-            return NSSize(width: width, height: height)
-        }
-        
-        // -------------------------------------
-        init(
-            frame buttonFrame: NSRect,
-            pullsDown flag: Bool,
-            onSelection: @escaping ItemSelectionAction)
-        {
-            self.width = buttonFrame.width
-            self.height = buttonFrame.height
-            self.itemSelectionAction = onSelection
-            
-            super.init(frame: buttonFrame, pullsDown: flag)
-        }
+        self.init(
+            width: width,
+            height: height,
+            valuePath: valuePath,
+            in: container) { fontList }
+    }
 
-        // -------------------------------------
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-        
-        // -------------------------------------
-        public override func viewDidMoveToSuperview()
-        {
-            super.viewDidMoveToSuperview()
-            setFrameSize(size)
-        }
-        
-        // -------------------------------------
-        @objc public func itemSelected(_ sender: Any?)
-        {
-            guard let item = selectedItem else { return }
-            itemSelectionAction(item)
-        }
-    }
-    
     // -------------------------------------
-    private func makeItem(from value: Value) -> NSMenuItem?
-    {
-        if let styledTitle = attributedItemTitle(from: value)
-        {
-            let item = NSMenuItem()
-            item.attributedTitle = styledTitle
-            return item
-        }
-        
-        if let plainTitle = itemTitle(from: value)
-        {
-            let item = NSMenuItem()
-            item.title = plainTitle
-            return item
-        }
-        
-        return nil
-    }
-    
-    // -------------------------------------
-    private func populate(button: NSViewType, from values: [Value])
-    {
-        button.autoenablesItems = false
-        
-        var selectedItemIndex = 0
-        
-        for value in values
-        {
-            guard let item = makeItem(from: value) else { continue }
-
-            item.action = #selector(NSViewType.itemSelected(_:))
-            item.target = button
-            
-            if itemsAreEqual(value, currentValue)
-            {
-                selectedItemIndex = button.menu!.items.count
-                item.state = .on
-            }
-
-            button.menu!.addItem(item)
-        }
-        
-        button.selectItem(at: selectedItemIndex)
-    }
-    
-    // -------------------------------------
-    func makeNSView(context: Context) -> NSViewType
-    {
-        let buttonRect = CGRect(
-            origin: .zero,
-            size: CGSize(width: width, height: height)
-        )
-        let button = NSViewType(frame: buttonRect, pullsDown: false)
-        { item in
-            guard let itemTitle = item.attributedTitle?.string ?? item.title,
-                  let value = value(for: itemTitle)
-            else { return }
-            
-            valueContainer[keyPath: valuePath] = value
-        }
-        
-        populate(button: button, from: content())
-        
-        return button
-    }
-    
-    // -------------------------------------
-    func updateNSView(_ nsView: NSViewType, context: Context) { }
-    
-    // MARK:- Customization Points
-    // -------------------------------------
-    public func itemsAreEqual(_ value1: Value, _ value2: Value) -> Bool {
+    func itemsAreEqual(_ value1: Value, _ value2: Value) -> Bool {
         return value1.familyName == value2.familyName
     }
     
     // -------------------------------------
-    public func attributedItemTitle(from value: Value) -> NSAttributedString?
+    func attributedItemTitle(from value: Value) -> NSAttributedString?
     {
         guard let familyName = value.familyName else { return nil }
         return NSAttributedString(
@@ -195,10 +92,10 @@ struct FontPopupButton<ValueContainer>: NSViewRepresentable
     }
     
     // -------------------------------------
-    public func itemTitle(from value: Value) -> String? { nil }
+    func itemTitle(from value: Value) -> String? { nil }
     
     // -------------------------------------
-    public func value(for itemTitle: String) -> Value?
+    func value(for itemTitle: String) -> Value?
     {
         return NSFontManager.shared.font(
             withFamily: itemTitle,
@@ -208,4 +105,3 @@ struct FontPopupButton<ValueContainer>: NSViewRepresentable
         )
     }
 }
-

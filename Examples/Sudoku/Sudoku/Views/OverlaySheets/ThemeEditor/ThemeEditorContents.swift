@@ -70,10 +70,10 @@ struct ThemeFontPicker: View
             FontPopupButton<Theme>(
                 width: 80,
                 height: 25,
-                valueContainer: $currentTheme,
-                valuePath: keyPath
+                valuePath: keyPath,
+                in: $currentTheme
             ).frame(alignment: .trailing)
-            
+
             Picker("Size:", selection: $size)
             {
                 ForEach(Self.sizes, id: \.self) { points in

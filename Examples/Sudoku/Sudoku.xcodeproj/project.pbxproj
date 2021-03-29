@@ -10,6 +10,7 @@
 		4506157F260726A400E58DE1 /* NSGameWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506157E260726A400E58DE1 /* NSGameWindow.swift */; };
 		45141E72260B6AD0008EF118 /* ThemeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45141E71260B6AD0008EF118 /* ThemeEditor.swift */; };
 		45278DC6260A528A00C0A76B /* MacMenuBar in Frameworks */ = {isa = PBXBuildFile; productRef = 45278DC5260A528A00C0A76B /* MacMenuBar */; };
+		453CA16E26123C1600B9F31C /* PopUpMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453CA16D26123C1600B9F31C /* PopUpMenuButton.swift */; };
 		4541EFAE2604DC7D0000298A /* CellGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFAD2604DC7D0000298A /* CellGroupView.swift */; };
 		4541EFB926055A7C0000298A /* CellNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFB826055A7C0000298A /* CellNotesView.swift */; };
 		4541EFBE260564FE0000298A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFBD260564FE0000298A /* Theme.swift */; };
@@ -82,6 +83,7 @@
 		4506157E260726A400E58DE1 /* NSGameWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSGameWindow.swift; sourceTree = "<group>"; };
 		45141E71260B6AD0008EF118 /* ThemeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditor.swift; sourceTree = "<group>"; };
 		45278DBA260A50C700C0A76B /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		453CA16D26123C1600B9F31C /* PopUpMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpMenuButton.swift; sourceTree = "<group>"; };
 		4541EFAD2604DC7D0000298A /* CellGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellGroupView.swift; sourceTree = "<group>"; };
 		4541EFB826055A7C0000298A /* CellNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellNotesView.swift; sourceTree = "<group>"; };
 		4541EFBD260564FE0000298A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				454ED2ED260FF18C00C2E6C7 /* ColorWell.swift */,
 				454EA495260FCE30009FA151 /* CustomTextField.swift */,
 				45DB1342261128E5006F2F9E /* FontPopupButton.swift */,
+				453CA16D26123C1600B9F31C /* PopUpMenuButton.swift */,
 			);
 			path = NSViewRepresentables;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				456428CB2604929800E60129 /* FileMenu.swift in Sources */,
 				4541EFBE260564FE0000298A /* Theme.swift in Sources */,
 				458AF5262609209A00CAD8B0 /* NSCoder+Extension.swift in Sources */,
+				453CA16E26123C1600B9F31C /* PopUpMenuButton.swift in Sources */,
 				458AF5112608DB2A00CAD8B0 /* ThemesMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
