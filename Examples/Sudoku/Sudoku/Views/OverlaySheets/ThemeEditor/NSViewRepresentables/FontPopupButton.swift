@@ -20,8 +20,20 @@
 
 import SwiftUI
 
-fileprivate let fontList = NSFontManager.shared.availableFontFamilies
 fileprivate let fontSize: CGFloat = 11
+
+// -------------------------------------
+fileprivate func font(from family: String) -> NSFont?
+{
+    NSFontManager.shared.font(
+        withFamily: family,
+        traits: [], weight: 5,
+        size: fontSize
+    )
+}
+
+fileprivate let fontList = NSFontManager.shared.availableFontFamilies
+    .map { font(from: $0) }.filter { $0 != nil }.map { $0! }
 
 // -------------------------------------
 /*
@@ -42,7 +54,7 @@ struct FontPopupButton<ValueContainer>: NSViewRepresentable
     let valuePath: ValuePath
     
     // -------------------------------------
-    var font: NSFont
+    var currentValue: NSFont
     {
         get { stylableThing[keyPath: valuePath] }
         set { stylableThing[keyPath: valuePath] = newValue }
@@ -96,6 +108,49 @@ struct FontPopupButton<ValueContainer>: NSViewRepresentable
     }
     
     // -------------------------------------
+    public func itemsAreEqual(_ value1: Value, _ value2: Value) -> Bool {
+        return value1.familyName == value2.familyName
+    }
+    
+    // -------------------------------------
+    private func makeItem(from value: Value) -> NSMenuItem?
+    {
+        guard let familyName = value.familyName else { return nil }
+        let item = NSMenuItem()
+        item.attributedTitle = NSAttributedString(
+            string: familyName,
+            attributes: [.font : value as Any]
+        )
+        return item
+    }
+    
+    // -------------------------------------
+    private func populate(button: NSViewType, from values: [Value])
+    {
+        button.autoenablesItems = false
+        
+        var selectedItemIndex = 0
+        
+        for value in values
+        {
+            guard let item = makeItem(from: value) else { continue }
+
+            item.action = #selector(NSViewType.itemSelected(_:))
+            item.target = button
+            
+            if itemsAreEqual(value, currentValue)
+            {
+                selectedItemIndex = button.menu!.items.count
+                item.state = .on
+            }
+
+            button.menu!.addItem(item)
+        }
+        
+        button.selectItem(at: selectedItemIndex)
+    }
+    
+    // -------------------------------------
     func makeNSView(context: Context) -> NSViewType
     {
         let buttonRect = CGRect(
@@ -109,43 +164,13 @@ struct FontPopupButton<ValueContainer>: NSViewRepresentable
                 withFamily: fontFamilyName,
                 traits: [],
                 weight: 5,
-                size: stylableThing[keyPath: valuePath].pointSize)
+                size: currentValue.pointSize)
             else { return }
             
             stylableThing[keyPath: valuePath] = font
         }
         
-        button.autoenablesItems = false
-        
-        var selectedItemIndex = 0
-        
-        for fontName in fontList
-        {
-            let font = NSFontManager.shared.font(
-                withFamily: fontName,
-                traits: [],
-                weight: 5,
-                size: fontSize
-            ) ?? NSFont.systemFont(ofSize: fontSize)
-            
-            let item = NSMenuItem()
-            item.attributedTitle = NSAttributedString(
-                string: fontName,
-                attributes: [.font : font as Any]
-            )
-            item.action = #selector(NSViewType.itemSelected(_:))
-            item.target = button
-            
-            if fontName == self.font.familyName
-            {
-                selectedItemIndex = button.menu!.items.count
-                item.state = .on
-            }
-
-            button.menu!.addItem(item)
-        }
-        
-        button.selectItem(at: selectedItemIndex)
+        populate(button: button, from: fontList)
         
         return button
     }
