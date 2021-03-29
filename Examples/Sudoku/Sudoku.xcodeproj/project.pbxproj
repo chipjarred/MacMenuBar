@@ -11,6 +11,8 @@
 		45141E72260B6AD0008EF118 /* ThemeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45141E71260B6AD0008EF118 /* ThemeEditor.swift */; };
 		45278DC6260A528A00C0A76B /* MacMenuBar in Frameworks */ = {isa = PBXBuildFile; productRef = 45278DC5260A528A00C0A76B /* MacMenuBar */; };
 		4529FC0526126943007091AC /* FontSizePopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529FC0426126943007091AC /* FontSizePopupButton.swift */; };
+		4529FC10261274C9007091AC /* ThemeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529FC0F261274C9007091AC /* ThemeSlider.swift */; };
+		4529FC152612752D007091AC /* ThemeFontPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529FC142612752D007091AC /* ThemeFontPicker.swift */; };
 		453CA16E26123C1600B9F31C /* PopUpMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453CA16D26123C1600B9F31C /* PopUpMenuButton.swift */; };
 		4541EFAE2604DC7D0000298A /* CellGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFAD2604DC7D0000298A /* CellGroupView.swift */; };
 		4541EFB926055A7C0000298A /* CellNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFB826055A7C0000298A /* CellNotesView.swift */; };
@@ -85,6 +87,8 @@
 		45141E71260B6AD0008EF118 /* ThemeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditor.swift; sourceTree = "<group>"; };
 		45278DBA260A50C700C0A76B /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4529FC0426126943007091AC /* FontSizePopupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSizePopupButton.swift; sourceTree = "<group>"; };
+		4529FC0F261274C9007091AC /* ThemeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSlider.swift; sourceTree = "<group>"; };
+		4529FC142612752D007091AC /* ThemeFontPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeFontPicker.swift; sourceTree = "<group>"; };
 		453CA16D26123C1600B9F31C /* PopUpMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpMenuButton.swift; sourceTree = "<group>"; };
 		4541EFAD2604DC7D0000298A /* CellGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellGroupView.swift; sourceTree = "<group>"; };
 		4541EFB826055A7C0000298A /* CellNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellNotesView.swift; sourceTree = "<group>"; };
@@ -218,15 +222,17 @@
 			isa = PBXGroup;
 			children = (
 				451003B626122D46000E63EA /* NSViewRepresentables */,
-				45141E71260B6AD0008EF118 /* ThemeEditor.swift */,
-				454EA4AD260FEF28009FA151 /* ThemeEditorContents.swift */,
-				454EA4A8260FEEC1009FA151 /* ThemeList.swift */,
-				454EA4A3260FEE68009FA151 /* ThemeListButton.swift */,
-				454EA49B260FEE1D009FA151 /* ThemeListCell.swift */,
 				45DB132626110993006F2F9E /* ThemeColorWell.swift */,
+				45141E71260B6AD0008EF118 /* ThemeEditor.swift */,
 				45DB1333261110A4006F2F9E /* ThemeEditorCellNotePreview.swift */,
 				45DB1338261110FA006F2F9E /* ThemeEditorCellNotesPreview.swift */,
 				45DB133D26111135006F2F9E /* ThemeEditorCellPreview.swift */,
+				454EA4AD260FEF28009FA151 /* ThemeEditorContents.swift */,
+				4529FC142612752D007091AC /* ThemeFontPicker.swift */,
+				454EA4A8260FEEC1009FA151 /* ThemeList.swift */,
+				454EA4A3260FEE68009FA151 /* ThemeListButton.swift */,
+				454EA49B260FEE1D009FA151 /* ThemeListCell.swift */,
+				4529FC0F261274C9007091AC /* ThemeSlider.swift */,
 			);
 			path = ThemeEditor;
 			sourceTree = "<group>";
@@ -495,6 +501,7 @@
 				4541EFAE2604DC7D0000298A /* CellGroupView.swift in Sources */,
 				45C9AF87260850C80058C373 /* PuzzleObject.swift in Sources */,
 				454EA4A9260FEEC1009FA151 /* ThemeList.swift in Sources */,
+				4529FC152612752D007091AC /* ThemeFontPicker.swift in Sources */,
 				4541EFDC2605C56A0000298A /* NSGameHostingView.swift in Sources */,
 				454EA4AE260FEF28009FA151 /* ThemeEditorContents.swift in Sources */,
 				45DB132726110993006F2F9E /* ThemeColorWell.swift in Sources */,
@@ -510,6 +517,7 @@
 				458AF51C26090B1500CAD8B0 /* Preferences.swift in Sources */,
 				4541EFFA26061BC30000298A /* CGKeyCode+Extension.swift in Sources */,
 				456428C72604929800E60129 /* MenuBar.swift in Sources */,
+				4529FC10261274C9007091AC /* ThemeSlider.swift in Sources */,
 				45141E72260B6AD0008EF118 /* ThemeEditor.swift in Sources */,
 				456428D92604929800E60129 /* ContentView.swift in Sources */,
 				45DB1334261110A4006F2F9E /* ThemeEditorCellNotePreview.swift in Sources */,

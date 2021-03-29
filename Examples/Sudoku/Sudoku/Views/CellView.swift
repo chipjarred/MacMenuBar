@@ -56,11 +56,9 @@ struct CellView: View
         }
     }
 
-    
     // -------------------------------------
-    static var highlight: some View
-    {
-        highlightRect.opacity(0.2)
+    var highlight: some View {
+        Self.highlightRect.opacity(prefs.theme.highlightBrightness)
     }
     
     // -------------------------------------
@@ -201,7 +199,7 @@ struct CellView: View
         ZStack
         {
             backColor
-            if !fixed && isSelected { Self.highlight }
+            if !fixed && isSelected { highlight }
             if !fixed && guess == nil {
                 CellNotesView(row: row, col: col)
                     .environmentObject(puzzle)

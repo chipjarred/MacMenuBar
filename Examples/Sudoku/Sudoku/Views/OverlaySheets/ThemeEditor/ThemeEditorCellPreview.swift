@@ -31,9 +31,7 @@ struct ThemeEditorCellPreview: View
     
     typealias HighlightPath = CellView.HighlightPath
     
-    static var highlight: some View { CellView.highlight }
-    static var highlightRect: some View { CellView.highlightRect }
-    
+
     @Binding var currentTheme: Theme
     
     var isSelected: Bool
@@ -44,6 +42,11 @@ struct ThemeEditorCellPreview: View
     var guess: Int? { cell.guess }
     var notes: Set<Int> { cell.notes }
     
+    // -------------------------------------
+    var highlight: some View {
+        CellView.highlightRect.opacity(currentTheme.highlightBrightness)
+    }
+
     // -------------------------------------
     var displayString: String
     {
@@ -80,7 +83,7 @@ struct ThemeEditorCellPreview: View
         ZStack
         {
             backColor
-            if !fixed && isSelected { Self.highlight }
+            if !fixed && isSelected { highlight }
             if !fixed && guess == nil
             {
                 ThemeEditorCellNotesPreview(
