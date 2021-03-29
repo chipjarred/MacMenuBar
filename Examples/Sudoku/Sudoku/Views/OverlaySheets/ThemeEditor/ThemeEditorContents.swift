@@ -65,24 +65,27 @@ struct ThemeFontPicker: View
                 .font(.system(size: 10))
                 .frame(alignment: .trailing)
                 .padding(.trailing, 5)
-                .padding(.top, 4)
             
-            FontPopupButton<Theme>(
+            FontFamilyPopupButton<Theme>(
                 width: 80,
                 height: 25,
                 valuePath: keyPath,
                 in: $currentTheme
             ).frame(alignment: .trailing)
+            
+            Text("Size:")
+                .font(.system(size: 10))
+                .frame(alignment: .trailing)
+                .padding([.leading, .trailing], 5)
 
-            Picker("Size:", selection: $size)
-            {
-                ForEach(Self.sizes, id: \.self) { points in
-                    Text("\(points)").tag(points)
-                }
-            }
-            .font(.system(size: 10))
-            .frame(width: 80, height: 25)
-            .padding(.top, 4)
+            FontSizePopupButton(
+                width: 45,
+                height: 25,
+                valuePath: keyPath,
+                in: $currentTheme,
+                content: { Self.sizes }
+            )
+            .frame(width: 45, height: 25)
         }.frame(width: 200)
     }
 }

@@ -10,6 +10,7 @@
 		4506157F260726A400E58DE1 /* NSGameWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506157E260726A400E58DE1 /* NSGameWindow.swift */; };
 		45141E72260B6AD0008EF118 /* ThemeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45141E71260B6AD0008EF118 /* ThemeEditor.swift */; };
 		45278DC6260A528A00C0A76B /* MacMenuBar in Frameworks */ = {isa = PBXBuildFile; productRef = 45278DC5260A528A00C0A76B /* MacMenuBar */; };
+		4529FC0526126943007091AC /* FontSizePopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529FC0426126943007091AC /* FontSizePopupButton.swift */; };
 		453CA16E26123C1600B9F31C /* PopUpMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453CA16D26123C1600B9F31C /* PopUpMenuButton.swift */; };
 		4541EFAE2604DC7D0000298A /* CellGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFAD2604DC7D0000298A /* CellGroupView.swift */; };
 		4541EFB926055A7C0000298A /* CellNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFB826055A7C0000298A /* CellNotesView.swift */; };
@@ -58,7 +59,7 @@
 		45DB1334261110A4006F2F9E /* ThemeEditorCellNotePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB1333261110A4006F2F9E /* ThemeEditorCellNotePreview.swift */; };
 		45DB1339261110FA006F2F9E /* ThemeEditorCellNotesPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB1338261110FA006F2F9E /* ThemeEditorCellNotesPreview.swift */; };
 		45DB133E26111135006F2F9E /* ThemeEditorCellPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB133D26111135006F2F9E /* ThemeEditorCellPreview.swift */; };
-		45DB1343261128E5006F2F9E /* FontPopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB1342261128E5006F2F9E /* FontPopupButton.swift */; };
+		45DB1343261128E5006F2F9E /* FontFamilyPopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB1342261128E5006F2F9E /* FontFamilyPopupButton.swift */; };
 		45E4C7A2260A1052004FF34F /* URLBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E4C7A1260A1052004FF34F /* URLBookmark.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +84,7 @@
 		4506157E260726A400E58DE1 /* NSGameWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSGameWindow.swift; sourceTree = "<group>"; };
 		45141E71260B6AD0008EF118 /* ThemeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditor.swift; sourceTree = "<group>"; };
 		45278DBA260A50C700C0A76B /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		4529FC0426126943007091AC /* FontSizePopupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSizePopupButton.swift; sourceTree = "<group>"; };
 		453CA16D26123C1600B9F31C /* PopUpMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpMenuButton.swift; sourceTree = "<group>"; };
 		4541EFAD2604DC7D0000298A /* CellGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellGroupView.swift; sourceTree = "<group>"; };
 		4541EFB826055A7C0000298A /* CellNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellNotesView.swift; sourceTree = "<group>"; };
@@ -140,7 +142,7 @@
 		45DB1333261110A4006F2F9E /* ThemeEditorCellNotePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorCellNotePreview.swift; sourceTree = "<group>"; };
 		45DB1338261110FA006F2F9E /* ThemeEditorCellNotesPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorCellNotesPreview.swift; sourceTree = "<group>"; };
 		45DB133D26111135006F2F9E /* ThemeEditorCellPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorCellPreview.swift; sourceTree = "<group>"; };
-		45DB1342261128E5006F2F9E /* FontPopupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontPopupButton.swift; sourceTree = "<group>"; };
+		45DB1342261128E5006F2F9E /* FontFamilyPopupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontFamilyPopupButton.swift; sourceTree = "<group>"; };
 		45E4C7A1260A1052004FF34F /* URLBookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBookmark.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,7 +184,8 @@
 			children = (
 				454ED2ED260FF18C00C2E6C7 /* ColorWell.swift */,
 				454EA495260FCE30009FA151 /* CustomTextField.swift */,
-				45DB1342261128E5006F2F9E /* FontPopupButton.swift */,
+				45DB1342261128E5006F2F9E /* FontFamilyPopupButton.swift */,
+				4529FC0426126943007091AC /* FontSizePopupButton.swift */,
 				453CA16D26123C1600B9F31C /* PopUpMenuButton.swift */,
 			);
 			path = NSViewRepresentables;
@@ -486,7 +489,7 @@
 			files = (
 				456428DD260492A600E60129 /* AppDelegate.swift in Sources */,
 				456428D32604929800E60129 /* WindowMenu.swift in Sources */,
-				45DB1343261128E5006F2F9E /* FontPopupButton.swift in Sources */,
+				45DB1343261128E5006F2F9E /* FontFamilyPopupButton.swift in Sources */,
 				4541EFB926055A7C0000298A /* CellNotesView.swift in Sources */,
 				45C9AFA02608D43F0058C373 /* OKCancelRequestSheet.swift in Sources */,
 				4541EFAE2604DC7D0000298A /* CellGroupView.swift in Sources */,
@@ -499,6 +502,7 @@
 				456428D72604929800E60129 /* main.swift in Sources */,
 				456428D12604929800E60129 /* ViewMenu.swift in Sources */,
 				456428CD2604929800E60129 /* EditMenu.swift in Sources */,
+				4529FC0526126943007091AC /* FontSizePopupButton.swift in Sources */,
 				454ED2EE260FF18C00C2E6C7 /* ColorWell.swift in Sources */,
 				454EA48E260FB180009FA151 /* ToolTip.swift in Sources */,
 				4506157F260726A400E58DE1 /* NSGameWindow.swift in Sources */,

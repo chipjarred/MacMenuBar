@@ -20,7 +20,7 @@
 
 import SwiftUI
 
-fileprivate let fontSize: CGFloat = 11
+fileprivate let _fontSize: CGFloat = 11
 
 // -------------------------------------
 fileprivate func font(from family: String) -> NSFont?
@@ -28,7 +28,7 @@ fileprivate func font(from family: String) -> NSFont?
     NSFontManager.shared.font(
         withFamily: family,
         traits: [], weight: 5,
-        size: fontSize
+        size: _fontSize
     )
 }
 
@@ -36,10 +36,12 @@ fileprivate let fontList = NSFontManager.shared.availableFontFamilies
     .map { font(from: $0) }.filter { $0 != nil }.map { $0! }
 
 // -------------------------------------
-struct FontPopupButton<ValueContainer>: PopupButtonProtocol
+struct FontFamilyPopupButton<ValueContainer>: PopupButtonProtocol
 {
     typealias Value = NSFont
     typealias ValueContainer = ValueContainer
+    
+    static var fontSize: CGFloat { _fontSize }
     
     var width: CGFloat
     var height: CGFloat
