@@ -13,6 +13,7 @@
 		4529FC0526126943007091AC /* FontSizePopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529FC0426126943007091AC /* FontSizePopupButton.swift */; };
 		4529FC10261274C9007091AC /* ThemeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529FC0F261274C9007091AC /* ThemeSlider.swift */; };
 		4529FC152612752D007091AC /* ThemeFontPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529FC142612752D007091AC /* ThemeFontPicker.swift */; };
+		4529FC1D26127869007091AC /* ThemeEditorFontsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529FC1C26127869007091AC /* ThemeEditorFontsView.swift */; };
 		453CA16E26123C1600B9F31C /* PopUpMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453CA16D26123C1600B9F31C /* PopUpMenuButton.swift */; };
 		4541EFAE2604DC7D0000298A /* CellGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFAD2604DC7D0000298A /* CellGroupView.swift */; };
 		4541EFB926055A7C0000298A /* CellNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFB826055A7C0000298A /* CellNotesView.swift */; };
@@ -30,7 +31,7 @@
 		454EA49C260FEE1D009FA151 /* ThemeListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA49B260FEE1D009FA151 /* ThemeListCell.swift */; };
 		454EA4A4260FEE68009FA151 /* ThemeListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA4A3260FEE68009FA151 /* ThemeListButton.swift */; };
 		454EA4A9260FEEC1009FA151 /* ThemeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA4A8260FEEC1009FA151 /* ThemeList.swift */; };
-		454EA4AE260FEF28009FA151 /* ThemeEditorContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA4AD260FEF28009FA151 /* ThemeEditorContents.swift */; };
+		454EA4AE260FEF28009FA151 /* ThemeEditorPuzzleColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA4AD260FEF28009FA151 /* ThemeEditorPuzzleColorsView.swift */; };
 		454ED2EE260FF18C00C2E6C7 /* ColorWell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ED2ED260FF18C00C2E6C7 /* ColorWell.swift */; };
 		456428C72604929800E60129 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456428C62604929800E60129 /* MenuBar.swift */; };
 		456428C92604929800E60129 /* ApplicationMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456428C82604929800E60129 /* ApplicationMenu.swift */; };
@@ -89,6 +90,7 @@
 		4529FC0426126943007091AC /* FontSizePopupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSizePopupButton.swift; sourceTree = "<group>"; };
 		4529FC0F261274C9007091AC /* ThemeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSlider.swift; sourceTree = "<group>"; };
 		4529FC142612752D007091AC /* ThemeFontPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeFontPicker.swift; sourceTree = "<group>"; };
+		4529FC1C26127869007091AC /* ThemeEditorFontsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorFontsView.swift; sourceTree = "<group>"; };
 		453CA16D26123C1600B9F31C /* PopUpMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpMenuButton.swift; sourceTree = "<group>"; };
 		4541EFAD2604DC7D0000298A /* CellGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellGroupView.swift; sourceTree = "<group>"; };
 		4541EFB826055A7C0000298A /* CellNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellNotesView.swift; sourceTree = "<group>"; };
@@ -106,7 +108,7 @@
 		454EA49B260FEE1D009FA151 /* ThemeListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeListCell.swift; sourceTree = "<group>"; };
 		454EA4A3260FEE68009FA151 /* ThemeListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeListButton.swift; sourceTree = "<group>"; };
 		454EA4A8260FEEC1009FA151 /* ThemeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeList.swift; sourceTree = "<group>"; };
-		454EA4AD260FEF28009FA151 /* ThemeEditorContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorContents.swift; sourceTree = "<group>"; };
+		454EA4AD260FEF28009FA151 /* ThemeEditorPuzzleColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorPuzzleColorsView.swift; sourceTree = "<group>"; };
 		454ED2ED260FF18C00C2E6C7 /* ColorWell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWell.swift; sourceTree = "<group>"; };
 		456428C02604929800E60129 /* Sudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		456428C62604929800E60129 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
@@ -227,7 +229,8 @@
 				45DB1333261110A4006F2F9E /* ThemeEditorCellNotePreview.swift */,
 				45DB1338261110FA006F2F9E /* ThemeEditorCellNotesPreview.swift */,
 				45DB133D26111135006F2F9E /* ThemeEditorCellPreview.swift */,
-				454EA4AD260FEF28009FA151 /* ThemeEditorContents.swift */,
+				4529FC1C26127869007091AC /* ThemeEditorFontsView.swift */,
+				454EA4AD260FEF28009FA151 /* ThemeEditorPuzzleColorsView.swift */,
 				4529FC142612752D007091AC /* ThemeFontPicker.swift */,
 				454EA4A8260FEEC1009FA151 /* ThemeList.swift */,
 				454EA4A3260FEE68009FA151 /* ThemeListButton.swift */,
@@ -503,11 +506,12 @@
 				454EA4A9260FEEC1009FA151 /* ThemeList.swift in Sources */,
 				4529FC152612752D007091AC /* ThemeFontPicker.swift in Sources */,
 				4541EFDC2605C56A0000298A /* NSGameHostingView.swift in Sources */,
-				454EA4AE260FEF28009FA151 /* ThemeEditorContents.swift in Sources */,
+				454EA4AE260FEF28009FA151 /* ThemeEditorPuzzleColorsView.swift in Sources */,
 				45DB132726110993006F2F9E /* ThemeColorWell.swift in Sources */,
 				45C9AF8C2608825E0058C373 /* NewGameSheet.swift in Sources */,
 				456428D72604929800E60129 /* main.swift in Sources */,
 				456428D12604929800E60129 /* ViewMenu.swift in Sources */,
+				4529FC1D26127869007091AC /* ThemeEditorFontsView.swift in Sources */,
 				456428CD2604929800E60129 /* EditMenu.swift in Sources */,
 				4529FC0526126943007091AC /* FontSizePopupButton.swift in Sources */,
 				454ED2EE260FF18C00C2E6C7 /* ColorWell.swift in Sources */,

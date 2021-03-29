@@ -55,7 +55,7 @@ struct ThemeEditor: View
                     Rectangle()
                         .fill(Color.controlColor)
                         .frame(height: 1)
-
+                    
                     HStack(alignment: .top, spacing: 0)
                     {
                         ThemeList(currentTheme: $currentTheme)
@@ -63,12 +63,23 @@ struct ThemeEditor: View
                         
                         VStack(alignment: .center, spacing: 0)
                         {
-                            ThemeEditorContents(currentTheme: $currentTheme)
-                                .environmentObject(preferences)
-                            
-                            Spacer()
-                            
-                            HStack
+                            TabView
+                            {
+                                ThemeEditorPuzzleColorsView(
+                                    currentTheme: $currentTheme
+                                ).environmentObject(preferences)
+                                .tabItem { Text("Puzzle Colors") }
+                                
+                                ThemeEditorFontsView(
+                                    currentTheme: $currentTheme
+                                ).environmentObject(preferences)
+                                .tabItem { Text("Fonts") }
+                                
+                                Rectangle().fill(Color.black.opacity(0))
+                                    .tabItem { Text("Popovers") }
+                            }
+
+                            HStack(alignment: .center)
                             {
                                 Spacer()
                                 
@@ -86,7 +97,7 @@ struct ThemeEditor: View
                                 }.frame(width: 100)
                                 
                                 Spacer()
-                            }.padding(.bottom, 20)
+                            }.padding([.top, .bottom], 10)
                         }
                     }
                 }

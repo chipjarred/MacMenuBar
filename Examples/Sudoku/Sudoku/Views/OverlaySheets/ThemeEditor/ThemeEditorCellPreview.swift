@@ -87,7 +87,7 @@ struct ThemeEditorCellPreview: View
             if !fixed && guess == nil
             {
                 ThemeEditorCellNotesPreview(
-                    notes: [1, 5, 6, 7, 9],
+                    notes: cell.notes,
                     currentTheme: $currentTheme
                 )
             }

@@ -22,7 +22,7 @@
 import SwiftUI
 
 // -------------------------------------
-struct ThemeEditorContents: View
+struct ThemeEditorPuzzleColorsView: View
 {
     @Binding var currentTheme: Theme
     @EnvironmentObject var prefs: Preferences
@@ -107,12 +107,10 @@ struct ThemeEditorContents: View
     {
         ZStack
         {
-            VStack
+            VStack(alignment: .center)
             {
                 HStack(alignment: .top)
                 {
-                    cellPreviewStack
-                    
                     VStack(alignment: .trailing, spacing: 2)
                     {
                         ThemeColorWell(
@@ -158,23 +156,9 @@ struct ThemeEditorContents: View
                             colorPath: \.noteColor
                         ).padding(.top, 10)
                     }
+                    
+                    cellPreviewStack
                 }
-                
-                ThemeFontPicker(
-                    label: "Value Font",
-                    pickerValue: currentTheme.font,
-                    size: Int(currentTheme.font.pointSize),
-                    currentTheme: $currentTheme,
-                    keyPath: \.font
-                )
-                
-                ThemeFontPicker(
-                    label: "Note Font",
-                    pickerValue: currentTheme.noteFont,
-                    size: Int(currentTheme.noteFont.pointSize),
-                    currentTheme: $currentTheme,
-                    keyPath: \.noteFont
-                )
             }
             .padding(.top, 10)
         }
@@ -182,7 +166,7 @@ struct ThemeEditorContents: View
 }
 
 // -------------------------------------
-struct ThemeEditorContents_Previews: PreviewProvider
+struct ThemeEditorPuzzleColorsView_Previews: PreviewProvider
 {
     static var prefs = Preferences()
     @State static var currentTheme = prefs.theme
@@ -190,7 +174,7 @@ struct ThemeEditorContents_Previews: PreviewProvider
     // -------------------------------------
     static var previews: some View
     {
-        ThemeEditorContents(currentTheme: $currentTheme)
+        ThemeEditorPuzzleColorsView(currentTheme: $currentTheme)
             .frame(
                 width: PuzzleView.width - ThemeList.width,
                 height: PuzzleView.width - ThemeEditor.titleHeight

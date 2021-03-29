@@ -24,7 +24,7 @@ import SwiftUI
 // -------------------------------------
 struct ThemeFontPicker: View
 {
-    static let sizes = [8, 9, 10, 11, 12, 14, 16, 18, 21, 24, 28, 30, 36, 48]
+    static let sizes = [8, 9, 10, 11, 12, 14, 16, 18, 21, 24, 28, 30]
     var label: String
     @State var pickerValue: NSFont
     @State var size: Int
