@@ -50,19 +50,17 @@ struct FontPopupButton<StylableThing>: NSViewRepresentable
     // -------------------------------------
     class CustomNSPopUpButton: NSPopUpButton
     {
+        typealias ItemSelectionAction = (NSMenuItem) -> Void
         let width: CGFloat
         let height: CGFloat
         var size: CGSize { CGSize(width: width, height: height) }
         @Binding var thing: StylableThing
         let fontPath: FontPath
+        let itemSelectionAction: ItemSelectionAction
         
         // -------------------------------------
-        override var intrinsicContentSize: NSSize
-        {
-            return NSSize(
-                width: width,
-                height: height
-            )
+        override var intrinsicContentSize: NSSize {
+            return NSSize(width: width, height: height)
         }
         
         // -------------------------------------
@@ -70,12 +68,14 @@ struct FontPopupButton<StylableThing>: NSViewRepresentable
             frame buttonFrame: NSRect,
             pullsDown flag: Bool,
             stylableThing: Binding<StylableThing>,
-            fontPath: FontPath)
+            fontPath: FontPath,
+            onSelection: @escaping ItemSelectionAction)
         {
             self.width = buttonFrame.width
             self.height = buttonFrame.height
             self._thing = stylableThing
             self.fontPath = fontPath
+            self.itemSelectionAction = onSelection
             
             super.init(frame: buttonFrame, pullsDown: flag)
         }
@@ -93,24 +93,10 @@ struct FontPopupButton<StylableThing>: NSViewRepresentable
         }
         
         // -------------------------------------
-        public override func setFrameSize(_ newSize: NSSize) {
-            super.setFrameSize(size)
-        }
-        
-        // -------------------------------------
         @objc public func itemSelected(_ sender: Any?)
         {
             guard let item = selectedItem else { return }
-            
-            let fontFamilyName = item.attributedTitle!.string
-            guard let font = NSFontManager.shared.font(
-                withFamily: fontFamilyName,
-                traits: [],
-                weight: 5,
-                size: thing[keyPath: fontPath].pointSize)
-            else { return }
-            
-            thing[keyPath: fontPath] = font
+            itemSelectionAction(item)
         }
     }
     
@@ -126,6 +112,17 @@ struct FontPopupButton<StylableThing>: NSViewRepresentable
             stylableThing: $stylableThing,
             fontPath: fontPath
         )
+        { item in
+            let fontFamilyName = item.attributedTitle!.string
+            guard let font = NSFontManager.shared.font(
+                withFamily: fontFamilyName,
+                traits: [],
+                weight: 5,
+                size: stylableThing[keyPath: fontPath].pointSize)
+            else { return }
+            
+            stylableThing[keyPath: fontPath] = font
+        }
         
         button.autoenablesItems = false
         
