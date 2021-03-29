@@ -175,6 +175,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		451003B626122D46000E63EA /* NSViewRepresentables */ = {
+			isa = PBXGroup;
+			children = (
+				454ED2ED260FF18C00C2E6C7 /* ColorWell.swift */,
+				454EA495260FCE30009FA151 /* CustomTextField.swift */,
+				45DB1342261128E5006F2F9E /* FontPopupButton.swift */,
+			);
+			path = NSViewRepresentables;
+			sourceTree = "<group>";
+		};
 		4541EFD2260588F90000298A /* Cocoa-BasedTypes */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +211,7 @@
 		454EA49A260FEDB9009FA151 /* ThemeEditor */ = {
 			isa = PBXGroup;
 			children = (
+				451003B626122D46000E63EA /* NSViewRepresentables */,
 				45141E71260B6AD0008EF118 /* ThemeEditor.swift */,
 				454EA4AD260FEF28009FA151 /* ThemeEditorContents.swift */,
 				454EA4A8260FEEC1009FA151 /* ThemeList.swift */,
@@ -312,9 +323,6 @@
 				4541EFE32605DAD90000298A /* GuessSelectionView.swift */,
 				456429212604A83100E60129 /* PuzzleView.swift */,
 				454EA48D260FB180009FA151 /* ToolTip.swift */,
-				454EA495260FCE30009FA151 /* CustomTextField.swift */,
-				454ED2ED260FF18C00C2E6C7 /* ColorWell.swift */,
-				45DB1342261128E5006F2F9E /* FontPopupButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
