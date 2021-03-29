@@ -29,22 +29,23 @@ fileprivate let fontSize: CGFloat = 11
  want a font menu to show fonts in their own face, we use standard NSMenu and
  NSMenuItem to build the font menu.
  */
-struct FontPopupButton<StylableThing>: NSViewRepresentable
+struct FontPopupButton<ValueContainer>: NSViewRepresentable
 {
+    typealias Value = NSFont
     typealias NSViewType = CustomNSPopUpButton
-    typealias FontPath = WritableKeyPath<StylableThing, NSFont>
+    typealias ValuePath = WritableKeyPath<ValueContainer, Value>
     
     let width: CGFloat
     let height: CGFloat
     
-    @Binding var stylableThing: StylableThing
-    let fontPath: FontPath
+    @Binding var stylableThing: ValueContainer
+    let valuePath: ValuePath
     
     // -------------------------------------
     var font: NSFont
     {
-        get { stylableThing[keyPath: fontPath] }
-        set { stylableThing[keyPath: fontPath] = newValue }
+        get { stylableThing[keyPath: valuePath] }
+        set { stylableThing[keyPath: valuePath] = newValue }
     }
     
     // -------------------------------------
@@ -97,23 +98,21 @@ struct FontPopupButton<StylableThing>: NSViewRepresentable
     // -------------------------------------
     func makeNSView(context: Context) -> NSViewType
     {
-        let button = NSViewType(
-            frame: CGRect(
-                origin: .zero,
-                size: CGSize(width: width, height: height)
-            ),
-            pullsDown: false
+        let buttonRect = CGRect(
+            origin: .zero,
+            size: CGSize(width: width, height: height)
         )
+        let button = NSViewType(frame: buttonRect, pullsDown: false)
         { item in
             let fontFamilyName = item.attributedTitle!.string
             guard let font = NSFontManager.shared.font(
                 withFamily: fontFamilyName,
                 traits: [],
                 weight: 5,
-                size: stylableThing[keyPath: fontPath].pointSize)
+                size: stylableThing[keyPath: valuePath].pointSize)
             else { return }
             
-            stylableThing[keyPath: fontPath] = font
+            stylableThing[keyPath: valuePath] = font
         }
         
         button.autoenablesItems = false

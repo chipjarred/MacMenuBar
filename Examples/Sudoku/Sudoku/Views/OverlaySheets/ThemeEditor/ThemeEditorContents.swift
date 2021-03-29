@@ -71,7 +71,7 @@ struct ThemeFontPicker: View
                 width: 80,
                 height: 25,
                 stylableThing: $currentTheme,
-                fontPath: keyPath
+                valuePath: keyPath
             ).frame(alignment: .trailing)
             
             Picker("Size:", selection: $size)
