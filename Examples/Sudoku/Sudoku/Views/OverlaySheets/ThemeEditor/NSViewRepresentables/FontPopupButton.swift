@@ -54,8 +54,6 @@ struct FontPopupButton<StylableThing>: NSViewRepresentable
         let width: CGFloat
         let height: CGFloat
         var size: CGSize { CGSize(width: width, height: height) }
-        @Binding var thing: StylableThing
-        let fontPath: FontPath
         let itemSelectionAction: ItemSelectionAction
         
         // -------------------------------------
@@ -67,14 +65,10 @@ struct FontPopupButton<StylableThing>: NSViewRepresentable
         init(
             frame buttonFrame: NSRect,
             pullsDown flag: Bool,
-            stylableThing: Binding<StylableThing>,
-            fontPath: FontPath,
             onSelection: @escaping ItemSelectionAction)
         {
             self.width = buttonFrame.width
             self.height = buttonFrame.height
-            self._thing = stylableThing
-            self.fontPath = fontPath
             self.itemSelectionAction = onSelection
             
             super.init(frame: buttonFrame, pullsDown: flag)
@@ -108,9 +102,7 @@ struct FontPopupButton<StylableThing>: NSViewRepresentable
                 origin: .zero,
                 size: CGSize(width: width, height: height)
             ),
-            pullsDown: false,
-            stylableThing: $stylableThing,
-            fontPath: fontPath
+            pullsDown: false
         )
         { item in
             let fontFamilyName = item.attributedTitle!.string
