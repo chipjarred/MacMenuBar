@@ -70,7 +70,7 @@ struct ThemeFontPicker: View
             FontPopupButton<Theme>(
                 width: 80,
                 height: 25,
-                stylableThing: $currentTheme,
+                valueContainer: $currentTheme,
                 valuePath: keyPath
             ).frame(alignment: .trailing)
             

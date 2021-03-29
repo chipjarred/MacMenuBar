@@ -50,14 +50,15 @@ struct FontPopupButton<ValueContainer>: NSViewRepresentable
     let width: CGFloat
     let height: CGFloat
     
-    @Binding var stylableThing: ValueContainer
+    @Binding var valueContainer: ValueContainer
     let valuePath: ValuePath
+    let content: () -> [Value] = { fontList }
     
     // -------------------------------------
     var currentValue: NSFont
     {
-        get { stylableThing[keyPath: valuePath] }
-        set { stylableThing[keyPath: valuePath] = newValue }
+        get { valueContainer[keyPath: valuePath] }
+        set { valueContainer[keyPath: valuePath] = newValue }
     }
     
     // -------------------------------------
@@ -108,20 +109,23 @@ struct FontPopupButton<ValueContainer>: NSViewRepresentable
     }
     
     // -------------------------------------
-    public func itemsAreEqual(_ value1: Value, _ value2: Value) -> Bool {
-        return value1.familyName == value2.familyName
-    }
-    
-    // -------------------------------------
     private func makeItem(from value: Value) -> NSMenuItem?
     {
-        guard let familyName = value.familyName else { return nil }
-        let item = NSMenuItem()
-        item.attributedTitle = NSAttributedString(
-            string: familyName,
-            attributes: [.font : value as Any]
-        )
-        return item
+        if let styledTitle = attributedItemTitle(from: value)
+        {
+            let item = NSMenuItem()
+            item.attributedTitle = styledTitle
+            return item
+        }
+        
+        if let plainTitle = itemTitle(from: value)
+        {
+            let item = NSMenuItem()
+            item.title = plainTitle
+            return item
+        }
+        
+        return nil
     }
     
     // -------------------------------------
@@ -159,18 +163,14 @@ struct FontPopupButton<ValueContainer>: NSViewRepresentable
         )
         let button = NSViewType(frame: buttonRect, pullsDown: false)
         { item in
-            let fontFamilyName = item.attributedTitle!.string
-            guard let font = NSFontManager.shared.font(
-                withFamily: fontFamilyName,
-                traits: [],
-                weight: 5,
-                size: currentValue.pointSize)
+            guard let itemTitle = item.attributedTitle?.string ?? item.title,
+                  let value = value(for: itemTitle)
             else { return }
             
-            stylableThing[keyPath: valuePath] = font
+            valueContainer[keyPath: valuePath] = value
         }
         
-        populate(button: button, from: fontList)
+        populate(button: button, from: content())
         
         return button
     }
@@ -178,5 +178,34 @@ struct FontPopupButton<ValueContainer>: NSViewRepresentable
     // -------------------------------------
     func updateNSView(_ nsView: NSViewType, context: Context) { }
     
+    // MARK:- Customization Points
+    // -------------------------------------
+    public func itemsAreEqual(_ value1: Value, _ value2: Value) -> Bool {
+        return value1.familyName == value2.familyName
+    }
+    
+    // -------------------------------------
+    public func attributedItemTitle(from value: Value) -> NSAttributedString?
+    {
+        guard let familyName = value.familyName else { return nil }
+        return NSAttributedString(
+            string: familyName,
+            attributes: [.font : value as Any]
+        )
+    }
+    
+    // -------------------------------------
+    public func itemTitle(from value: Value) -> String? { nil }
+    
+    // -------------------------------------
+    public func value(for itemTitle: String) -> Value?
+    {
+        return NSFontManager.shared.font(
+            withFamily: itemTitle,
+            traits: [],
+            weight: 5,
+            size: currentValue.pointSize
+        )
+    }
 }
 
