@@ -17,32 +17,50 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+//
 
-import Cocoa
+import SwiftUI
 
 // -------------------------------------
-@objc class NSGameWindow: NSWindow
+struct ThemeColorWell: View
 {
-    // -------------------------------------
-    override init(
-        contentRect: NSRect,
-        styleMask style: NSWindow.StyleMask,
-        backing backingStoreType: NSWindow.BackingStoreType,
-        defer flag: Bool)
+    let label: String
+    @Binding var currentTheme: Theme
+    let colorPath: WritableKeyPath<Theme, NSColor>
+    
+    init(
+        _ label: String,
+        currentTheme: Binding<Theme>,
+        colorPath: WritableKeyPath<Theme, NSColor>)
     {
-        super.init(
-            contentRect: contentRect,
-            styleMask: style,
-            backing: backingStoreType,
-            defer: flag
-        )
+        self.label = label
+        self._currentTheme = currentTheme
+        self.colorPath = colorPath
     }
-
+        
     // -------------------------------------
-    @objc override func keyDown(with event: NSEvent)
+    public var body: some View
     {
-        if (contentView as? NSGameHostingView)?.keyDown(with: event) == false {
-            super.keyDown(with: event)
+        HStack(spacing: 0)
+        {
+            Text("\(label):")
+                .font(.system(size: 10))
+                .frame(alignment: .trailing)
+                .padding([.leading, .trailing], 5)
+            ColorWell($currentTheme, colorPath: colorPath)
+                .frame(width: 50, height: 20, alignment: .leading)
         }
+    }
+}
+
+// -------------------------------------
+struct ThemeColorWell_Previews: PreviewProvider
+{
+    static let prefs = Preferences()
+    @State static var currentTheme = prefs.theme
+    
+    // -------------------------------------
+    static var previews: some View {
+        ThemeColorWell("Some Color", currentTheme: $currentTheme, colorPath: \.validGuessColor)
     }
 }

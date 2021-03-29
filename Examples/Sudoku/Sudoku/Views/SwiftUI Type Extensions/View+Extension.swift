@@ -28,4 +28,30 @@ extension View
     func frame(_ size: CGSize) -> some View {
         frame(width: size.width, height: size.height)
     }
+    
+    // -------------------------------------
+    @inlinable
+    func hAlign(_ alignment: HorizontalAlignment) -> some View {
+        VStack(alignment: alignment, spacing: 0) { self }
+    }
+    
+    // -------------------------------------
+    @inlinable
+    func hAlign(_ alignment: VerticalAlignment) -> some View {
+        HStack(alignment: alignment, spacing: 0) { self }
+    }
+}
+
+// -------------------------------------
+extension View
+{
+    // -------------------------------------
+    func toolTip(_ toolTip: String) -> some View {
+        self.overlay(Tooltip(tooltip: toolTip))
+    }
+    
+    // -------------------------------------
+    func selectable(onTap block: @escaping () -> Void) -> some View {
+        self.onTapGesture { block() }
+    }
 }

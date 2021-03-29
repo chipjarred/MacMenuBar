@@ -59,5 +59,7 @@ let themesMenu = StandardMenu(title: "Themes")
     }
     
     MenuSeparator()
-    TextMenuItem(title: "Edit Themes").enabled(false)
+    TextMenuItem(title: "Edit Themes") { _ in
+        AppDelegate.shared.sheetRequest.state = .editThemes
+    }.enabledWhen { AppDelegate.shared.sheetRequest.state == .none }
 }

@@ -37,6 +37,7 @@ final class Preferences: ObservableObject, Codable
         if let newTheme = customThemes.first(where: { $0.name == name }) {
             theme = newTheme
         }
+        sortThemes()
     }
     
     // -------------------------------------
@@ -59,6 +60,7 @@ final class Preferences: ObservableObject, Codable
         customThemes = Theme.initialThemes
         theme = .system
         recentBookmarks.removeAll()
+        sortThemes()
     }
     
     // -------------------------------------
@@ -75,6 +77,40 @@ final class Preferences: ObservableObject, Codable
     // -------------------------------------
     public func updateRecent(bookmark: URLBookmark, at index: Int) {
         recentBookmarks.insert(bookmark, at: 0)
+    }
+    
+    // -------------------------------------
+    public func addCustomTheme(_ newTheme: Theme)
+    {
+        customThemes.append(newTheme)
+        sortThemes()
+    }
+    
+    // -------------------------------------
+    public func removeCustomTheme(_ theme: Theme)
+    {
+        if let i = customThemes.firstIndex(where: { $0.id == theme.id })
+        {
+            customThemes.remove(at: i)
+            if self.theme.id == theme.id {
+                self.theme = .system
+            }
+        }
+    }
+    
+    // -------------------------------------
+    public func updateTheme(_ theme: Theme, to newTheme: Theme)
+    {
+        if let i = customThemes.firstIndex(where: { $0.id == theme.id }) {
+            customThemes[i] = newTheme
+        }
+        sortThemes()
+        if self.theme.id == theme.id { self.theme = newTheme }
+    }
+        
+        // -------------------------------------
+    private func sortThemes() {
+        customThemes.sort { $0.name < $1.name }
     }
     
     // MARK:- Coding Conformance

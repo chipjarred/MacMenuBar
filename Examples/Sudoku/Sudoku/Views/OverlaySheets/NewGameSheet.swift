@@ -44,3 +44,9 @@ struct NewGameRequestSheet: OKCancelRequestSheet
         sheetRequest.state = .none
     }
 }
+
+struct NewGameSheet_Previews: PreviewProvider {
+    static var previews: some View {
+        NewGameRequestSheet()
+    }
+}

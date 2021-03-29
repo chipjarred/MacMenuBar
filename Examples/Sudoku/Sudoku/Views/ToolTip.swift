@@ -18,31 +18,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import Cocoa
+import SwiftUI
 
 // -------------------------------------
-@objc class NSGameWindow: NSWindow
+struct Tooltip: NSViewRepresentable
 {
+    let tooltip: String
+    
     // -------------------------------------
-    override init(
-        contentRect: NSRect,
-        styleMask style: NSWindow.StyleMask,
-        backing backingStoreType: NSWindow.BackingStoreType,
-        defer flag: Bool)
+    func makeNSView(context: NSViewRepresentableContext<Tooltip>) -> NSView
     {
-        super.init(
-            contentRect: contentRect,
-            styleMask: style,
-            backing: backingStoreType,
-            defer: flag
-        )
-    }
+        let view = NSView()
+        view.toolTip = tooltip
 
-    // -------------------------------------
-    @objc override func keyDown(with event: NSEvent)
-    {
-        if (contentView as? NSGameHostingView)?.keyDown(with: event) == false {
-            super.keyDown(with: event)
-        }
+        return view
     }
+    
+    func updateNSView(
+        _ nsView: NSView,
+        context: NSViewRepresentableContext<Tooltip>)
+    { }
 }

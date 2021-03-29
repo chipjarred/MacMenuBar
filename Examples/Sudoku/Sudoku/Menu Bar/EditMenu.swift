@@ -34,8 +34,12 @@ let editMenu = StandardMenu(title: "Edit")
 
     MenuSeparator()
     
-    TextMenuItem(title: "Cut", action: .cut).enabled(false)
-    TextMenuItem(title: "Copy", action: .copy).enabled(false)
-    TextMenuItem(title: "Paste", action: .paste).enabled(false)
-    TextMenuItem(title: "Delete", action: .delete).enabled(false)
+    TextMenuItem(title: "Cut", action: .cut)
+    TextMenuItem(title: "Copy", action: .copy)
+    TextMenuItem(title: "Paste", action: .paste)
+    TextMenuItem(title: "Delete", action: .delete)
+    
+    MenuSeparator()
+    
+    TextMenuItem(title: "Select All", action: .selectAll)
 }

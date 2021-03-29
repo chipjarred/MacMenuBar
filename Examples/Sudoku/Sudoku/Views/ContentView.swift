@@ -29,6 +29,7 @@ class SheetRequest: ObservableObject
     {
         case none
         case newGame
+        case editThemes
     }
     
     @Published var state: Request = .none
@@ -57,11 +58,17 @@ struct ContentView: View
                 .environmentObject(sheetRequest)
                 .environmentObject(prefs)
 
-            if sheetRequest.state != .none
+            if sheetRequest.state == .newGame
             {
                 NewGameRequestSheet()
                     .zIndex(2)
                     .environmentObject(puzzle)
+                    .environmentObject(sheetRequest)
+                    .environmentObject(prefs)
+            }
+            else if sheetRequest.state == .editThemes
+            {
+                ThemeEditor()
                     .environmentObject(sheetRequest)
                     .environmentObject(prefs)
             }

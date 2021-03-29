@@ -21,26 +21,28 @@
 import SwiftUI
 
 // -------------------------------------
-struct Theme
+struct Theme: Identifiable
 {
+    var id: Int { name.hashValue }
+    
     let name: String
-    let valueColor: NSColor
-    let correctGuessColor: NSColor
-    let incorrectGuessColor: NSColor
-    let noteColor: NSColor
-    let backColor: NSColor
-    let incorrectBackColor: NSColor
-    let borderColor: NSColor
-    let invalidGuessColor: NSColor
-    let validGuessColor: NSColor
-    let actualGuessColor: NSColor
-    let selectedNoteColor: NSColor
-    let unSelectedNoteColor: NSColor
+    var valueColor: NSColor
+    var correctGuessColor: NSColor
+    var incorrectGuessColor: NSColor
+    var noteColor: NSColor
+    var backColor: NSColor
+    var incorrectBackColor: NSColor
+    var borderColor: NSColor
+    var invalidGuessColor: NSColor
+    var validGuessColor: NSColor
+    var actualGuessColor: NSColor
+    var selectedNoteColor: NSColor
+    var unSelectedNoteColor: NSColor
     
-    let highlightBrightness: Double
+    var highlightBrightness: Double
     
-    let font: NSFont
-    let noteFont: NSFont
+    var font: NSFont
+    var noteFont: NSFont
     
     // -------------------------------------
     static let dark = Theme(
@@ -257,3 +259,5 @@ extension Theme: Codable
         try noteFont.encode(to: &container, forKey: .noteFont)
     }
 }
+
+extension Theme: Equatable { }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4506157F260726A400E58DE1 /* NSGameWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506157E260726A400E58DE1 /* NSGameWindow.swift */; };
+		45141E72260B6AD0008EF118 /* ThemeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45141E71260B6AD0008EF118 /* ThemeEditor.swift */; };
 		45278DC6260A528A00C0A76B /* MacMenuBar in Frameworks */ = {isa = PBXBuildFile; productRef = 45278DC5260A528A00C0A76B /* MacMenuBar */; };
 		4541EFAE2604DC7D0000298A /* CellGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFAD2604DC7D0000298A /* CellGroupView.swift */; };
 		4541EFB926055A7C0000298A /* CellNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFB826055A7C0000298A /* CellNotesView.swift */; };
@@ -19,6 +20,14 @@
 		4541EFED2605DCF30000298A /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFEC2605DCF30000298A /* View+Extension.swift */; };
 		4541EFF52605FEC50000298A /* KeyResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFF42605FEC50000298A /* KeyResponder.swift */; };
 		4541EFFA26061BC30000298A /* CGKeyCode+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541EFF926061BC30000298A /* CGKeyCode+Extension.swift */; };
+		454EA489260F9991009FA151 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA488260F9991009FA151 /* Color+Extension.swift */; };
+		454EA48E260FB180009FA151 /* ToolTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA48D260FB180009FA151 /* ToolTip.swift */; };
+		454EA496260FCE30009FA151 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA495260FCE30009FA151 /* CustomTextField.swift */; };
+		454EA49C260FEE1D009FA151 /* ThemeListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA49B260FEE1D009FA151 /* ThemeListCell.swift */; };
+		454EA4A4260FEE68009FA151 /* ThemeListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA4A3260FEE68009FA151 /* ThemeListButton.swift */; };
+		454EA4A9260FEEC1009FA151 /* ThemeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA4A8260FEEC1009FA151 /* ThemeList.swift */; };
+		454EA4AE260FEF28009FA151 /* ThemeEditorContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA4AD260FEF28009FA151 /* ThemeEditorContents.swift */; };
+		454ED2EE260FF18C00C2E6C7 /* ColorWell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ED2ED260FF18C00C2E6C7 /* ColorWell.swift */; };
 		456428C72604929800E60129 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456428C62604929800E60129 /* MenuBar.swift */; };
 		456428C92604929800E60129 /* ApplicationMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456428C82604929800E60129 /* ApplicationMenu.swift */; };
 		456428CB2604929800E60129 /* FileMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456428CA2604929800E60129 /* FileMenu.swift */; };
@@ -44,6 +53,11 @@
 		45C9AF96260896D50058C373 /* MacOSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9AF95260896D50058C373 /* MacOSButton.swift */; };
 		45C9AF9B2608D3EF0058C373 /* KeyResponderGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9AF9A2608D3EF0058C373 /* KeyResponderGroup.swift */; };
 		45C9AFA02608D43F0058C373 /* OKCancelRequestSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9AF9F2608D43F0058C373 /* OKCancelRequestSheet.swift */; };
+		45DB132726110993006F2F9E /* ThemeColorWell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB132626110993006F2F9E /* ThemeColorWell.swift */; };
+		45DB1334261110A4006F2F9E /* ThemeEditorCellNotePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB1333261110A4006F2F9E /* ThemeEditorCellNotePreview.swift */; };
+		45DB1339261110FA006F2F9E /* ThemeEditorCellNotesPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB1338261110FA006F2F9E /* ThemeEditorCellNotesPreview.swift */; };
+		45DB133E26111135006F2F9E /* ThemeEditorCellPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB133D26111135006F2F9E /* ThemeEditorCellPreview.swift */; };
+		45DB1343261128E5006F2F9E /* FontPopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB1342261128E5006F2F9E /* FontPopupButton.swift */; };
 		45E4C7A2260A1052004FF34F /* URLBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E4C7A1260A1052004FF34F /* URLBookmark.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +80,7 @@
 
 /* Begin PBXFileReference section */
 		4506157E260726A400E58DE1 /* NSGameWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSGameWindow.swift; sourceTree = "<group>"; };
+		45141E71260B6AD0008EF118 /* ThemeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditor.swift; sourceTree = "<group>"; };
 		45278DBA260A50C700C0A76B /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4541EFAD2604DC7D0000298A /* CellGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellGroupView.swift; sourceTree = "<group>"; };
 		4541EFB826055A7C0000298A /* CellNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellNotesView.swift; sourceTree = "<group>"; };
@@ -77,6 +92,14 @@
 		4541EFEC2605DCF30000298A /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		4541EFF42605FEC50000298A /* KeyResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyResponder.swift; sourceTree = "<group>"; };
 		4541EFF926061BC30000298A /* CGKeyCode+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGKeyCode+Extension.swift"; sourceTree = "<group>"; };
+		454EA488260F9991009FA151 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		454EA48D260FB180009FA151 /* ToolTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolTip.swift; sourceTree = "<group>"; };
+		454EA495260FCE30009FA151 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		454EA49B260FEE1D009FA151 /* ThemeListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeListCell.swift; sourceTree = "<group>"; };
+		454EA4A3260FEE68009FA151 /* ThemeListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeListButton.swift; sourceTree = "<group>"; };
+		454EA4A8260FEEC1009FA151 /* ThemeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeList.swift; sourceTree = "<group>"; };
+		454EA4AD260FEF28009FA151 /* ThemeEditorContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorContents.swift; sourceTree = "<group>"; };
+		454ED2ED260FF18C00C2E6C7 /* ColorWell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWell.swift; sourceTree = "<group>"; };
 		456428C02604929800E60129 /* Sudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		456428C62604929800E60129 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		456428C82604929800E60129 /* ApplicationMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationMenu.swift; sourceTree = "<group>"; };
@@ -111,6 +134,11 @@
 		45C9AF95260896D50058C373 /* MacOSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacOSButton.swift; sourceTree = "<group>"; };
 		45C9AF9A2608D3EF0058C373 /* KeyResponderGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyResponderGroup.swift; sourceTree = "<group>"; };
 		45C9AF9F2608D43F0058C373 /* OKCancelRequestSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKCancelRequestSheet.swift; sourceTree = "<group>"; };
+		45DB132626110993006F2F9E /* ThemeColorWell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorWell.swift; sourceTree = "<group>"; };
+		45DB1333261110A4006F2F9E /* ThemeEditorCellNotePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorCellNotePreview.swift; sourceTree = "<group>"; };
+		45DB1338261110FA006F2F9E /* ThemeEditorCellNotesPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorCellNotesPreview.swift; sourceTree = "<group>"; };
+		45DB133D26111135006F2F9E /* ThemeEditorCellPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorCellPreview.swift; sourceTree = "<group>"; };
+		45DB1342261128E5006F2F9E /* FontPopupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontPopupButton.swift; sourceTree = "<group>"; };
 		45E4C7A1260A1052004FF34F /* URLBookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBookmark.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -165,8 +193,25 @@
 			isa = PBXGroup;
 			children = (
 				4541EFEC2605DCF30000298A /* View+Extension.swift */,
+				454EA488260F9991009FA151 /* Color+Extension.swift */,
 			);
 			path = "SwiftUI Type Extensions";
+			sourceTree = "<group>";
+		};
+		454EA49A260FEDB9009FA151 /* ThemeEditor */ = {
+			isa = PBXGroup;
+			children = (
+				45141E71260B6AD0008EF118 /* ThemeEditor.swift */,
+				454EA4AD260FEF28009FA151 /* ThemeEditorContents.swift */,
+				454EA4A8260FEEC1009FA151 /* ThemeList.swift */,
+				454EA4A3260FEE68009FA151 /* ThemeListButton.swift */,
+				454EA49B260FEE1D009FA151 /* ThemeListCell.swift */,
+				45DB132626110993006F2F9E /* ThemeColorWell.swift */,
+				45DB1333261110A4006F2F9E /* ThemeEditorCellNotePreview.swift */,
+				45DB1338261110FA006F2F9E /* ThemeEditorCellNotesPreview.swift */,
+				45DB133D26111135006F2F9E /* ThemeEditorCellPreview.swift */,
+			);
+			path = ThemeEditor;
 			sourceTree = "<group>";
 		};
 		456428B72604929800E60129 = {
@@ -266,6 +311,10 @@
 				4541EFB826055A7C0000298A /* CellNotesView.swift */,
 				4541EFE32605DAD90000298A /* GuessSelectionView.swift */,
 				456429212604A83100E60129 /* PuzzleView.swift */,
+				454EA48D260FB180009FA151 /* ToolTip.swift */,
+				454EA495260FCE30009FA151 /* CustomTextField.swift */,
+				454ED2ED260FF18C00C2E6C7 /* ColorWell.swift */,
+				45DB1342261128E5006F2F9E /* FontPopupButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -273,6 +322,7 @@
 		45C9AFA42608D7D30058C373 /* OverlaySheets */ = {
 			isa = PBXGroup;
 			children = (
+				454EA49A260FEDB9009FA151 /* ThemeEditor */,
 				45C9AF9F2608D43F0058C373 /* OKCancelRequestSheet.swift */,
 				45C9AF8B2608825E0058C373 /* NewGameSheet.swift */,
 			);
@@ -425,31 +475,45 @@
 			files = (
 				456428DD260492A600E60129 /* AppDelegate.swift in Sources */,
 				456428D32604929800E60129 /* WindowMenu.swift in Sources */,
+				45DB1343261128E5006F2F9E /* FontPopupButton.swift in Sources */,
 				4541EFB926055A7C0000298A /* CellNotesView.swift in Sources */,
 				45C9AFA02608D43F0058C373 /* OKCancelRequestSheet.swift in Sources */,
 				4541EFAE2604DC7D0000298A /* CellGroupView.swift in Sources */,
 				45C9AF87260850C80058C373 /* PuzzleObject.swift in Sources */,
+				454EA4A9260FEEC1009FA151 /* ThemeList.swift in Sources */,
 				4541EFDC2605C56A0000298A /* NSGameHostingView.swift in Sources */,
+				454EA4AE260FEF28009FA151 /* ThemeEditorContents.swift in Sources */,
+				45DB132726110993006F2F9E /* ThemeColorWell.swift in Sources */,
 				45C9AF8C2608825E0058C373 /* NewGameSheet.swift in Sources */,
 				456428D72604929800E60129 /* main.swift in Sources */,
 				456428D12604929800E60129 /* ViewMenu.swift in Sources */,
 				456428CD2604929800E60129 /* EditMenu.swift in Sources */,
+				454ED2EE260FF18C00C2E6C7 /* ColorWell.swift in Sources */,
+				454EA48E260FB180009FA151 /* ToolTip.swift in Sources */,
 				4506157F260726A400E58DE1 /* NSGameWindow.swift in Sources */,
 				4564292B2604AA3600E60129 /* Puzzle.swift in Sources */,
 				458AF51C26090B1500CAD8B0 /* Preferences.swift in Sources */,
 				4541EFFA26061BC30000298A /* CGKeyCode+Extension.swift in Sources */,
 				456428C72604929800E60129 /* MenuBar.swift in Sources */,
+				45141E72260B6AD0008EF118 /* ThemeEditor.swift in Sources */,
 				456428D92604929800E60129 /* ContentView.swift in Sources */,
+				45DB1334261110A4006F2F9E /* ThemeEditorCellNotePreview.swift in Sources */,
+				454EA4A4260FEE68009FA151 /* ThemeListButton.swift in Sources */,
 				45C9AF9B2608D3EF0058C373 /* KeyResponderGroup.swift in Sources */,
+				454EA489260F9991009FA151 /* Color+Extension.swift in Sources */,
 				456429182604A7AA00E60129 /* CellView.swift in Sources */,
 				4541EFF52605FEC50000298A /* KeyResponder.swift in Sources */,
 				4541EFC326057D820000298A /* CellNoteView.swift in Sources */,
+				454EA496260FCE30009FA151 /* CustomTextField.swift in Sources */,
+				45DB1339261110FA006F2F9E /* ThemeEditorCellNotesPreview.swift in Sources */,
 				45C9AF9126088D350058C373 /* NSEvent+Extension.swift in Sources */,
 				45C9AF96260896D50058C373 /* MacOSButton.swift in Sources */,
+				454EA49C260FEE1D009FA151 /* ThemeListCell.swift in Sources */,
 				45E4C7A2260A1052004FF34F /* URLBookmark.swift in Sources */,
 				4541EFE42605DAD90000298A /* GuessSelectionView.swift in Sources */,
 				456429222604A83100E60129 /* PuzzleView.swift in Sources */,
 				456428C92604929800E60129 /* ApplicationMenu.swift in Sources */,
+				45DB133E26111135006F2F9E /* ThemeEditorCellPreview.swift in Sources */,
 				4541EFCE260587820000298A /* GameWindowDelegate.swift in Sources */,
 				4541EFED2605DCF30000298A /* View+Extension.swift in Sources */,
 				456428D52604929800E60129 /* DebugMenu.swift in Sources */,

@@ -44,11 +44,12 @@ extension OKCancelRequestSheet
         {
             ZStack
             {
-                Rectangle().fill(Color.black).opacity(0.6)
+                Rectangle().fill(Color.black).opacity(0.8)
                 VStack(spacing: 0)
                 {
-                    Text(title).font(.title)
-                        .padding(20)
+                    HStack(alignment: .center, spacing: 0) {
+                        Text(title).font(.title)
+                    }.frame(height: 35)
 
                     Text(description)
                     .padding([.leading, .trailing], 20)
@@ -64,12 +65,14 @@ extension OKCancelRequestSheet
                                 cancelText,
                                 keyEquivalent: .command + "."
                             ) { cancel() }
+                            .frame(width: 100)
                         }
                         
                         MacOSButton(okText, keyEquivalent: .none + "\r") {
                             ok()
                         }.focusable()
-                        
+                        .frame(width: 100)
+
                         Spacer()
                     }
                     

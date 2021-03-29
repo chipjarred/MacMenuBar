@@ -30,7 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
     internal let userDefaultsSuite = "com.github.chipjarred.MacMenuBar."
         + "\(ProcessInfo.processInfo.processName)"
 
-    var window: NSWindow!
+    var window: NSGameWindow!
     var gameWindowDelegate: GameWindowDelegate!
     var gameHostingView: NSGameHostingView!
     var puzzle: PuzzleObject!

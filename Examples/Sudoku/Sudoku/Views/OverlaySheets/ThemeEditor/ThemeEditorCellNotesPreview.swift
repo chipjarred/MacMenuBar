@@ -17,32 +17,44 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+//
 
-import Cocoa
+import SwiftUI
 
 // -------------------------------------
-@objc class NSGameWindow: NSWindow
+struct ThemeEditorCellNotesPreview: View
 {
+    var notes: Set<Int>
+    
+    @Binding var currentTheme: Theme
+    
     // -------------------------------------
-    override init(
-        contentRect: NSRect,
-        styleMask style: NSWindow.StyleMask,
-        backing backingStoreType: NSWindow.BackingStoreType,
-        defer flag: Bool)
+    func note(_ noteRow: Int, _ noteCol: Int) -> Int?
     {
-        super.init(
-            contentRect: contentRect,
-            styleMask: style,
-            backing: backingStoreType,
-            defer: flag
-        )
+        let noteValue = 3 * noteRow + noteCol + 1
+        return notes.contains(noteValue) ? noteValue : nil
     }
 
     // -------------------------------------
-    @objc override func keyDown(with event: NSEvent)
+    var body: some View
     {
-        if (contentView as? NSGameHostingView)?.keyDown(with: event) == false {
-            super.keyDown(with: event)
+        VStack(spacing:0)
+        {
+            ForEach(0..<3)
+            { noteRow in
+                HStack(spacing: 0)
+                {
+                    ForEach(0..<3)
+                    { noteCol in
+                        ThemeEditorCellNotePreview(
+                            note: note(noteRow, noteCol),
+                            currentTheme: $currentTheme
+                        )
+                    }
+                }
+                .scaledToFit()
+            }
         }
+        .scaledToFit()
     }
 }

@@ -69,7 +69,7 @@ class NSGameHostingView: NSHostingView<ContentView>
     }
 
     // -------------------------------------
-    public func keyDown(with event: NSEvent) -> Bool {
+    @objc public func keyDown(with event: NSEvent) -> Bool {
         return KeyResponder.current?.closure?(event) ?? false
     }
 }

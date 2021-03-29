@@ -126,7 +126,10 @@ struct CellView: View
     
     let row: Int
     let col: Int
-    var isSelected: Bool {
+    
+    // -------------------------------------
+    var isSelected: Bool
+    {
         if let s = puzzle.selection {
             return s == (row, col)
         }
