@@ -146,7 +146,7 @@ struct ThemeEditorPuzzleColorsView: View
                             colorPath: \.incorrectGuessColor
                         )
                         ThemeColorWell(
-                            "Wrong Guess Background Color",
+                            "Wrong Guess Back Color",
                             currentTheme: $currentTheme,
                             colorPath: \.incorrectBackColor
                         )

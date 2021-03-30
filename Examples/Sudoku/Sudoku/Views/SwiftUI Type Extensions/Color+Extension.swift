@@ -49,4 +49,10 @@ extension Color
     static var alternateSelectedControlTextColor: Color {
         Color(.alternateSelectedControlTextColor)
     }
+    
+    static var windowFrameColor: Color { Color(.windowFrameColor) }
+    static var windowBackgroundColor: Color { Color(.windowBackgroundColor) }
+    static var windowFrameTextColor: Color { Color(.windowFrameTextColor) }
+    
+    static var gridColor: Color { Color(.gridColor) }
 }

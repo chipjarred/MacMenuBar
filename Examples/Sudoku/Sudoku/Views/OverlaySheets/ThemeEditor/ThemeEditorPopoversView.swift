@@ -27,7 +27,6 @@ struct ThemeEditorPopoversView: View
 {
     @Binding var currentTheme: Theme
     @EnvironmentObject var prefs: Preferences
-    @State var fakeState: Bool = true
     
     // -------------------------------------
     func invisibleRect(align: Alignment) -> some View
@@ -44,110 +43,93 @@ struct ThemeEditorPopoversView: View
     }
     
     // -------------------------------------
-    var notesPopoverColumn: some View
+    var noteColorWells: some View
     {
-        return VStack(alignment: .leading, spacing: 0)
+        VStack(alignment: .trailing, spacing: 0)
         {
-            HStack(alignment: .top)
-            {
-                VStack(spacing: 0)
-                {
-                    ThemeColorWell(
-                        "Available Note",
-                        currentTheme: $currentTheme,
-                        colorPath: \.unSelectedNoteColor
-                    ).frame(alignment: .trailing)
-                    .padding(.top, 30)
-                    .padding(.bottom, 10)
-                    
-                    ThemeColorWell(
-                        "Selected Note",
-                        currentTheme: $currentTheme,
-                        colorPath: \.selectedNoteColor
-                    ).frame(alignment: .trailing)
-                    .padding(.bottom, 10)
-                }
-                .frame(alignment: .leading)
-            }.frame(alignment: .leading)
+            ThemeColorWell(
+                "Available Note",
+                currentTheme: $currentTheme,
+                colorPath: \.unSelectedNoteColor
+            )
+            .padding(.top, 30)
+            .padding(.bottom, 10)
             
-            HStack(alignment: .top, spacing: 0)
-            {
-                ThemeEditorPopoverPreview(
-                    currentTheme: $currentTheme,
-                    settingNotes: false,
-                    arrowEdge: .trailing
-                ).frame(ThemeEditorPopoverPreview.size)
-                .padding(.trailing, 30)
-
-                spacerRect()
-            }
+            ThemeColorWell(
+                "Selected Note",
+                currentTheme: $currentTheme,
+                colorPath: \.selectedNoteColor
+            )
+            .padding(.bottom, 10)
         }
+        .frame(alignment: .leading)
     }
     
     // -------------------------------------
-    var guessPopoverColumn: some View
+    var guessColorWells: some View
     {
-        VStack(alignment: .leading, spacing: 0)
+        VStack(alignment: .trailing, spacing: 0)
         {
-            HStack(alignment: .top, spacing: 0)
-            {
-                spacerRect()
-                
-                ThemeEditorPopoverPreview(
-                    currentTheme: $currentTheme,
-                    settingNotes: true,
-                    arrowEdge: .leading
-                ).frame(ThemeEditorPopoverPreview.size)
-                    .frame(alignment: .topTrailing)
-                    .padding(.leading, 30)
-            }.padding(.top, 20)
-
-            HStack(alignment: .top)
-            {
-                invisibleRect(align: .leading)
-                    .frame(ThemeEditorPopoverPreview.size)
-                
-                VStack(alignment: .trailing, spacing: 0)
-                {
-                    ThemeColorWell(
-                        "Invalid Guess",
-                        currentTheme: $currentTheme,
-                        colorPath: \.invalidGuessColor
-                    )
-                    .padding(.top, 20)
-                    .frame(alignment: .trailing)
-                    
-                    ThemeColorWell(
-                        "Valid Guess",
-                        currentTheme: $currentTheme,
-                        colorPath: \.invalidGuessColor
-                    )
-                    .padding(.top, 10)
-                    .frame(alignment: .trailing)
-                    
-                    ThemeColorWell(
-                        "Selected Guess",
-                        currentTheme: $currentTheme,
-                        colorPath: \.actualGuessColor
-                    )
-                    .padding(.top, 10)
-                    .frame(alignment: .trailing)
-                }
-                .frame(alignment: .trailing)
-            }.frame(alignment: .trailing)
+            ThemeColorWell(
+                "Invalid Guess",
+                currentTheme: $currentTheme,
+                colorPath: \.invalidGuessColor
+            )
+            .padding(.top, 20)
+            
+            ThemeColorWell(
+                "Valid Guess",
+                currentTheme: $currentTheme,
+                colorPath: \.invalidGuessColor
+            )
+            .padding(.top, 10)
+            
+            ThemeColorWell(
+                "Selected Guess",
+                currentTheme: $currentTheme,
+                colorPath: \.actualGuessColor
+            )
+            .padding(.top, 10)
         }
+        .frame(alignment: .trailing)
+    }
+    
+    // -------------------------------------
+    var notePopoverPreview: some View
+    {
+        ThemeEditorPopoverPreview(
+            currentTheme: $currentTheme,
+            settingNotes: true,
+            arrowEdge: .leading
+        ).frame(ThemeEditorPopoverPreview.size)
+    }
+    
+    // -------------------------------------
+    var guessPopoverPreview: some View
+    {
+        ThemeEditorPopoverPreview(
+            currentTheme: $currentTheme,
+            settingNotes: false,
+            arrowEdge: .trailing
+        ).frame(ThemeEditorPopoverPreview.size)
     }
     
     // -------------------------------------
     var body: some View
     {
-        ZStack
+        VStack
         {
-            notesPopoverColumn
-            guessPopoverColumn
+            HStack
+            {
+                noteColorWells
+                notePopoverPreview
+            }
+            HStack
+            {
+                guessPopoverPreview
+                guessColorWells
+            }
         }
-        .padding(.top, 10)
-        .onAppear { fakeState = true }
     }
 }
 

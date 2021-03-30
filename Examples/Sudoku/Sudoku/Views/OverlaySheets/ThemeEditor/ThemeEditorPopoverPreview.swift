@@ -76,8 +76,10 @@ struct ThemeEditorPopoverPreview: View
     // -------------------------------------
     func popoverView(arrowEdge: Edge) -> some View
     {
-        PopoverPreviewBackground()
-            .mask(PopoverShape(arrowEdge: arrowEdge))
+        let shape = PopoverShape(arrowEdge: arrowEdge)
+        return PopoverPreviewBackground()
+            .mask(shape)
+            .overlay(shape.strokeBorder(Color.windowFrameColor, lineWidth: 1))
     }
     
     // -------------------------------------

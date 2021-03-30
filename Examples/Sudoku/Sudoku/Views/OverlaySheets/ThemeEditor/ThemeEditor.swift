@@ -54,7 +54,7 @@ struct ThemeEditor: View
                     }.frame(height: Self.titleHeight)
                     
                     Rectangle()
-                        .fill(Color.controlColor)
+                        .fill(Color.gridColor)
                         .frame(height: 1)
                     
                     HStack(alignment: .top, spacing: 0)
@@ -80,7 +80,12 @@ struct ThemeEditor: View
                                     currentTheme: $currentTheme
                                 ).environmentObject(preferences)
                                     .tabItem { Text("Popovers") }
-                            }
+                            }.padding(.top, 10)
+                                .padding([.leading, .trailing, .bottom], 5)
+                            
+                            Rectangle()
+                                .fill(Color.gridColor)
+                                .frame(height: 1)
 
                             HStack(alignment: .center)
                             {

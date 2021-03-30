@@ -101,10 +101,15 @@ struct ThemeList: View
     // -------------------------------------
     var body: some View
     {
-        VStack(alignment: .leading, spacing: 0)
+        HStack(spacing: 0)
         {
-            scrollView
-            controlButtons
+            VStack(alignment: .leading, spacing: 0)
+            {
+                scrollView
+                Rectangle().fill(Color.gridColor).frame(height: 1)
+                controlButtons
+            }
+            Rectangle().fill(Color.gridColor).frame(width: 1)
         }
         .frame(width: Self.width)
     }

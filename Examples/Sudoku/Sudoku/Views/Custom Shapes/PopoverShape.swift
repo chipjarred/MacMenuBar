@@ -227,13 +227,9 @@ struct PopoverShape: Shape, InsettableShape
         var curPoint = startPoint
         path.move(to: curPoint)
         
-        #warning("DEBUG")
-        var debugCount = 0
-        
         var finished = false
         repeat
         {
-            debugCount += 1
             var nextPoint: CGPoint
             
             if curPoint.y == rect.minY
