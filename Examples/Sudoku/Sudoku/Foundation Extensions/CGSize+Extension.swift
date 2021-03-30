@@ -18,56 +18,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import SwiftUI
+import Foundation
 
 // -------------------------------------
-struct CellGroupView: View
+public extension CGSize
 {
-    @EnvironmentObject var puzzle: PuzzleObject
-    @EnvironmentObject var prefs: Preferences
-
-    static let cellSpacing: CGFloat = 1
-    static let width = CellView.width * 3 + cellSpacing * 2
-    static let height = width
-    static let size = CGSize(width: width, height: height)
-    
-    let row: Int
-    let col: Int
+    // -------------------------------------
+    var transposed: CGSize { CGSize(width: height, height: width) }
     
     // -------------------------------------
-    var body: some View
+    static func + (lhs: CGSize, rhs: CGSize) -> CGSize
     {
-        VStack(spacing: Self.cellSpacing)
-        {
-            ForEach(0..<3)
-            { i in
-                HStack(spacing: Self.cellSpacing)
-                {
-                    ForEach(0..<3)
-                    { j in
-                        CellView(
-                            row: row * 3 + i,
-                            col: col * 3 + j
-                        )
-                        .environmentObject(puzzle)
-                        .environmentObject(prefs)
-                    }
-                }
-            }
-        }
+        return CGSize(
+            width: lhs.width + rhs.width,
+            height: lhs.height + rhs.height
+        )
     }
-}
-
-// -------------------------------------
-struct CellGroupView_Previews: PreviewProvider
-{
-    @State static var puzzle =  previewPuzzle
     
     // -------------------------------------
-    static var previews: some View
+    static func - (lhs: CGSize, rhs: CGSize) -> CGSize
     {
-        CellGroupView(row: 0, col: 0 )
-            .environmentObject(previewPuzzle)
-            .environmentObject(Preferences())
+        return CGSize(
+            width: lhs.width - rhs.width,
+            height: lhs.height - rhs.height
+        )
+    }
+    
+    // -------------------------------------
+    static func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
+        return CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
+    }
+    
+    // -------------------------------------
+    static func * (lhs: CGFloat, rhs: CGSize) -> CGSize {
+        return rhs * lhs
+    }
+
+    // -------------------------------------
+    static func / (lhs: CGSize, rhs: CGFloat) -> CGSize {
+        return CGSize(width: lhs.width / rhs, height: lhs.height / rhs)
     }
 }

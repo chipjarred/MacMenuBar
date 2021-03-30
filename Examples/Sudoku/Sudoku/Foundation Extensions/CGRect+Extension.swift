@@ -18,56 +18,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import SwiftUI
+import Foundation
 
 // -------------------------------------
-struct CellGroupView: View
+public extension CGRect
 {
-    @EnvironmentObject var puzzle: PuzzleObject
-    @EnvironmentObject var prefs: Preferences
-
-    static let cellSpacing: CGFloat = 1
-    static let width = CellView.width * 3 + cellSpacing * 2
-    static let height = width
-    static let size = CGSize(width: width, height: height)
+    // -------------------------------------
+    func move(to point: CGPoint) -> CGRect {
+        CGRect(origin: point, size: size)
+    }
     
-    let row: Int
-    let col: Int
+    func translate(by delta: CGSize) -> CGRect {
+        CGRect(origin: origin + delta, size: size)
+    }
     
     // -------------------------------------
-    var body: some View
+    func inset(by delta: CGSize) -> CGRect
     {
-        VStack(spacing: Self.cellSpacing)
-        {
-            ForEach(0..<3)
-            { i in
-                HStack(spacing: Self.cellSpacing)
-                {
-                    ForEach(0..<3)
-                    { j in
-                        CellView(
-                            row: row * 3 + i,
-                            col: col * 3 + j
-                        )
-                        .environmentObject(puzzle)
-                        .environmentObject(prefs)
-                    }
-                }
-            }
-        }
+        CGRect(
+            origin: origin + delta,
+            size: size - delta
+        )
     }
-}
-
-// -------------------------------------
-struct CellGroupView_Previews: PreviewProvider
-{
-    @State static var puzzle =  previewPuzzle
     
     // -------------------------------------
-    static var previews: some View
-    {
-        CellGroupView(row: 0, col: 0 )
-            .environmentObject(previewPuzzle)
-            .environmentObject(Preferences())
+    func inset(deltaX: CGFloat, deltaY: CGFloat) -> CGRect{
+        inset(by: CGSize(width: deltaX, height: deltaY))
     }
+    
+    var topLeft: CGPoint { origin }
+    var topRight: CGPoint { .init(x: maxX, y: minY) }
+    var bottomLeft: CGPoint { .init(x: minX, y: maxY) }
+    var bottomRight: CGPoint { origin + size }
 }

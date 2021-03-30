@@ -21,53 +21,36 @@
 import SwiftUI
 
 // -------------------------------------
-struct CellGroupView: View
+struct PopoverPreviewBackground: NSViewRepresentable
 {
-    @EnvironmentObject var puzzle: PuzzleObject
-    @EnvironmentObject var prefs: Preferences
-
-    static let cellSpacing: CGFloat = 1
-    static let width = CellView.width * 3 + cellSpacing * 2
-    static let height = width
-    static let size = CGSize(width: width, height: height)
-    
-    let row: Int
-    let col: Int
+    typealias NSViewType = CustomVisualEffectView
     
     // -------------------------------------
-    var body: some View
+    class CustomVisualEffectView: NSVisualEffectView
     {
-        VStack(spacing: Self.cellSpacing)
+        // -------------------------------------
+        override var allowsVibrancy: Bool { true }
+        
+        // -------------------------------------
+        override func viewDidMoveToSuperview()
         {
-            ForEach(0..<3)
-            { i in
-                HStack(spacing: Self.cellSpacing)
-                {
-                    ForEach(0..<3)
-                    { j in
-                        CellView(
-                            row: row * 3 + i,
-                            col: col * 3 + j
-                        )
-                        .environmentObject(puzzle)
-                        .environmentObject(prefs)
-                    }
-                }
+            super.viewDidMoveToSuperview()
+            if let frame = superview?.frame {
+                setFrameSize(frame.size)
             }
         }
     }
-}
-
-// -------------------------------------
-struct CellGroupView_Previews: PreviewProvider
-{
-    @State static var puzzle =  previewPuzzle
     
     // -------------------------------------
-    static var previews: some View
+    func makeNSView(context: Context) -> NSViewType
     {
-        CellGroupView(row: 0, col: 0 )
-            .environmentObject(previewPuzzle)
-            .environmentObject(Preferences())
+        let view = NSViewType()
+        view.material = .popover
+        view.blendingMode = .withinWindow
+        view.state = .active
+        return view
     }
+    
+    // -------------------------------------
+    func updateNSView(_ nsView: NSViewType, context: Context) { }
 }

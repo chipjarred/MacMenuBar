@@ -21,75 +21,6 @@
 
 import SwiftUI
 
-// -------------------------------------
-struct ThemeEditorPopoverPreview: View
-{
-    static let width = CellGroupView.width
-    static let height = CellGroupView.height + 20
-    static let size = CGSize(width: width, height: height)
-    
-    @Binding var currentTheme: Theme
-    
-    let settingNotes: Bool
-    
-    let notes: Set<Int> = [1, 3, 5, 6, 8]
-    let validGuesses: Set<Int> = [2, 8, 9]
-    let correctValue = 8
-    let guess: Int = 9
-
-    // -------------------------------------
-    func foreColor(for value: Int) -> Color
-    {
-        GuessSelectionView.foreColor(
-            for: value,
-            settingNotes: settingNotes,
-            in: notes,
-            isValidGuess: validGuesses.contains(value),
-            isSelectedValue: guess == value,
-            theme: currentTheme
-        )
-    }
-    
-    // -------------------------------------
-    func isEnabled(for value: Int) -> Bool { validGuesses.contains(value) }
-    
-    // -------------------------------------
-    func valueCell(row: Int, col: Int) -> some View
-    {
-        let value = row * 3 + col + 1
-        return GuessSelectionView.valueCell(
-            value: value,
-            foreColor: foreColor(for: value),
-            theme: currentTheme
-        )
-    }
-
-    
-    // -------------------------------------
-    var body: some View
-    {
-        ZStack
-        {
-            VStack(spacing: 0)
-            {
-                Text(settingNotes ? "Set Note" : "Set Guess")
-                    .padding([.top, .bottom], 1)
-                
-                ForEach(0..<3)
-                { valueRow in
-                    HStack(spacing:0)
-                    {
-                        ForEach(0..<3)
-                        { valueCol in
-                            valueCell(row: valueRow, col: valueCol)
-                        }
-                    }
-                }
-            }
-            .padding(.top, 10)
-        }.frame(Self.size)
-    }
-}
 
 // -------------------------------------
 struct ThemeEditorPopoversView: View
@@ -109,34 +40,47 @@ struct ThemeEditorPopoversView: View
     func spacerRect() -> some View
     {
         Rectangle().fill(Color.black.opacity(0))
-            .frame(width: 100, height: 100)
+            .frame(width: 130, height: 100)
     }
     
     // -------------------------------------
     var notesPopoverColumn: some View
     {
-        VStack(alignment: .leading, spacing: 0)
+        return VStack(alignment: .leading, spacing: 0)
         {
-            HStack(alignment: .center)
+            HStack(alignment: .top)
             {
                 VStack(spacing: 0)
                 {
-                    Text("Some Note Settings")
+                    ThemeColorWell(
+                        "Available Note",
+                        currentTheme: $currentTheme,
+                        colorPath: \.unSelectedNoteColor
+                    ).frame(alignment: .trailing)
+                    .padding(.top, 30)
+                    .padding(.bottom, 10)
+                    
+                    ThemeColorWell(
+                        "Selected Note",
+                        currentTheme: $currentTheme,
+                        colorPath: \.selectedNoteColor
+                    ).frame(alignment: .trailing)
+                    .padding(.bottom, 10)
                 }
                 .frame(alignment: .leading)
-                .popover(isPresented: $fakeState, arrowEdge: .trailing)
-                {
-                    ThemeEditorPopoverPreview(
-                        currentTheme: $currentTheme,
-                        settingNotes: true
-                    ).onDisappear { fakeState = true }
-                }
-                
-                invisibleRect(align: .trailing)
-                    .frame(ThemeEditorPopoverPreview.size)
             }.frame(alignment: .leading)
             
-            spacerRect()
+            HStack(alignment: .top, spacing: 0)
+            {
+                ThemeEditorPopoverPreview(
+                    currentTheme: $currentTheme,
+                    settingNotes: false,
+                    arrowEdge: .trailing
+                ).frame(ThemeEditorPopoverPreview.size)
+                .padding(.trailing, 30)
+
+                spacerRect()
+            }
         }
     }
     
@@ -145,26 +89,51 @@ struct ThemeEditorPopoversView: View
     {
         VStack(alignment: .leading, spacing: 0)
         {
-            spacerRect()
-            
-            HStack(alignment: .center)
+            HStack(alignment: .top, spacing: 0)
+            {
+                spacerRect()
+                
+                ThemeEditorPopoverPreview(
+                    currentTheme: $currentTheme,
+                    settingNotes: true,
+                    arrowEdge: .leading
+                ).frame(ThemeEditorPopoverPreview.size)
+                    .frame(alignment: .topTrailing)
+                    .padding(.leading, 30)
+            }.padding(.top, 20)
+
+            HStack(alignment: .top)
             {
                 invisibleRect(align: .leading)
                     .frame(ThemeEditorPopoverPreview.size)
                 
-                VStack(spacing: 0)
+                VStack(alignment: .trailing, spacing: 0)
                 {
-                    Text("Some Note Settings")
+                    ThemeColorWell(
+                        "Invalid Guess",
+                        currentTheme: $currentTheme,
+                        colorPath: \.invalidGuessColor
+                    )
+                    .padding(.top, 20)
+                    .frame(alignment: .trailing)
+                    
+                    ThemeColorWell(
+                        "Valid Guess",
+                        currentTheme: $currentTheme,
+                        colorPath: \.invalidGuessColor
+                    )
+                    .padding(.top, 10)
+                    .frame(alignment: .trailing)
+                    
+                    ThemeColorWell(
+                        "Selected Guess",
+                        currentTheme: $currentTheme,
+                        colorPath: \.actualGuessColor
+                    )
+                    .padding(.top, 10)
+                    .frame(alignment: .trailing)
                 }
                 .frame(alignment: .trailing)
-                .popover(isPresented: $fakeState, arrowEdge: .leading)
-                {
-                    ThemeEditorPopoverPreview(
-                        currentTheme: $currentTheme,
-                        settingNotes: false
-                    ).onDisappear { fakeState = true }
-                }
-
             }.frame(alignment: .trailing)
         }
     }
@@ -179,5 +148,20 @@ struct ThemeEditorPopoversView: View
         }
         .padding(.top, 10)
         .onAppear { fakeState = true }
+    }
+}
+
+// -------------------------------------
+struct ThemeEditorPopoversView_Previews: PreviewProvider
+{
+    @State static var theme = Theme.system
+    // -------------------------------------
+    static var previews: some View
+    {
+        ZStack
+        {
+            Color.gray
+            ThemeEditorPopoversView(currentTheme: $theme)
+        }
     }
 }
