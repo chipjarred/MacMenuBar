@@ -87,7 +87,7 @@ struct ThemeEditorPuzzleColorsView: View
         let numCells = CGFloat(cells.count)
         let intercellSpacing: CGFloat = 2
         
-       return ZStack
+        return ZStack
         {
             Rectangle().fill(Color(currentTheme.borderColor))
                 .frame(
@@ -139,7 +139,7 @@ struct ThemeEditorPuzzleColorsView: View
                             currentTheme: $currentTheme,
                             keyPath: \.highlightBrightness
                         )
-                        .padding([.top, .bottom], 2)
+                        .padding([.top, .bottom], 3)
                         ThemeColorWell(
                             "Wrong Guess Color",
                             currentTheme: $currentTheme,

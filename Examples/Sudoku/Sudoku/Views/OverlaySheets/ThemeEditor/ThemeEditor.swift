@@ -75,7 +75,9 @@ struct ThemeEditor: View
                                 ).environmentObject(preferences)
                                 .tabItem { Text("Fonts") }
                                 
-                                Rectangle().fill(Color.black.opacity(0))
+                                ThemeEditorPopoversView(
+                                    currentTheme: $currentTheme
+                                ).environmentObject(preferences)
                                     .tabItem { Text("Popovers") }
                             }
 

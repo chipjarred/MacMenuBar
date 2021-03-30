@@ -64,6 +64,7 @@
 		45DB133E26111135006F2F9E /* ThemeEditorCellPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB133D26111135006F2F9E /* ThemeEditorCellPreview.swift */; };
 		45DB1343261128E5006F2F9E /* FontFamilyPopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB1342261128E5006F2F9E /* FontFamilyPopupButton.swift */; };
 		45E4C7A2260A1052004FF34F /* URLBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E4C7A1260A1052004FF34F /* URLBookmark.swift */; };
+		45EA2C832612931900DC3E99 /* ThemeEditorPopoversView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EA2C822612931900DC3E99 /* ThemeEditorPopoversView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +151,7 @@
 		45DB133D26111135006F2F9E /* ThemeEditorCellPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorCellPreview.swift; sourceTree = "<group>"; };
 		45DB1342261128E5006F2F9E /* FontFamilyPopupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontFamilyPopupButton.swift; sourceTree = "<group>"; };
 		45E4C7A1260A1052004FF34F /* URLBookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBookmark.swift; sourceTree = "<group>"; };
+		45EA2C822612931900DC3E99 /* ThemeEditorPopoversView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorPopoversView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +232,7 @@
 				45DB1338261110FA006F2F9E /* ThemeEditorCellNotesPreview.swift */,
 				45DB133D26111135006F2F9E /* ThemeEditorCellPreview.swift */,
 				4529FC1C26127869007091AC /* ThemeEditorFontsView.swift */,
+				45EA2C822612931900DC3E99 /* ThemeEditorPopoversView.swift */,
 				454EA4AD260FEF28009FA151 /* ThemeEditorPuzzleColorsView.swift */,
 				4529FC142612752D007091AC /* ThemeFontPicker.swift */,
 				454EA4A8260FEEC1009FA151 /* ThemeList.swift */,
@@ -499,6 +502,7 @@
 				456428DD260492A600E60129 /* AppDelegate.swift in Sources */,
 				456428D32604929800E60129 /* WindowMenu.swift in Sources */,
 				45DB1343261128E5006F2F9E /* FontFamilyPopupButton.swift in Sources */,
+				45EA2C832612931900DC3E99 /* ThemeEditorPopoversView.swift in Sources */,
 				4541EFB926055A7C0000298A /* CellNotesView.swift in Sources */,
 				45C9AFA02608D43F0058C373 /* OKCancelRequestSheet.swift in Sources */,
 				4541EFAE2604DC7D0000298A /* CellGroupView.swift in Sources */,

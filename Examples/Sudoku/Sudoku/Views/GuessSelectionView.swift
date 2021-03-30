@@ -34,24 +34,45 @@ struct GuessSelectionView: View
     let col: Int
     
     // -------------------------------------
-    func foreColor(for value: Int) -> Color
+    static func foreColor(
+        for value: Int,
+        settingNotes: Bool,
+        in notes: Set<Int>,
+        isValidGuess: Bool,
+        isSelectedValue: Bool,
+        theme: Theme) -> Color
     {
         if settingNotes
         {
-            return Color(puzzle[row, col].notes.contains(value)
-                ? prefs.theme.selectedNoteColor
-                : prefs.theme.unSelectedNoteColor
+            return Color(
+                notes.contains(value)
+                    ? theme.selectedNoteColor
+                    : theme.unSelectedNoteColor
             )
         }
         else
         {
-            return Color(puzzle.isValid(guess: value, forRow: row, col: col)
-                ? puzzle[row, col].guess == value
-                    ? prefs.theme.actualGuessColor
-                    : prefs.theme.validGuessColor
-                : prefs.theme.invalidGuessColor
+            return Color(
+                isValidGuess
+                    ? isSelectedValue
+                        ? theme.actualGuessColor
+                        : theme.validGuessColor
+                    : theme.invalidGuessColor
             )
         }
+    }
+    
+    // -------------------------------------
+    func foreColor(for value: Int) -> Color
+    {
+        Self.foreColor(
+            for: value,
+            settingNotes: settingNotes,
+            in: puzzle[row, col].notes,
+            isValidGuess: puzzle.isValid(guess: value, forRow: row, col: col),
+            isSelectedValue: puzzle[row, col].guess == value,
+            theme: prefs.theme
+        )
     }
     
     // -------------------------------------
@@ -80,16 +101,25 @@ struct GuessSelectionView: View
         }
         .onAppear() { Self.keyResponder.onKeyDown { handleKeyDown($0) } }
     }
+    
+    // -------------------------------------
+    static func valueCell(value: Int, foreColor: Color, theme: Theme) -> some View
+    {
+        return Text("\(value)")
+            .font(Font(theme.font))
+            .foregroundColor(foreColor)
+            .frame(CellView.frame)
+    }
 
     // -------------------------------------
     func valueCell(row: Int, col: Int) -> some View
     {
         let value = row * 3 + col + 1
-        return Text("\(value)")
-            .font(Font(prefs.theme.font))
-            .foregroundColor(foreColor(for: value))
-            .frame(CellView.frame)
-            .gesture( TapGesture().onEnded { _ in handleGesture(for: value) } )
+        return Self.valueCell(
+            value: value,
+            foreColor: foreColor(for: value),
+            theme: prefs.theme
+        ).gesture( TapGesture().onEnded { _ in handleGesture(for: value) } )
     }
     
     // -------------------------------------
