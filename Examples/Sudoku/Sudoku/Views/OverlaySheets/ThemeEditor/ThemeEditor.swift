@@ -45,11 +45,12 @@ struct ThemeEditor: View
         {
             ZStack
             {
-                Color.black.opacity(0.8)
+                Color(.controlBackgroundColor).opacity(0.8)
                 VStack(spacing: 0)
                 {
                     HStack(alignment: .center, spacing: 0) {
                         Text("Edit Theme").font(.title)
+                            .foregroundColor(.controlTextColor)
                     }.frame(height: Self.titleHeight)
                     
                     Rectangle()

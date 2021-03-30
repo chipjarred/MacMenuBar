@@ -38,6 +38,7 @@ struct ThemeFontPicker: View
         {
             Text("\(label):")
                 .font(.system(size: 10))
+                .foregroundColor(.controlTextColor)
                 .frame(alignment: .trailing)
                 .padding(.trailing, 5)
             
@@ -50,6 +51,7 @@ struct ThemeFontPicker: View
             
             Text("Size:")
                 .font(.system(size: 10))
+                .foregroundColor(.controlTextColor)
                 .frame(alignment: .trailing)
                 .padding([.leading, .trailing], 5)
 

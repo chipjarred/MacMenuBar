@@ -98,7 +98,8 @@ struct ThemeEditorPopoverPreview: View
                 VStack(spacing: 0)
                 {
                     Text(settingNotes ? "Set Note" : "Set Guess")
-                    .padding([.top, .bottom], 1)
+                        .foregroundColor(.controlTextColor)
+                        .padding([.top, .bottom], 1)
 
                     ForEach(0..<3)
                     { valueRow in

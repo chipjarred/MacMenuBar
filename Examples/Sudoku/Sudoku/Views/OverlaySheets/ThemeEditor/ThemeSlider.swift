@@ -37,6 +37,7 @@ struct ThemeSlider<FloatValue: BinaryFloatingPoint>: View
         {
             Text("\(label):")
                 .font(.system(size: 10))
+                .foregroundColor(.controlTextColor)
                 .frame(alignment: .trailing)
                 .padding([.leading, .trailing], 5)
             Slider(value: $sliderValue, in: 0.0...1.0) { _ in

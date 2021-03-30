@@ -138,7 +138,7 @@ struct ThemeListButton: View
     {
         isEnabled
             ? .controlTextColor
-            : .gray
+            : .disabledControlTextColor
     }
     
     // -------------------------------------

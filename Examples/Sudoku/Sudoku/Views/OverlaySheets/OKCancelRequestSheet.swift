@@ -47,13 +47,16 @@ extension OKCancelRequestSheet
                 Rectangle().fill(Color.black).opacity(0.8)
                 VStack(spacing: 0)
                 {
-                    HStack(alignment: .center, spacing: 0) {
+                    HStack(alignment: .center, spacing: 0)
+                    {
                         Text(title).font(.title)
+                            .foregroundColor(.controlTextColor)
                     }.frame(height: 35)
 
                     Text(description)
-                    .padding([.leading, .trailing], 20)
-                    .padding(.bottom, 40)
+                        .foregroundColor(.controlTextColor)
+                        .padding([.leading, .trailing], 20)
+                        .padding(.bottom, 40)
                     
                     HStack
                     {
