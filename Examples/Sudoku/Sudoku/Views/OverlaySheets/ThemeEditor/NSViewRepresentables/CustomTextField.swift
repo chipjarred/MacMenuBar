@@ -215,6 +215,7 @@ struct CustomTextField: NSViewRepresentable
         nsView.textStorage!
             .setAttributedString(text.attributedString(attributes))
         nsView.selectAll(nsView)
+        nsView.commitAction = commitAction
     }
     
     // -------------------------------------

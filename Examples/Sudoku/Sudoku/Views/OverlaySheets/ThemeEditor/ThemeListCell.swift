@@ -57,22 +57,64 @@ struct ThemeListCell: View
     }
     
     // -------------------------------------
+    func nameClashes(_ newName: String) -> Bool
+    {
+        if newName.isEmpty || newName.isAllWhitespace { return true }
+        
+        if let existingTheme = prefs.themeNamed(newName),
+           existingTheme.id != theme.id
+        {
+            return true
+        }
+        
+        return false
+    }
+    
+    // -------------------------------------
     func commitNewThemeName(_ newName: String)
     {
-        if let existingTheme = prefs.themeNamed(newName),
-           existingTheme.id != currentTheme.id
+        if nameClashes(newName)
         {
             nameClash = true
             return
         }
         
-        let newTheme = Theme(from: currentTheme, withName: newName)
+        let newTheme = Theme(from: theme, withName: newName)
 
         prefs.updateTheme(currentTheme, to: newTheme)
         currentTheme = newTheme
         theme = newTheme
         self.newName = newTheme.name
         shouldRename = false
+    }
+    
+    // -------------------------------------
+    func doClick(clickCount: Int)
+    {
+        if clickCount == 1
+        {
+            currentTheme = theme
+            shouldRename = false
+        }
+        else
+        {
+            assert(clickCount == 2)
+            currentTheme = theme
+            shouldRename = theme.isEditable
+        }
+    }
+    
+    // -------------------------------------
+    var nameClashAlert: Alert
+    {
+        let titleStr = newName == ""
+            ? "Theme name must not be empty"
+            : "The name, \"\(newName)\", is already taken."
+        return Alert(
+            title: Text(titleStr),
+            message: Text("Please choose another name."),
+            dismissButton: nil
+        )
     }
     
     // -------------------------------------
@@ -94,17 +136,7 @@ struct ThemeListCell: View
                 .padding(.leading, 5)
                 .background(Color.controlBackgroundColor)
                 .border(Color.blue, width: 1)
-                .alert(isPresented: $nameClash)
-                {
-                    let titleStr = newName == ""
-                        ? "Theme name must not be empty"
-                        : "The name, \"\(newName)\", is already taken."
-                    return Alert(
-                        title: Text(titleStr),
-                        message: Text("Please choose another name."),
-                        dismissButton: nil
-                    )
-                }
+                .alert(isPresented: $nameClash) { nameClashAlert }
             }
             else
             {
@@ -112,21 +144,9 @@ struct ThemeListCell: View
                     .font(.system(size: Self.themeNameFontSize))
                     .foregroundColor(.controlTextColor)
                     .padding(.leading, 10)
-                    .onTapGesture(count: 2)
-                    {
-                        currentTheme = theme
-                        shouldRename = theme.isEditable
-                    }
-                    .onTapGesture(count: 1)
-                    {
-                        if theme == currentTheme {
-                            shouldRename = theme.isEditable
-                        }
-                        else
-                        {
-                            currentTheme = theme
-                            shouldRename = false
-                        }
+                    .onTapGesture(count: 2) { doClick(clickCount: 2) }
+                    .onTapGesture(count: 1) {
+                        doClick(clickCount: theme == currentTheme ? 2 : 1)
                     }
             }
         }
