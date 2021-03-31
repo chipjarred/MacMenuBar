@@ -76,7 +76,7 @@ struct ThemeEditorPopoversView: View
             ThemeColorWell(
                 "Valid Guess",
                 currentTheme: $currentTheme,
-                colorPath: \.invalidGuessColor
+                colorPath: \.validGuessColor
             )
             
             ThemeColorWell(
