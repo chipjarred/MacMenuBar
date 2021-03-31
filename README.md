@@ -287,7 +287,7 @@ The closure passed to `.updatingStateWith` is called when the menu is opened by 
 
 ## Dynamically Populating Menus
 
-Let's leave our "Debug" for now, and provide menu functionality our app's users would use.  We'll add a new "Themes" menu so that users can select the color scheme used by our app, and we'll populate with the names of our themes.  Instead of declaring each menu item individually, we can use `ForEach` to generate them for us from a array of the theme names:
+Let's leave our "Debug" for now, and provide menu functionality our app's users would use.  We'll add a new "Themes" menu so that users can select the color scheme used by our app, and we'll populate with the names of our themes.  Instead of declaring each menu item individually, we can use `ForEach` to generate them for us from an array of the theme names:
 
 ```swift
             StandardMenu(title: "Themes")
