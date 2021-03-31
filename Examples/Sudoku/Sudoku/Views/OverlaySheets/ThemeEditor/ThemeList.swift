@@ -27,7 +27,7 @@ struct ThemeList: View
     
     @EnvironmentObject var preferences: Preferences
     @Binding var currentTheme: Theme
-    @State var shouldRenameCurrrentTheme: Bool = false
+    @State var shouldRenameCurrentTheme: Bool = false
     
     // -------------------------------------
     var scrollView: some View
@@ -40,12 +40,12 @@ struct ThemeList: View
                 ThemeListCell(
                     .light,
                     currentTheme: $currentTheme,
-                    shouldRename: $shouldRenameCurrrentTheme
+                    shouldRename: $shouldRenameCurrentTheme
                 )
                 ThemeListCell(
                     .dark,
                     currentTheme: $currentTheme,
-                    shouldRename: $shouldRenameCurrrentTheme
+                    shouldRename: $shouldRenameCurrentTheme
                 )
                 
                 Rectangle()
@@ -57,7 +57,7 @@ struct ThemeList: View
                     ThemeListCell(
                         aTheme,
                         currentTheme: $currentTheme,
-                        shouldRename: $shouldRenameCurrrentTheme
+                        shouldRename: $shouldRenameCurrentTheme
                     ).environmentObject(preferences)
                 }
             }
@@ -81,7 +81,7 @@ struct ThemeList: View
                     )
                     preferences.addCustomTheme(newTheme)
                     currentTheme = newTheme
-                    shouldRenameCurrrentTheme = true
+                    shouldRenameCurrentTheme = true
                 }.frame(width: 20)
                 
                 ThemeListButton.minus(

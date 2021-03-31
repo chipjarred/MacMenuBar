@@ -39,6 +39,65 @@ struct ThemeEditor: View
     }
     
     // -------------------------------------
+    var tabView: some View
+    {
+        TabView
+        {
+            ThemeEditorPuzzleColorsView(
+                currentTheme: $currentTheme
+            ).environmentObject(preferences)
+            .tabItem { Text("Puzzle Colors") }
+            
+            ThemeEditorFontsView(
+                currentTheme: $currentTheme
+            ).environmentObject(preferences)
+            .tabItem { Text("Fonts") }
+            
+            ThemeEditorPopoversView(
+                currentTheme: $currentTheme
+            ).environmentObject(preferences)
+                .tabItem { Text("Popovers") }
+        }
+    }
+    
+    let helpStr =
+    ###"""
+    Select a theme to edit in the list to the left.
+
+    To copy a theme:
+        • Select it in the list to the left.
+        • Click "＋" under the list.
+        • Give a new name
+
+    To remove a theme from the list:
+        • Select it in the list to the left.
+        • Click "－" under the list.
+
+    To rename a theme:
+        • Double click it in the list to the left
+        • Type the new name
+
+    Note: You cannot edit or rename the "Light" or "Dark" themes, but you can copy them and edit the copies.
+    """###
+    
+    // -------------------------------------
+    var themeNotEditable: some View
+    {
+        return VStack
+        {
+            Text("Theme \"\(currentTheme.name)\" is not editable")
+                .foregroundColor(.controlTextColor)
+                .font(.subheadline)
+                .padding(.bottom, 10)
+            Text(helpStr)
+                .frame(alignment: .leading)
+                .foregroundColor(.controlTextColor)
+                .font(.system(size: 10))
+                .padding()
+        }
+    }
+    
+    // -------------------------------------
     var body: some View
     {
         KeyResponderGroup
@@ -64,24 +123,17 @@ struct ThemeEditor: View
                         
                         VStack(alignment: .center, spacing: 0)
                         {
-                            TabView
+                            if currentTheme.isEditable
                             {
-                                ThemeEditorPuzzleColorsView(
-                                    currentTheme: $currentTheme
-                                ).environmentObject(preferences)
-                                .tabItem { Text("Puzzle Colors") }
-                                
-                                ThemeEditorFontsView(
-                                    currentTheme: $currentTheme
-                                ).environmentObject(preferences)
-                                .tabItem { Text("Fonts") }
-                                
-                                ThemeEditorPopoversView(
-                                    currentTheme: $currentTheme
-                                ).environmentObject(preferences)
-                                    .tabItem { Text("Popovers") }
-                            }.padding(.top, 10)
-                                .padding([.leading, .trailing, .bottom], 5)
+                                tabView.padding(.top, 10)
+                                    .padding([.leading, .trailing, .bottom], 5)
+                            }
+                            else
+                            {
+                                Spacer()
+                                themeNotEditable
+                                Spacer()
+                            }
                             
                             Rectangle()
                                 .fill(Color.gridColor)
@@ -102,7 +154,8 @@ struct ThemeEditor: View
                                     sheetRequest.state = .none
                                     saveThemeChanges()
                                     preferences.theme = currentTheme
-                                }.frame(width: 100)
+                                }.enable(currentTheme.isEditable)
+                                    .frame(width: 100)
                                 
                                 Spacer()
                             }.padding([.top, .bottom], 10)

@@ -87,12 +87,12 @@ struct ThemeListCell: View
                     .foregroundColor(.controlTextColor)
                     .padding(.leading, 10)
                     .onTapGesture(count: 2) {
-                        shouldRename = true
+                        shouldRename = theme.isEditable
                     }
                     .onTapGesture(count: 1)
                     {
                         if theme == currentTheme {
-                            shouldRename = true
+                            shouldRename = theme.isEditable
                         }
                         else
                         {

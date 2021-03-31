@@ -25,6 +25,8 @@ struct Theme: Identifiable
 {
     var id: Int { name.hashValue }
     
+    let isEditable: Bool
+    
     let name: String
     var valueColor: NSColor
     var correctGuessColor: NSColor
@@ -46,6 +48,7 @@ struct Theme: Identifiable
     
     // -------------------------------------
     static let dark = Theme(
+        isEditable: false,
         name: "Dark",
         valueColor: #colorLiteral(red: 0.4242922289, green: 0.4284931421, blue: 0.4284931421, alpha: 1),
         correctGuessColor: #colorLiteral(red: 0.4619969942, green: 0.6018599302, blue: 0.4795914408, alpha: 1),
@@ -66,6 +69,7 @@ struct Theme: Identifiable
     
     // -------------------------------------
     static let light = Theme(
+        isEditable: false,
         name: "Light",
         valueColor: #colorLiteral(red: 0.370555222, green: 0.3705646992, blue: 0.3705595732, alpha: 1),
         correctGuessColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1),
@@ -87,6 +91,7 @@ struct Theme: Identifiable
     static let initialThemes =
     [
         Theme(
+            isEditable: true,
             name: "Ocean",
             valueColor: #colorLiteral(red: 0, green: 0.616694885, blue: 0.7177481724, alpha: 1),
             correctGuessColor: #colorLiteral(red: 0, green: 0.6443423983, blue: 0.2367669849, alpha: 1),
@@ -105,6 +110,7 @@ struct Theme: Identifiable
             noteFont: NSFont(name: "Chalkboard", size: 11)!
         ),
         Theme(
+            isEditable: true,
             name: "Sahara",
             valueColor: #colorLiteral(red: 0.6716067957, green: 0.4977128586, blue: 0.2989052758, alpha: 1),
             correctGuessColor: #colorLiteral(red: 0.3098039329, green: 0.2039215714, blue: 0.03921568766, alpha: 1),
@@ -142,13 +148,15 @@ extension Theme
     {
         return Theme(
             from: systemInDarkMode ? .dark : .light,
-            withName: "System"
+            withName: "System",
+            isEditable: false
         )
     }
     
     // -------------------------------------
-    init(from theme: Theme, withName name: String)
+    init(from theme: Theme, withName name: String, isEditable: Bool = true)
     {
+        self.isEditable          = isEditable
         self.name                = name
         self.valueColor          = theme.valueColor
         self.correctGuessColor   = theme.correctGuessColor
@@ -175,6 +183,7 @@ extension Theme: Codable
 {
     enum CodingKey: Swift.CodingKey
     {
+        case isEditable
         case name
         case valueColor
         case correctGuessColor
@@ -199,6 +208,9 @@ extension Theme: Codable
     init(from decoder: Decoder) throws
     {
         var container = try decoder.container(keyedBy: CodingKey.self)
+        self.isEditable =
+            try container.decodeIfPresent(Bool.self, forKey: .isEditable)
+                ?? false
         self.name = try container.decode(String.self, forKey: .name)
         self.valueColor =
             try NSColor.decode(from: &container, forKey: .valueColor)
@@ -236,6 +248,7 @@ extension Theme: Codable
     {
         var container = encoder.container(keyedBy: CodingKey.self)
         
+        try container.encode(isEditable, forKey: .isEditable)
         try container.encode(name, forKey: .name)
         try valueColor.encode(to: &container, forKey: .valueColor)
         try correctGuessColor.encode(to: &container, forKey: .correctGuessColor)

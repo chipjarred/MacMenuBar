@@ -34,6 +34,7 @@ struct MacOSButton: NSViewRepresentable
     let title: String
     let action: () -> Void
     let keyEquivalent: KeyEquivalent?
+    private var isEnabled: () -> Bool = { true }
 
     // -------------------------------------
     init(
@@ -47,9 +48,9 @@ struct MacOSButton: NSViewRepresentable
     }
 
     // -------------------------------------
-    func makeNSView(context: Context) -> NSClosureButton
+    func makeNSView(context: Context) -> NSViewType
     {
-        let button = NSClosureButton(
+        let button = NSViewType(
             title,
             keyEquivalent: keyEquivalent,
             action: action
@@ -75,8 +76,17 @@ struct MacOSButton: NSViewRepresentable
     }
 
     // -------------------------------------
-    func updateNSView(_ nsView: NSClosureButton, context: Context) {
+    func updateNSView(_ nsView: NSViewType, context: Context) {
+        nsView.isEnabled = self.isEnabled()
         return
+    }
+    
+    // -------------------------------------
+    func enable(_ isEnabled: @escaping @autoclosure () -> Bool = true) -> Self
+    {
+        var copy = self
+        copy.isEnabled = isEnabled
+        return copy
     }
 }
 
