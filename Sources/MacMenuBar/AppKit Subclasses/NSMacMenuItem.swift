@@ -173,12 +173,7 @@ import Cocoa
     public func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
         assert(menuItem === self)
-        #warning("DEBUG")
-        let validation = validateMenuItemSelf()
-        if menuItem.title == "Cut" {
-            print("\(#function) returning \(validation)")
-        }
-        return validation
+        return validateMenuItemSelf()
     }
     
     // -------------------------------------
@@ -186,36 +181,8 @@ import Cocoa
         _ item: NSValidatedUserInterfaceItem) -> Bool
     {
         assert(item === self)
-        #warning("DEBUG")
-        let validation = validateMenuItemSelf()
-        if (item as? NSMacMenuItem)?.title == "Cut" {
-            print("\(#function) returning \(validation)")
-        }
-        return validation
+        return validateMenuItemSelf()
 
-    }
-    
-    // -------------------------------------
-    #warning("Delete after testing new version")
-    public func validateMenuItemSelf_Saved() -> Bool
-    {
-        if self.submenu != nil { return true }
-        
-        guard let action = _action, action.canBeEnabled else { return false }
-        
-        if let validator = action.enabledValidator {
-            return validator()
-        }
-        
-        guard let selectorAction = action as? SelectorAction else {
-            return true
-        }
-        
-        if let target = target(for: selectorAction) {
-            return validateMenuItem(for: target)
-        }
-        
-        return false
     }
     
     // -------------------------------------
@@ -227,10 +194,6 @@ import Cocoa
         
         if let selectorAction = action as? SelectorAction
         {
-            #warning("DEBUG")
-            if selectorAction.selector == #selector(NSText.cut(_:)) {
-                print("BREAK ON ME")
-            }
             if selectorAction.isEnabled,
                let target = target(for: selectorAction)
             {
@@ -300,10 +263,6 @@ import Cocoa
     // -------------------------------------
     public override func responds(to aSelector: Selector!) -> Bool
     {
-        #warning("DEBUG")
-        if aSelector == #selector(NSText.cut(_:)) {
-            print("\(#function) for cut")
-        }
         guard aSelector == menuItemActionSelector, (_action?.isEnabled ?? false)
         else { return super.responds(to: aSelector) }
         

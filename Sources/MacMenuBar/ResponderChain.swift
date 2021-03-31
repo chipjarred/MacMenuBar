@@ -147,7 +147,6 @@ internal struct ResponderChain
     {
         guard let window = window else { return }
         
-        #warning("DEBUG")
         if let responder = window.firstResponder
         {
             responders.append(responder)
@@ -158,9 +157,6 @@ internal struct ResponderChain
                 curResponder = curResp.nextResponder
             }
         }
-//        if let responder = window.firstResponder {
-//            responders.append(responder)
-//        }
         
         responders.append(window)
         
