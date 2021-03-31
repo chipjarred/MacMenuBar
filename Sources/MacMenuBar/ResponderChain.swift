@@ -147,9 +147,20 @@ internal struct ResponderChain
     {
         guard let window = window else { return }
         
-        if let responder = window.firstResponder {
+        #warning("DEBUG")
+        if let responder = window.firstResponder
+        {
             responders.append(responder)
+            var curResponder = responder.nextResponder
+            while let curResp = curResponder
+            {
+                responders.append(curResp)
+                curResponder = curResp.nextResponder
+            }
         }
+//        if let responder = window.firstResponder {
+//            responders.append(responder)
+//        }
         
         responders.append(window)
         
