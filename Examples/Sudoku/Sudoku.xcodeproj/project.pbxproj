@@ -937,7 +937,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/chipjarred/MacMenuBar.git";
 			requirement = {
-				branch = FixResponderChain;
+				branch = master;
 				kind = branch;
 			};
 		};
