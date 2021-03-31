@@ -41,8 +41,16 @@ public struct SelectorAction: Action
     // -------------------------------------
     public var isEnabled: Bool
     {
-        return canBeEnabled && selector != nil
-            && (enabledValidator?() ?? true)
+        guard canBeEnabled && selector != nil else { return false }
+        
+        if let validator = enabledValidator {
+            return validator()
+        }
+        
+        let responderChain = ResponderChain(forContextualMenu: false)
+        return nil != responderChain.firstResponder {
+            $0.responds(to: selector)
+        }
     }
     
     // -------------------------------------
