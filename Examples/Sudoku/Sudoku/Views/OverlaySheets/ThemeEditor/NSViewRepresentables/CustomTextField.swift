@@ -86,10 +86,11 @@ struct CustomTextField: NSViewRepresentable
             
             let layoutManager = NSLayoutManager()
             storage.addLayoutManager(layoutManager)
-            let container = NSTextContainer(containerSize: .zero)
+            let containerSize = CGSize(width: 1024, height: 0)
+            let container = NSTextContainer(containerSize: containerSize)
             layoutManager.addTextContainer(container)
             container.heightTracksTextView = true
-            container.widthTracksTextView  = true
+            container.widthTracksTextView  = false
 
             super.init(frame: .zero, textContainer: container)
             
