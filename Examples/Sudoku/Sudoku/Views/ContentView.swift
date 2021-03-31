@@ -46,18 +46,12 @@ struct ContentView: View
     static let borderWidth: CGFloat = 3
     static let width = PuzzleView.width + 2 * borderWidth
     static let height = width
-
+    
     // -------------------------------------
-    var body: some View
+    var requestedSheet: some View
     {
-        ZStack
+        Group
         {
-            Color(prefs.theme.borderColor)
-            PuzzleView()
-                .environmentObject(puzzle)
-                .environmentObject(sheetRequest)
-                .environmentObject(prefs)
-
             if sheetRequest.state == .newGame
             {
                 NewGameRequestSheet()
@@ -72,6 +66,22 @@ struct ContentView: View
                     .environmentObject(sheetRequest)
                     .environmentObject(prefs)
             }
+            else { EmptyView() }
+        }
+    }
+
+    // -------------------------------------
+    var body: some View
+    {
+        ZStack
+        {
+            Color(prefs.theme.borderColor)
+            PuzzleView()
+                .environmentObject(puzzle)
+                .environmentObject(sheetRequest)
+                .environmentObject(prefs)
+            
+            requestedSheet
         }
         .frame(width: Self.width, height: Self.height, alignment: .center)
     }

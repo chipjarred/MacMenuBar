@@ -44,14 +44,13 @@ extension OKCancelRequestSheet
         {
             ZStack
             {
-                Rectangle().fill(Color.black).opacity(0.8)
+                Rectangle().fill(Color.controlColor).opacity(0.8)
                 VStack(spacing: 0)
                 {
-                    HStack(alignment: .center, spacing: 0)
-                    {
-                        Text(title).font(.title)
-                            .foregroundColor(.controlTextColor)
-                    }.frame(height: 35)
+                    Text(title).font(.title)
+                        .foregroundColor(.controlTextColor)
+                        .padding(.top, 20)
+                        .padding(.bottom, 50)
 
                     Text(description)
                         .foregroundColor(.controlTextColor)

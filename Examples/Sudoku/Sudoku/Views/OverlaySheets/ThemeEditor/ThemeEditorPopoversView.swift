@@ -45,22 +45,19 @@ struct ThemeEditorPopoversView: View
     // -------------------------------------
     var noteColorWells: some View
     {
-        VStack(alignment: .trailing, spacing: 0)
+        VStack(alignment: .trailing)
         {
             ThemeColorWell(
                 "Available Note",
                 currentTheme: $currentTheme,
                 colorPath: \.unSelectedNoteColor
             )
-            .padding(.top, 30)
-            .padding(.bottom, 10)
             
             ThemeColorWell(
                 "Selected Note",
                 currentTheme: $currentTheme,
                 colorPath: \.selectedNoteColor
             )
-            .padding(.bottom, 10)
         }
         .frame(alignment: .leading)
     }
@@ -68,28 +65,25 @@ struct ThemeEditorPopoversView: View
     // -------------------------------------
     var guessColorWells: some View
     {
-        VStack(alignment: .trailing, spacing: 0)
+        VStack(alignment: .trailing)
         {
             ThemeColorWell(
                 "Invalid Guess",
                 currentTheme: $currentTheme,
                 colorPath: \.invalidGuessColor
             )
-            .padding(.top, 20)
             
             ThemeColorWell(
                 "Valid Guess",
                 currentTheme: $currentTheme,
                 colorPath: \.invalidGuessColor
             )
-            .padding(.top, 10)
             
             ThemeColorWell(
                 "Selected Guess",
                 currentTheme: $currentTheme,
                 colorPath: \.actualGuessColor
             )
-            .padding(.top, 10)
         }
         .frame(alignment: .trailing)
     }
@@ -127,7 +121,7 @@ struct ThemeEditorPopoversView: View
             HStack
             {
                 guessPopoverPreview
-                guessColorWells
+                guessColorWells.padding(.trailing, 5)
             }
         }
     }
@@ -145,5 +139,9 @@ struct ThemeEditorPopoversView_Previews: PreviewProvider
             Color.gray
             ThemeEditorPopoversView(currentTheme: $theme)
         }
+        .frame(
+            width: PuzzleView.width - ThemeList.width - 10,
+            height: PuzzleView.height - 120
+        )
     }
 }
