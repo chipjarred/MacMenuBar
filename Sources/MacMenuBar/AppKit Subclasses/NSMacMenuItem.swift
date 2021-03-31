@@ -227,6 +227,10 @@ import Cocoa
         
         if let selectorAction = action as? SelectorAction
         {
+            #warning("DEBUG")
+            if selectorAction.selector == #selector(NSText.cut(_:)) {
+                print("BREAK ON ME")
+            }
             if selectorAction.isEnabled,
                let target = target(for: selectorAction)
             {
