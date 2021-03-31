@@ -143,19 +143,19 @@ struct ThemeEditor: View
                             {
                                 Spacer()
                                 
-                                MacOSButton("Cancel") {
-                                    sheetRequest.state = .none
-                                }.frame(width: 100)
-                                
-                                Spacer()
-                                
                                 MacOSButton("Done")
                                 {
                                     sheetRequest.state = .none
                                     saveThemeChanges()
+                                }.frame(width: 100)
+                                
+                                Spacer()
+                                
+                                MacOSButton("Set As Current")
+                                {
+                                    saveThemeChanges()
                                     preferences.theme = currentTheme
-                                }.enable(currentTheme.isEditable)
-                                    .frame(width: 100)
+                                }.frame(width: 100)
                                 
                                 Spacer()
                             }.padding([.top, .bottom], 10)

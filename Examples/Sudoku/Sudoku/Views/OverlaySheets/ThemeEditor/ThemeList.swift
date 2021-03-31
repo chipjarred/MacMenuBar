@@ -39,6 +39,12 @@ struct ThemeList: View
             ScrollView(.vertical, showsIndicators: true)
             {
                 ThemeListCell(
+                    .system,
+                    currentTheme: $currentTheme,
+                    shouldRename: $shouldRenameCurrentTheme,
+                    needsRefresh: $needsRefresh
+                )
+                ThemeListCell(
                     .light,
                     currentTheme: $currentTheme,
                     shouldRename: $shouldRenameCurrentTheme,
@@ -123,7 +129,7 @@ struct ThemeList: View
                 .frame(height: 20)
             HStack(spacing: 0)
             {
-                ThemeListButton.plus(toolTip: "Add a new theme")
+                ThemeListButton.plus(toolTip: "Copy selected theme")
                 {
                     let newTheme = Theme(
                         from: currentTheme,

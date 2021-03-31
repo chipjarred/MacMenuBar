@@ -19,7 +19,7 @@ This project uses:
 - [x] Undo/Redo
 - [x] Game save/restore
 - [x] Revert from saved
-- [ ] Edit/Create themes
+- [x] Edit/Create themes
 - [x] Save preferences
 - [ ] Puzzle solved view
 - [ ] Usage tutorial on first run
