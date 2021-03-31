@@ -173,7 +173,12 @@ import Cocoa
     public func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
         assert(menuItem === self)
-        return validateMenuItemSelf()
+        #warning("DEBUG")
+        let validation = validateMenuItemSelf()
+        if menuItem.title == "Cut" {
+            print("\(#function) returning \(validation)")
+        }
+        return validation
     }
     
     // -------------------------------------
@@ -181,7 +186,12 @@ import Cocoa
         _ item: NSValidatedUserInterfaceItem) -> Bool
     {
         assert(item === self)
-        return validateMenuItemSelf()
+        #warning("DEBUG")
+        let validation = validateMenuItemSelf()
+        if (item as? NSMacMenuItem)?.title == "Cut" {
+            print("\(#function) returning \(validation)")
+        }
+        return validation
 
     }
     
