@@ -48,6 +48,18 @@ final class Preferences: ObservableObject, Codable
             theme = systemTheme
         }
     }
+    
+    // -------------------------------------
+    func themeNamed(_ name: String) -> Theme?
+    {
+        [.light, .dark, .system].first { $0.name == name }
+            ?? customThemes.first { $0.name == name }
+    }
+    
+    // -------------------------------------
+    func isUniqueThemeName(name: String) -> Bool {
+        themeNamed(name) == nil
+    }
 
     @Published var theme: Theme = .dark
     
@@ -82,6 +94,8 @@ final class Preferences: ObservableObject, Codable
     // -------------------------------------
     public func addCustomTheme(_ newTheme: Theme)
     {
+        assert(isUniqueThemeName(name: newTheme.name))
+        
         customThemes.append(newTheme)
         sortThemes()
     }

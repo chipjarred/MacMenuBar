@@ -71,6 +71,7 @@
 		45EA2C9E2613185000DC3E99 /* CGRect+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EA2C9D2613185000DC3E99 /* CGRect+Extension.swift */; };
 		45EA2CA4261318D600DC3E99 /* PopoverShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EA2CA3261318D600DC3E99 /* PopoverShape.swift */; };
 		45EA2CAF2613B82800DC3E99 /* ThemeEditorPopoverPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EA2CAE2613B82800DC3E99 /* ThemeEditorPopoverPreview.swift */; };
+		45EA2CB826141F5900DC3E99 /* StringProtocol+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EA2CB726141F5900DC3E99 /* StringProtocol+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +165,7 @@
 		45EA2C9D2613185000DC3E99 /* CGRect+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extension.swift"; sourceTree = "<group>"; };
 		45EA2CA3261318D600DC3E99 /* PopoverShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverShape.swift; sourceTree = "<group>"; };
 		45EA2CAE2613B82800DC3E99 /* ThemeEditorPopoverPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorPopoverPreview.swift; sourceTree = "<group>"; };
+		45EA2CB726141F5900DC3E99 /* StringProtocol+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,6 +295,7 @@
 				456428DA260492A600E60129 /* Assets.xcassets */,
 				456428E3260492A600E60129 /* Sudoku.entitlements */,
 				4541EFD2260588F90000298A /* Cocoa-BasedTypes */,
+				45EA2CB626141F3800DC3E99 /* Swift Type Extensions */,
 				45EA2C92261317A900DC3E99 /* Foundation Extensions */,
 				456428C52604929800E60129 /* Menu Bar */,
 				456429262604A84700E60129 /* Views */,
@@ -397,6 +400,14 @@
 				45EA2CA3261318D600DC3E99 /* PopoverShape.swift */,
 			);
 			path = "Custom Shapes";
+			sourceTree = "<group>";
+		};
+		45EA2CB626141F3800DC3E99 /* Swift Type Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				45EA2CB726141F5900DC3E99 /* StringProtocol+Extension.swift */,
+			);
+			path = "Swift Type Extensions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -588,6 +599,7 @@
 				4541EFCE260587820000298A /* GameWindowDelegate.swift in Sources */,
 				4541EFED2605DCF30000298A /* View+Extension.swift in Sources */,
 				456428D52604929800E60129 /* DebugMenu.swift in Sources */,
+				45EA2CB826141F5900DC3E99 /* StringProtocol+Extension.swift in Sources */,
 				456428CB2604929800E60129 /* FileMenu.swift in Sources */,
 				4541EFBE260564FE0000298A /* Theme.swift in Sources */,
 				458AF5262609209A00CAD8B0 /* NSCoder+Extension.swift in Sources */,

@@ -26,7 +26,9 @@ struct ThemeListCell: View
     @State var theme: Theme
     @Binding var shouldRename: Bool
     @Binding var currentTheme: Theme
+    @Binding var needsRefresh: Bool
     @State var newName: String = ""
+    @State var nameClash: Bool = false
     
     @EnvironmentObject var prefs: Preferences
 
@@ -42,21 +44,31 @@ struct ThemeListCell: View
     init(
         _ theme: Theme,
         currentTheme: Binding<Theme>,
-        shouldRename: Binding<Bool>)
+        shouldRename: Binding<Bool>,
+        needsRefresh: Binding<Bool>)
     {
         self._theme = State(initialValue: theme)
         self._currentTheme = currentTheme
         self._shouldRename = shouldRename
+        self._needsRefresh = needsRefresh
         self._newName = State(initialValue: theme.name)
     }
     
     // -------------------------------------
     func commitNewThemeName()
     {
+        if let existingTheme = prefs.themeNamed(newName),
+           existingTheme.id != currentTheme.id
+        {
+            nameClash = true
+            return
+        }
+        
         let newTheme = Theme(
             from: currentTheme,
             withName: newName
         )
+
         prefs.updateTheme(currentTheme, to: newTheme)
         currentTheme = newTheme
         theme = newTheme
@@ -80,13 +92,24 @@ struct ThemeListCell: View
                 .padding(.leading, 5)
                 .background(Color.controlBackgroundColor)
                 .border(Color.blue, width: 1)
+                .alert(isPresented: $nameClash)
+                {
+                    Alert(
+                        title:
+                            Text("The name, \"\(newName)\", is already taken."),
+                        message: Text("Please choose another name."),
+                        dismissButton: nil
+                    )
+                }
             }
             else
             {
                 Text(theme.name)
                     .foregroundColor(.controlTextColor)
                     .padding(.leading, 10)
-                    .onTapGesture(count: 2) {
+                    .onTapGesture(count: 2)
+                    {
+                        currentTheme = theme
                         shouldRename = theme.isEditable
                     }
                     .onTapGesture(count: 1)

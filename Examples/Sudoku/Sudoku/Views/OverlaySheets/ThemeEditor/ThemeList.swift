@@ -28,6 +28,7 @@ struct ThemeList: View
     @EnvironmentObject var preferences: Preferences
     @Binding var currentTheme: Theme
     @State var shouldRenameCurrentTheme: Bool = false
+    @State var needsRefresh: Bool = true
     
     // -------------------------------------
     var scrollView: some View
@@ -40,28 +41,77 @@ struct ThemeList: View
                 ThemeListCell(
                     .light,
                     currentTheme: $currentTheme,
-                    shouldRename: $shouldRenameCurrentTheme
+                    shouldRename: $shouldRenameCurrentTheme,
+                    needsRefresh: $needsRefresh
                 )
                 ThemeListCell(
                     .dark,
                     currentTheme: $currentTheme,
-                    shouldRename: $shouldRenameCurrentTheme
+                    shouldRename: $shouldRenameCurrentTheme,
+                    needsRefresh: $needsRefresh
                 )
                 
                 Rectangle()
                     .fill(Color.gray.opacity(0.5))
                     .frame(height: 1)
 
+                if needsRefresh {
+                    EmptyView()
+                }
+                
                 ForEach(preferences.customThemes)
                 { aTheme in
                     ThemeListCell(
                         aTheme,
                         currentTheme: $currentTheme,
-                        shouldRename: $shouldRenameCurrentTheme
+                        shouldRename: $shouldRenameCurrentTheme,
+                        needsRefresh: $needsRefresh
                     ).environmentObject(preferences)
                 }
             }
+        }.onAppear { needsRefresh = !shouldRenameCurrentTheme }
+    }
+    
+    // -------------------------------------
+    private func nameWithCopyAppended(_ name: String) -> String
+    {
+        guard let copyRange = name.lastRange(of: "Copy") else {
+            return name + " Copy"
         }
+        
+        if copyRange.upperBound == name.endIndex {
+            return name
+        }
+        
+        guard let numSuffixRange = name.rangeOfNumericSuffix else {
+            return name + " Copy"
+        }
+        
+        let betweenRange = copyRange.upperBound..<numSuffixRange.lowerBound
+        
+        if name[betweenRange].isAllWhitespace {
+            return String(name[..<copyRange.upperBound])
+        }
+        
+        return name + " Copy"
+    }
+    
+    // -------------------------------------
+    func uniqueName(for theme: Theme) -> String
+    {
+        let currentThemes = preferences.customThemes + [.light, .dark, .system]
+        
+        let newName: String = nameWithCopyAppended(theme.name)
+        if !currentThemes.contains(where: { $0.name == newName }) {
+            return newName
+        }
+
+        var i = 1
+        while currentThemes.contains(where: { $0.name == "\(newName) \(i)" }) {
+            i += 1
+        }
+        
+        return "\(newName) \(i)"
     }
     
     // -------------------------------------
@@ -77,11 +127,12 @@ struct ThemeList: View
                 {
                     let newTheme = Theme(
                         from: currentTheme,
-                        withName: currentTheme.name + " Copy"
+                        withName: uniqueName(for: currentTheme)
                     )
                     preferences.addCustomTheme(newTheme)
                     currentTheme = newTheme
                     shouldRenameCurrentTheme = true
+                    needsRefresh = true
                 }.frame(width: 20)
                 
                 ThemeListButton.minus(
@@ -91,6 +142,7 @@ struct ThemeList: View
                 ) {
                     preferences.removeCustomTheme(currentTheme)
                     currentTheme = preferences.theme
+                    needsRefresh = true
                 }.frame(width:20)
                 
                 Spacer()
