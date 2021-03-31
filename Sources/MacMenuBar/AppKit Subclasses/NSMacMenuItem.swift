@@ -186,7 +186,8 @@ import Cocoa
     }
     
     // -------------------------------------
-    public func validateMenuItemSelf() -> Bool
+    #warning("Delete after testing new version")
+    public func validateMenuItemSelf_Saved() -> Bool
     {
         if self.submenu != nil { return true }
         
@@ -207,6 +208,27 @@ import Cocoa
         return false
     }
     
+    // -------------------------------------
+    public func validateMenuItemSelf() -> Bool
+    {
+        if self.submenu != nil { return true }
+        
+        guard let action = _action, action.canBeEnabled else { return false }
+        
+        if let selectorAction = action as? SelectorAction
+        {
+            if selectorAction.isEnabled,
+               let target = target(for: selectorAction)
+            {
+                return validateMenuItem(for: target)
+            }
+            
+            return false
+        }
+        else { return action.enabledValidator?() ?? true }
+        
+    }
+
     private let validateMenuItemSelector =
         #selector(NSMenuItemValidation.validateMenuItem(_:))
     private let validateUIItemSelector =

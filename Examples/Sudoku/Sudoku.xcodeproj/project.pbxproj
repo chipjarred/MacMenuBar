@@ -3,13 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		4506157F260726A400E58DE1 /* NSGameWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506157E260726A400E58DE1 /* NSGameWindow.swift */; };
 		45141E72260B6AD0008EF118 /* ThemeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45141E71260B6AD0008EF118 /* ThemeEditor.swift */; };
-		45278DC6260A528A00C0A76B /* MacMenuBar in Frameworks */ = {isa = PBXBuildFile; productRef = 45278DC5260A528A00C0A76B /* MacMenuBar */; };
 		4529FC0526126943007091AC /* FontSizePopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529FC0426126943007091AC /* FontSizePopupButton.swift */; };
 		4529FC10261274C9007091AC /* ThemeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529FC0F261274C9007091AC /* ThemeSlider.swift */; };
 		4529FC152612752D007091AC /* ThemeFontPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529FC142612752D007091AC /* ThemeFontPicker.swift */; };
@@ -173,7 +172,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45278DC6260A528A00C0A76B /* MacMenuBar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,7 +425,6 @@
 			);
 			name = Sudoku;
 			packageProductDependencies = (
-				45278DC5260A528A00C0A76B /* MacMenuBar */,
 			);
 			productName = Sudoku;
 			productReference = 456428C02604929800E60129 /* Sudoku.app */;
@@ -501,7 +498,6 @@
 			);
 			mainGroup = 456428B72604929800E60129;
 			packageReferences = (
-				45278DC4260A528A00C0A76B /* XCRemoteSwiftPackageReference "MacMenuBar" */,
 			);
 			productRefGroup = 456428C12604929800E60129 /* Products */;
 			projectDirPath = "";
@@ -931,25 +927,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		45278DC4260A528A00C0A76B /* XCRemoteSwiftPackageReference "MacMenuBar" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/chipjarred/MacMenuBar.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		45278DC5260A528A00C0A76B /* MacMenuBar */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 45278DC4260A528A00C0A76B /* XCRemoteSwiftPackageReference "MacMenuBar" */;
-			productName = MacMenuBar;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 456428B82604929800E60129 /* Project object */;
 }
