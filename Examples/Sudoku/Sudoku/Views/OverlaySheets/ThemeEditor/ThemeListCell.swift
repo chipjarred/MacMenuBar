@@ -23,6 +23,8 @@ import SwiftUI
 // -------------------------------------
 struct ThemeListCell: View
 {
+    static let themeNameFontSize: CGFloat = 10
+    
     @State var theme: Theme
     @Binding var shouldRename: Bool
     @Binding var currentTheme: Theme
@@ -55,7 +57,7 @@ struct ThemeListCell: View
     }
     
     // -------------------------------------
-    func commitNewThemeName()
+    func commitNewThemeName(_ newName: String)
     {
         if let existingTheme = prefs.themeNamed(newName),
            existingTheme.id != currentTheme.id
@@ -64,14 +66,12 @@ struct ThemeListCell: View
             return
         }
         
-        let newTheme = Theme(
-            from: currentTheme,
-            withName: newName
-        )
+        let newTheme = Theme(from: currentTheme, withName: newName)
 
         prefs.updateTheme(currentTheme, to: newTheme)
         currentTheme = newTheme
         theme = newTheme
+        self.newName = newTheme.name
         shouldRename = false
     }
     
@@ -86,17 +86,21 @@ struct ThemeListCell: View
                 CustomTextField(
                     $newName,
                     isFirstResponder: true,
-                    onCommit: { commitNewThemeName() }
+                    onCommit: { commitNewThemeName(newName) }
                 )
+                .font(NSFont.systemFont(ofSize: Self.themeNameFontSize))
+                .foregroundColor(NSColor.controlTextColor)
                 .frame(height: 15)
                 .padding(.leading, 5)
                 .background(Color.controlBackgroundColor)
                 .border(Color.blue, width: 1)
                 .alert(isPresented: $nameClash)
                 {
-                    Alert(
-                        title:
-                            Text("The name, \"\(newName)\", is already taken."),
+                    let titleStr = newName == ""
+                        ? "Theme name must not be empty"
+                        : "The name, \"\(newName)\", is already taken."
+                    return Alert(
+                        title: Text(titleStr),
                         message: Text("Please choose another name."),
                         dismissButton: nil
                     )
@@ -105,6 +109,7 @@ struct ThemeListCell: View
             else
             {
                 Text(theme.name)
+                    .font(.system(size: Self.themeNameFontSize))
                     .foregroundColor(.controlTextColor)
                     .padding(.leading, 10)
                     .onTapGesture(count: 2)

@@ -18,9 +18,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+import AppKit
+
 // -------------------------------------
 extension StringProtocol
 {
+    // -------------------------------------
+    func attributedString(_ font: NSFont) -> NSAttributedString {
+        attributedString([.font: font])
+    }
+    
+    // -------------------------------------
+    func attributedString(
+        _ attributes: [NSAttributedString.Key: Any]) -> NSAttributedString
+    {
+        NSAttributedString(string: String(self), attributes: attributes)
+    }
+    
     // -------------------------------------
     func lastRange<S: StringProtocol>(of substr: S) -> Range<Index>?
     {

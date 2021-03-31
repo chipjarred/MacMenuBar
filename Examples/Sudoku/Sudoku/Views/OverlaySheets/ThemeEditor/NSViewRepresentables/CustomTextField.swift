@@ -29,6 +29,11 @@ struct CustomTextField: NSViewRepresentable
     @Binding var text: String
     var isFirstResponder: Bool
     var commitAction: CommitAction?
+    var attributes: [NSAttributedString.Key: Any] =
+    [
+        .font: NSFont.systemFont(ofSize: 12),
+        .foregroundColor: NSColor.textColor
+    ]
     
     // -------------------------------------
     /*
@@ -68,7 +73,7 @@ struct CustomTextField: NSViewRepresentable
     @objc class CustomNSTextView: NSTextView
     {
         var isFirstResponder: Bool
-        var commitAction: CommitAction
+        var commitAction: CommitAction? = nil
         var savedText: String
         @Binding var text: String
         
@@ -77,7 +82,10 @@ struct CustomTextField: NSViewRepresentable
         var alreadyFirstResponder: Bool = false
 
         // -------------------------------------
-        init(text: Binding<String>, isFirstResponder: Bool, onCommit: CommitAction? = nil)
+        init(
+            text: Binding<String>,
+            isFirstResponder: Bool,
+            onCommit: CommitAction? = nil)
         {
             self._text = text
             self.savedText = text.wrappedValue
@@ -96,7 +104,6 @@ struct CustomTextField: NSViewRepresentable
             
             self.isEditable = true
             self.isSelectable = true
-            self.string = text.wrappedValue
             self.textContainerInset = .zero
         }
         
@@ -104,7 +111,7 @@ struct CustomTextField: NSViewRepresentable
         deinit
         {
             text = string
-            commitAction()
+            doCommit()
         }
         
         // -------------------------------------
@@ -134,7 +141,17 @@ struct CustomTextField: NSViewRepresentable
         override var canBecomeKeyView: Bool { true }
         
         // -------------------------------------
-        override func viewDidMoveToWindow()
+        override func viewDidMoveToWindow() {
+            setAsFirstRespoder()
+        }
+        
+        // -------------------------------------
+        override func viewDidUnhide() {
+            setAsFirstRespoder()
+        }
+        
+        // -------------------------------------
+        private func setAsFirstRespoder()
         {
             if isFirstResponder, let w = window
             {
@@ -144,10 +161,20 @@ struct CustomTextField: NSViewRepresentable
         }
         
         // -------------------------------------
+        private func doCommit()
+        {
+            if let commitAction = self.commitAction
+            {
+                commitAction()
+                self.commitAction = nil
+            }
+        }
+        
+        // -------------------------------------
         override func insertNewline(_ sender: Any?)
         {
             text = string
-            commitAction()
+            doCommit()
         }
         
         // -------------------------------------
@@ -155,7 +182,7 @@ struct CustomTextField: NSViewRepresentable
         {
             string = savedText
             text = savedText
-            commitAction()
+            doCommit()
         }
     }
     
@@ -173,17 +200,36 @@ struct CustomTextField: NSViewRepresentable
     // -------------------------------------
     func makeNSView(context: Context) -> NSViewType
     {
-        return NSViewType(
+        let view = NSViewType(
             text: $text,
             isFirstResponder: isFirstResponder,
             onCommit: commitAction
         )
+            
+        return view
     }
 
     // -------------------------------------
     func updateNSView(_ nsView: NSViewType, context: Context)
     {
-        nsView.string = text
+        nsView.textStorage!
+            .setAttributedString(text.attributedString(attributes))
         nsView.selectAll(nsView)
+    }
+    
+    // -------------------------------------
+    func font(_ font: NSFont) -> Self
+    {
+        var copy = self
+        copy.attributes[.font] = font
+        return copy
+    }
+    
+    // -------------------------------------
+    func foregroundColor(_ color: NSColor) -> Self
+    {
+        var copy = self
+        copy.attributes[.foregroundColor] = color
+        return copy
     }
 }
