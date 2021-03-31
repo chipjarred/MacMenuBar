@@ -296,6 +296,10 @@ import Cocoa
     // -------------------------------------
     public override func responds(to aSelector: Selector!) -> Bool
     {
+        #warning("DEBUG")
+        if aSelector == #selector(NSText.cut(_:)) {
+            print("\(#function) for cut")
+        }
         guard aSelector == menuItemActionSelector, (_action?.isEnabled ?? false)
         else { return super.responds(to: aSelector) }
         
