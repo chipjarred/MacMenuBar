@@ -21,28 +21,27 @@
 import MacMenuBar
 
 // -------------------------------------
+fileprivate func menuState(for theme: Theme) -> MacMenuItemState {
+    Preferences.shared.theme.name == theme.name ? .on : .off
+}
+
+// -------------------------------------
 let themesMenu = StandardMenu(title: "Themes")
 {
     TextMenuItem(title: "System") { _ in
         Preferences.shared.theme = .system
     }
-    .updatingStateWith {
-        Preferences.shared.theme.name == Theme.system.name ? .on : .off
-    }
+    .updatingStateWith { menuState(for: .system) }
     
     TextMenuItem(title: Theme.light.name) { _ in
         Preferences.shared.theme = .light
     }
-    .updatingStateWith {
-        Preferences.shared.theme.name == Theme.light.name ? .on : .off
-    }
+    .updatingStateWith { menuState(for: .light) }
     
     TextMenuItem(title: Theme.dark.name) { _ in
         Preferences.shared.theme = .dark
     }
-    .updatingStateWith {
-        Preferences.shared.theme.name == Theme.dark.name ? .on : .off
-    }
+    .updatingStateWith { menuState(for: .dark) }
 
     MenuSeparator()
     
@@ -53,9 +52,7 @@ let themesMenu = StandardMenu(title: "Themes")
             Preferences.shared.setTheme(named: theme.name)
         }
         .indented()
-        .updatingStateWith {
-            Preferences.shared.theme.name == theme.name ? .on : .off
-        }
+        .updatingStateWith { menuState(for: theme) }
     }
     
     MenuSeparator()
