@@ -72,4 +72,16 @@ class NSGameHostingView: NSHostingView<ContentView>
     @objc public func keyDown(with event: NSEvent) -> Bool {
         return KeyResponder.current?.closure?(event) ?? false
     }
+    
+    #warning("DEBUG")
+    @objc public override func responds(to selector: Selector) -> Bool
+    {
+        let result = super.responds(to: selector)
+        
+        if selector == #selector(NSText.cut(_:)) {
+            print("\(Self.self) responds to cut: \(result)")
+        }
+        
+        return result
+    }
 }
