@@ -74,7 +74,14 @@ fileprivate struct MenuItemCache
         title: String) -> NSMenuItem?
     {
         let key = Key(valueType: valueType, title: title)
-        return items[key]?.popLast()
+        if let item = items[key]?.popLast()
+        {
+            item.state = .off
+            item.isEnabled = true
+            item.isHidden = false
+            return item
+        }
+        return nil
     }
     
     // -------------------------------------
@@ -128,7 +135,17 @@ extension PopupButtonProtocol
     }
     
     // -------------------------------------
-    func updateNSView(_ nsView: NSViewType, context: Context) { }
+    func updateNSView(_ nsView: NSViewType, context: Context)
+    {
+        let cValue = currentValue
+        guard let currentTitle = attributedItemTitle(from: cValue)?.string
+                ?? itemTitle(from: cValue),
+              let item = nsView.menu?.items.first(
+                where: { $0.title == currentTitle })
+        else { return }
+        
+        nsView.select(item)
+    }
 
     /*
      MacMenuBar doesn't currently allow setting attributed titles, and since we
@@ -192,7 +209,6 @@ extension PopupButtonProtocol
                 selectedItemIndex = button.menu!.items.count
                 item.state = .on
             }
-            else { item.state = .off }
 
             button.menu!.addItem(item)
         }
