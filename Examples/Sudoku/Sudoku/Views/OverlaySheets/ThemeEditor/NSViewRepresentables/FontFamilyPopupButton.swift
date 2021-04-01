@@ -32,8 +32,23 @@ fileprivate func font(from family: String) -> NSFont?
     )
 }
 
+// -------------------------------------
 fileprivate let fontList = NSFontManager.shared.availableFontFamilies
     .map { font(from: $0) }.filter { $0 != nil }.map { $0! }
+
+// -------------------------------------
+fileprivate var attributedFontNames: [String: NSAttributedString] =
+{
+    var map = [String: NSAttributedString]()
+    map.reserveCapacity(fontList.count)
+    
+    for font in fontList
+    {
+        guard let familyName = font.familyName else { continue }
+        map[familyName] = familyName.attributedString(font)
+    }
+    return map
+}()
 
 // -------------------------------------
 struct FontFamilyPopupButton<ValueContainer>: PopupButtonProtocol
@@ -87,10 +102,13 @@ struct FontFamilyPopupButton<ValueContainer>: PopupButtonProtocol
     func attributedItemTitle(from value: Value) -> NSAttributedString?
     {
         guard let familyName = value.familyName else { return nil }
-        return NSAttributedString(
-            string: familyName,
-            attributes: [.font : value as Any]
-        )
+        if let attributedName = attributedFontNames[familyName] {
+            return attributedName
+        }
+        
+        let attributedName = familyName.attributedString(value)
+        attributedFontNames[familyName] = attributedName
+        return attributedName
     }
     
     // -------------------------------------

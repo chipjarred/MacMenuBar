@@ -50,6 +50,52 @@ protocol PopupButtonProtocol: NSViewRepresentable
 }
 
 // -------------------------------------
+fileprivate struct MenuItemCache
+{
+    // -------------------------------------
+    struct Key: Hashable
+    {
+        let typeHash: Int
+        let title: String
+        
+        // -------------------------------------
+        init<Value>(valueType: Value.Type, title: String)
+        {
+            self.typeHash = "\(valueType)".hashValue
+            self.title = title
+        }
+    }
+    
+    var items = [Key: [NSMenuItem]]()
+    
+    // -------------------------------------
+    mutating func getItem<Value>(
+        for valueType: Value.Type,
+        title: String) -> NSMenuItem?
+    {
+        let key = Key(valueType: valueType, title: title)
+        return items[key]?.popLast()
+    }
+    
+    // -------------------------------------
+    mutating func putItem<Value>(
+        _ item: NSMenuItem,
+        for valueType: Value.Type)
+    {
+        assert(item.title.count > 0)
+        let key = Key(valueType: valueType, title: item.title)
+        
+        if items.keys.contains(key) {
+            items[key]!.append(item)
+        }
+        else { items[key] = [item] }
+    }
+}
+
+fileprivate var menuItemCache = MenuItemCache()
+
+
+// -------------------------------------
 extension PopupButtonProtocol
 {
     // -------------------------------------
@@ -74,6 +120,7 @@ extension PopupButtonProtocol
             
             valueContainer.wrappedValue[keyPath: valuePath] = value
         }
+        onDeinit: { if let items = $0 { cacheMenuItems(items: items) } }
         
         populate(button: button, from: content())
         
@@ -94,6 +141,12 @@ extension PopupButtonProtocol
     {
         if let styledTitle = attributedItemTitle(from: value)
         {
+            if let cachedItem = menuItemCache.getItem(
+                for: Value.self, title: styledTitle.string)
+            {
+                return cachedItem
+            }
+            
             let item = NSMenuItem()
             item.attributedTitle = styledTitle
             return item
@@ -101,12 +154,23 @@ extension PopupButtonProtocol
         
         if let plainTitle = itemTitle(from: value)
         {
+            if let cachedItem =
+                menuItemCache.getItem(for: Value.self, title: plainTitle)
+            {
+                return cachedItem
+            }
+            
             let item = NSMenuItem()
             item.title = plainTitle
             return item
         }
         
         return nil
+    }
+    
+    // -------------------------------------
+    private func cacheMenuItems(items: [NSMenuItem]) {
+        items.forEach { menuItemCache.putItem($0, for: Value.self) }
     }
     
     // -------------------------------------
@@ -128,6 +192,7 @@ extension PopupButtonProtocol
                 selectedItemIndex = button.menu!.items.count
                 item.state = .on
             }
+            else { item.state = .off }
 
             button.menu!.addItem(item)
         }
@@ -186,10 +251,13 @@ extension PopupButtonProtocol where Value == String
 class CustomNSPopUpButton: NSPopUpButton
 {
     typealias ItemSelectionAction = (NSMenuItem) -> Void
+    typealias DeinitAction = ([NSMenuItem]?) -> Void
+    
     let width: CGFloat
     let height: CGFloat
     var size: CGSize { CGSize(width: width, height: height) }
     let itemSelectionAction: ItemSelectionAction
+    let deinitAction: DeinitAction
     
     // -------------------------------------
     override var intrinsicContentSize: NSSize {
@@ -200,11 +268,13 @@ class CustomNSPopUpButton: NSPopUpButton
     init(
         frame buttonFrame: NSRect,
         pullsDown flag: Bool,
-        onSelection: @escaping ItemSelectionAction)
+        onSelection: @escaping ItemSelectionAction,
+        onDeinit: @escaping DeinitAction)
     {
         self.width = buttonFrame.width
         self.height = buttonFrame.height
         self.itemSelectionAction = onSelection
+        self.deinitAction = onDeinit
         
         super.init(frame: buttonFrame, pullsDown: flag)
     }
@@ -213,6 +283,9 @@ class CustomNSPopUpButton: NSPopUpButton
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // -------------------------------------
+    deinit { deinitAction(menu?.items) }
     
     // -------------------------------------
     public override func viewDidMoveToSuperview()
