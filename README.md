@@ -329,3 +329,72 @@ Now our menu will list our current theme plus a different random selection of th
 The `ForEach` being used here is purposefully named to match the one in SwiftUI, because it serves a similar purpose, but we're using `MacMenuBar.ForEach` not `SwiftUI.ForEach`.  Whereas SwiftUI's `ForEach` needs to respond to dynamically changing data at any time during execution, MacMenuBar's `ForEach` only needs to do that when the user opens its parent menu, and of course, it generates menu items not SwiftUI `View`s.
 
 
+## Special Topics
+### macOS Injected Menu Items
+If you're used to Mac development, you probably are aware that macOS automatically inserts a small number of menu items of its own into your menus.  It injects `Start Dictation...` and `Emoji & Symbols ` into your `Edit` menu.  If you provide a `View` menu, it will inject `Enter Full Screen` there.  If you don't provide a `View` menu, but you provide a `Window` menu, it will insert `Enter Full Screen` there.
+
+If you're happy with those inserted menus as they are, MacMenuBar handles them just fine.  The problem comes when you decide to override some aspect of those menu items.  For example, the injected `Enter Full Screen` item has a command key equivalent to enter full screen mode, but it doesn't have one for exiting it. Quite a few applications like for the `escape` key to exit full screen mode, and that is convenient for the user.  To do this in MacMenuBar, you implement the `Enter Full Screen` item yourself.  For example:
+
+```swift
+    StandardMenu(title: "View")
+    {
+        TextMenuItem(title: "Show Toolbar", action: .showToolbar).enabled(false)
+        TextMenuItem(title: "Customize Toolbar...", action: .customizeToolbar).enabled(false)
+        
+        MenuSeparator()
+        
+        TextMenuItem(title: "Show Sidebar", action: .showSidebar).enabled(false)
+        
+        TextMenuItem(title: "Enter Full Screen", action: .enterFullScreen)
+            .afterAction
+            { menuItem in
+                if AppDelegate.isFullScreen
+                {
+                    menuItem.title = "Exit Full Screen"
+                    KeyEquivalent.escape.set(in: menuItem)
+                }
+                else
+                {
+                    menuItem.title = "Enter Full Screen"
+                    (.command + .control + "f").set(in: menuItem)
+                }
+            }
+    }
+```
+
+Now the user can enter full screen mode with `command-control-f` as they would normally do, but they can also exit it by pressing the `escape` key.  
+
+There is a small problem with this though.  Because MacMenuBar supports dynamically populated menus, and because for `Enter Full Screen` macOS checks to see if it should insert the menu item every time the menu is opened, it can try to insert its menu item while MacMenuBar is updating the menu's contents.  That can lead to the menu item being added twice.  It can be even more frustrating when you dig into it to find that macOS handles its insertions into your `Edit` menu differently from your `View` or `Window` menu, with the former happening when your app sets the main menu in your  `AppDelegate`, and the latter happening everytime the users opens the menu.   MacMenuBar captures the insertions and tries to only allow the macOS-inserted items if you haven't already implemented a menu item for the same selector.  However, if you provide your own selector, you can still end up with duplicate menu items, and there are some other edge cases because of how MacMenuBar dynamically populates menus.
+
+To handle these potential issues, MacMenuBar allows you to simply refuse to allow all auto-injected items for a particular menu.  For example to refuse the allow macOS to automatically insert its `Enter Full Screen` item into your `View` menu,  add `.refuseAutoinjectedMenuItems()` to the declaration of that menu, like this:
+
+```swift
+    StandardMenu(title: "View")
+    {
+        TextMenuItem(title: "Show Toolbar", action: .showToolbar).enabled(false)
+        TextMenuItem(title: "Customize Toolbar...", action: .customizeToolbar).enabled(false)
+        
+        MenuSeparator()
+        
+        TextMenuItem(title: "Show Sidebar", action: .showSidebar).enabled(false)
+        
+        TextMenuItem(title: "Enter Full Screen", action: .enterFullScreen)
+            .afterAction
+            { menuItem in
+                if AppDelegate.isFullScreen
+                {
+                    menuItem.title = "Exit Full Screen"
+                    KeyEquivalent.escape.set(in: menuItem)
+                }
+                else
+                {
+                    menuItem.title = "Enter Full Screen"
+                    (.command + .control + "f").set(in: menuItem)
+                }
+            }
+    }.refuseAutoinjectedMenuItems() // <-- ADDED THIS
+```
+
+In this case, because macOS may try to add the item to the `Window` menu, append . `.refuseAutoinjectedMenuItems()` to your `Window` menu delcaration too.
+
+To maintain the experience Mac users expect, only do this when you implement replacements for the auto-injected items.
