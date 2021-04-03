@@ -395,6 +395,6 @@ To handle these potential issues, MacMenuBar allows you to simply refuse to allo
     }.refuseAutoinjectedMenuItems() // <-- ADDED THIS
 ```
 
-In this case, because macOS may try to add the item to the `Window` menu, append . `.refuseAutoinjectedMenuItems()` to your `Window` menu delcaration too.
+In this case, because macOS may try to add the item to the `Window` menu, append `.refuseAutoinjectedMenuItems()` to your `Window` menu delcaration too.
 
 To maintain the experience Mac users expect, only do this when you implement replacements for the auto-injected items.
