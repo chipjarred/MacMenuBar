@@ -162,7 +162,7 @@ struct ThemeEditor: View
                         }
                     }
                 }
-            }
+            }.frame(width: PuzzleView.width, height: PuzzleView.height)
         }.transition(
             AnyTransition.opacity.animation(
                 .easeInOut(duration: 0.3)

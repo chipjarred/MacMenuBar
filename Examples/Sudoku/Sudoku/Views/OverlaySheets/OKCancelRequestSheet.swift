@@ -44,7 +44,7 @@ extension OKCancelRequestSheet
         {
             ZStack
             {
-                Rectangle().fill(Color.controlColor).opacity(0.8)
+                Rectangle().fill(Color.controlBackgroundColor).opacity(0.8)
                 VStack(spacing: 0)
                 {
                     Text(title).font(.title)
