@@ -18,36 +18,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import Cocoa
-
 // -------------------------------------
-public protocol MenuBar
+public struct NoMenu
 {
-    var body: StandardMenuBar { get }
-}
-
-// -------------------------------------
-@_functionBuilder
-public struct MenuBarBuilder {
-    public static func buildBlock(_ menus: MacMenu...) -> [MacMenu] { menus }
-}
-
-// -------------------------------------
-public struct StandardMenuBar
-{
-    internal private(set) var menu: NSMenu
+    public internal(set) var nsMenu: NSMacMenu
     
-    public init(@MenuBarBuilder menus: () -> [MacMenu])
-    {
-        self.menu = NSMenu()
-        menus().forEach
-        {
-            if $0 is NoMenu { return }
-            
-            let item = NSMenuItem()
-            item.title = $0.title
-            item.submenu = $0.nsMenu
-            self.menu.addItem(item)
-        }
+    // -------------------------------------
+    public init() {
+        self.nsMenu = NSMacMenu()
+        self.nsMenu.delegate = self.nsMenu
     }
+}
+
+// -------------------------------------
+extension NoMenu: MacMenu
+{
+    // -------------------------------------
+    @inlinable public var isItem: Bool { false }
+
+    // -------------------------------------
+    @inlinable public var title: String
+    {
+        get { "" }
+        set { }
+    }
+    
+    // -------------------------------------
+    @inlinable public var isVisible: Bool
+    {
+        get { false }
+        set { }
+    }
+    
+    // -------------------------------------
+    @inlinable public var canBeEnabled: Bool
+    {
+        get { false }
+        set { }
+    }
+    
+    // -------------------------------------
+    @inlinable public var isEnabled: Bool { false }
 }
