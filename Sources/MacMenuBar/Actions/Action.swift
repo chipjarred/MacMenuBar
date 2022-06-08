@@ -40,7 +40,7 @@ public protocol Action
 // -------------------------------------
 public extension Action
 {
-    static var none: some Action { NoAction() }
+    static var none: Action { NoAction() as Action }
     
     // -------------------------------------
     /**
