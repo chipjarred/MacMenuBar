@@ -328,7 +328,7 @@ public enum StandardMenuItemAction
                 
             case .textCompletion:
                 return (
-                    #selector(NSTextView.toggleAutomaticTextCompletion(_:)),
+                    textCompletionActionSelector,
                     .none
                 )
 
@@ -597,4 +597,26 @@ public enum StandardMenuItemAction
 
         }
     }
+    
+    fileprivate var textCompletionActionSelector: Selector
+    {
+        /*
+         Prior to macOS 10.12.2, text completion in macOS was not supplied by
+         AppKit, so prior to that, we supply selector to a no-op method that
+         shouldn't be implemented by anything in the responder chain.
+         Consequently, the corresponding menu item will be disabled by AppKit.
+         */
+        if #available(OSX 10.12.2, *) {
+            return #selector(NSTextView.toggleAutomaticTextCompletion(_:))
+        }
+        else { return #selector(BagOfSelectors.macMenuBar_DoNothing__(_:)) }
+    }
+}
+
+/**
+ Just an `NSObject` subclass for the sole purpose of declaring methods to take selectors from
+ */
+@objc
+fileprivate class BagOfSelectors: NSObject {
+    @objc func macMenuBar_DoNothing__(_ sender: Any?) { }
 }
