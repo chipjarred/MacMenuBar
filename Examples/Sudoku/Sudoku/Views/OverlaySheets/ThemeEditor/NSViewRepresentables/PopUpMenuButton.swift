@@ -121,9 +121,8 @@ extension PopupButtonProtocol
         )
         let button = NSViewType(frame: buttonRect, pullsDown: false)
         { item in
-            guard let itemTitle = item.attributedTitle?.string ?? item.title,
-                  let value = value(for: itemTitle)
-            else { return }
+            let itemTitle = item.attributedTitle?.string ?? item.title
+            guard let value = value(for: itemTitle) else { return }
             
             valueContainer.wrappedValue[keyPath: valuePath] = value
         }
