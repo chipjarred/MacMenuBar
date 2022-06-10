@@ -30,6 +30,7 @@ import MacMenuBar
 struct MacOSButton: NSViewRepresentable
 {
     typealias NSViewType = NSClosureButton
+    typealias KeyEquivalent = MacMenuBar.KeyEquivalent
 
     let title: String
     let action: () -> Void
@@ -94,6 +95,8 @@ struct MacOSButton: NSViewRepresentable
 // -------------------------------------
 @objc class NSClosureButton: NSButton
 {
+    typealias KeyEquivalent = MacMenuBar.KeyEquivalent
+    
     let buttonAction: () -> Void
 
     // -------------------------------------
