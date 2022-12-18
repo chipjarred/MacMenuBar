@@ -64,9 +64,27 @@ struct MainMenuBar: MenuBar
     }
 }
 ```
-This kind of looks like how you write your SwiftUI `View` code, doesn't it?  
+This kind of looks like how you write your SwiftUI `View` code, doesn't it? 
 
-Now we just need to tell the `AppDelegate` to use it.  So at the end of `AppDelegate.applicationDidFinishLaunching()`  add `setMenuBar(to: MainMenuBar())`
+At the moment, MacMenuBar isn't hooked into SwiftUI.  For a pure SwiftUI project, we do that in our `@main` `App`:
+
+```swift
+import SwiftUI
+import MacMenuBar
+
+@main
+struct MyApp: App
+{
+    init() { setMenuBar(to: MainMenuBar()) } // <- ADD THIS
+    
+    var body: some Scene {
+        WindowGroup {
+            return ContentView()
+        }
+    }
+}
+```
+If your project uses the old model of providing an app delegate instead of `@main`,  add the call to `setMenuBar(to:)` at the end of `AppDelegate.applicationDidFinishLaunching()`:
 
 ```swift
 func applicationDidFinishLaunching(_ aNotification: Notification)

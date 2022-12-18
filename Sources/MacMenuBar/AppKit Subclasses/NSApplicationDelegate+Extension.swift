@@ -19,11 +19,12 @@
 // SOFTWARE.
 
 import Cocoa
+import SwiftUI
 
 // -------------------------------------
-public extension NSApplicationDelegate
+fileprivate func _setMenuBar<MenuBarType: MenuBar>(to menuBar: MenuBarType)
 {
-    func setMenuBar<MenuBarType: MenuBar>(to menuBar: MenuBarType)
+    DispatchQueue.main.async
     {
         let menu = menuBar.body.menu
         // Build dynamic menu content before setting the menu bar so our menus
@@ -35,5 +36,22 @@ public extension NSApplicationDelegate
             }
         }
         NSApplication.shared.mainMenu = menu
+    }
+}
+
+// -------------------------------------
+public extension SwiftUI.App
+{
+    // -------------------------------------
+    func setMenuBar<MenuBarType: MenuBar>(to menuBar: MenuBarType) {
+        _setMenuBar(to: menuBar)
+    }
+}
+
+// -------------------------------------
+public extension NSApplicationDelegate
+{
+    func setMenuBar<MenuBarType: MenuBar>(to menuBar: MenuBarType) {
+        _setMenuBar(to: menuBar)
     }
 }
