@@ -132,7 +132,7 @@ Within the top-level `StandardMenu` instances we have two kinds of menu items: `
 
 In addition to menu items, we can also nest menus within menus to create submenus by simply using another `StandardMenu` instead of a menu item type. The "Open Recent..." submenu in our "File" menu is an example of this.
 
-Finally the change we made to `AppDelegate.applicationDidFinishLaunching` by calling `setMenuBar(to: MainMenuBar())` is the line that actually sets the application's main menu to our `MainMenuBar`.  SwiftUI has to do something similar a few lines up in the line, `let contentView = ContentView()`.  It's just that the project template already provided that line, so you don't have to write it yourself.
+Finally the initializer we added to `MyApp` is the thing that actually sets the application's main menu to our `MainMenuBar`. 
 
 ## Custom Menu Actions
 
